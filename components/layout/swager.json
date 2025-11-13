@@ -1,0 +1,4537 @@
+{
+  "swaggerDoc": {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API Documentation",
+      "version": "1.0.0",
+      "description": "This is the API documentation for NeuroVice."
+    },
+    "servers": [
+      {
+        "url": "https://api-neurovice.dyms.dev/v1",
+        "description": "Development server"
+      }
+    ],
+    "paths": {
+      "/authentication/": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Obtiene los datos del usuario con el Token",
+          "description": "Obtiene los datos del usuario con el Token. Requiere token JWT y Roles.",
+          "responses": {
+            "200": {
+              "description": "Un objeto User",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/authentication/signup": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Registro",
+          "description": "Registra a un Usuario en la plataforma y devuelve access + refresh tokens.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "Email del usuario"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Contraseña del usuario"
+                    },
+                    "repeatPassword": {
+                      "type": "string",
+                      "description": "Contraseña del usuario repetida"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nombre del usuario"
+                    },
+                    "lastName": {
+                      "type": "string",
+                      "description": "Apellidos del usuario"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "password",
+                    "repeatPassword",
+                    "name",
+                    "lastName"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "401": {
+              "description": "Invalid credentials"
+            },
+            "404": {
+              "description": "User not found."
+            },
+            "500": {
+              "description": "Error del servidor."
+            },
+            "responses": {
+              "200": {
+                "description": "El usuario y los tokens",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "$ref": "#/components/schemas/User"
+                        },
+                        "accessToken": {
+                          "type": "string",
+                          "description": "Access token de corta duración"
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "description": "Refresh token de larga duración"
+                        }
+                      },
+                      "required": [
+                        "user",
+                        "accessToken",
+                        "refreshToken"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/authentication/signin": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Login",
+          "description": "Inicia sesión con un usuario. Requiere token JWT y Rol en la base de datos adecuado.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "Email del usuario"
+                    },
+                    "password": {
+                      "type": "string",
+                      "description": "Contraseña del usuario"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "password"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "El usuario y los tokens",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "user": {
+                        "$ref": "#/components/schemas/User"
+                      },
+                      "accessToken": {
+                        "type": "string",
+                        "description": "Access token de corta duración"
+                      },
+                      "refreshToken": {
+                        "type": "string",
+                        "description": "Refresh token de larga duración"
+                      }
+                    },
+                    "required": [
+                      "user",
+                      "accessToken",
+                      "refreshToken"
+                    ]
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid credentials"
+            },
+            "404": {
+              "description": "User not found."
+            },
+            "500": {
+              "description": "Error del servidor."
+            }
+          }
+        }
+      },
+      "/authentication/refresh": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Renueva tokens",
+          "description": "Intercambia un refresh token válido por un nuevo access token + refresh token.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refreshToken": {
+                      "type": "string",
+                      "description": "Refresh token válido"
+                    }
+                  },
+                  "required": [
+                    "refreshToken"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Nuevos tokens generados",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "accessToken": {
+                        "type": "string",
+                        "description": "Nuevo access token"
+                      },
+                      "refreshToken": {
+                        "type": "string",
+                        "description": "Nuevo refresh token"
+                      }
+                    },
+                    "required": [
+                      "accessToken",
+                      "refreshToken"
+                    ]
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "refreshToken es requerido"
+            },
+            "401": {
+              "description": "Refresh token inválido o expirado"
+            },
+            "500": {
+              "description": "Server error."
+            }
+          }
+        }
+      },
+      "/authentication/signout": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Invalida el Token actual",
+          "description": "Invalida el Token actual y desloguea al usuario. Requiere token JWT y Roles.",
+          "responses": {
+            "200": {
+              "description": "Signed out"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/authentication/close-all-sessions": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Invalida TODOS los Tokens del Usuario",
+          "description": "Invalida TODOS los Tokens y desloguea al usuario. Requiere token JWT y Roles.",
+          "responses": {
+            "200": {
+              "description": "All Tokens invalidated"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/authentication/request-reset-password": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Petición de reseteo de contraseña",
+          "description": "Inicia el reset de una contraseña",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "description": "Email del usuario"
+                    }
+                  },
+                  "required": [
+                    "email"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Email sent"
+            },
+            "400": {
+              "description": "Invalid Email"
+            },
+            "404": {
+              "description": "User not found with provided email."
+            },
+            "500": {
+              "description": "Server error."
+            }
+          }
+        }
+      },
+      "/authentication/reset-password": {
+        "post": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Petición de reseteo de contraseña",
+          "description": "Inicia el reset de una contraseña",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "El token adjunto en el email (se envía además de en el header para doble verificación)"
+                    },
+                    "newPassword": {
+                      "type": "string",
+                      "description": "La nueva contraseña seleccionada por el usuario"
+                    },
+                    "newPasswordConfirm": {
+                      "type": "string",
+                      "description": "Confirmación de la nueva contraseña"
+                    }
+                  },
+                  "required": [
+                    "token",
+                    "newPassword",
+                    "newPasswordConfirm"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Password successfully reset"
+            },
+            "400": {
+              "description": "All parameters required || Password and Password confirm must be equals || Password is not correctly composed: 8 - 32 characters, 1 special character, 1 number y 1 upper case"
+            },
+            "401": {
+              "description": "Unauthorized || Invalid or expired password reset token"
+            },
+            "500": {
+              "description": "Server error."
+            }
+          }
+        }
+      },
+      "/authentication/facebook": {
+        "get": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Obtiene URL de autenticación para Meta / Facebook",
+          "description": "Genera la URL para iniciar el proceso de autenticación con Meta / Facebook. Requiere token JWT.",
+          "responses": {
+            "200": {
+              "description": "URL de autenticación generada.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "https://www.facebook.com/v19.0/dialog/oauth?client_id=...&redirect_uri=..."
+                }
+              }
+            },
+            "401": {
+              "description": "Usuario no autenticado."
+            },
+            "500": {
+              "description": "Error del servidor."
+            }
+          }
+        }
+      },
+      "/authentication/facebook/callback": {
+        "get": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Callback de autenticación para Facebook",
+          "description": "Recibe `code` y `state`, autentica con Facebook y redirige con `accessToken` y `refreshToken` en query params.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "code",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "Código de autorización proporcionado por Facebook."
+            },
+            {
+              "in": "query",
+              "name": "state",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "Estado enviado en la solicitud de autenticación."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Autenticación con Facebook exitosa. Retorna mensaje con Access Token y User ID.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "No se recibió el código o estado, o el estado es inválido."
+            },
+            "401": {
+              "description": "Usuario no autenticado."
+            },
+            "500": {
+              "description": "Error durante la autenticación con Instagram."
+            }
+          }
+        }
+      },
+      "/authentication/google": {
+        "get": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Obtiene URL de autenticación para TikTok",
+          "description": "Genera la URL para iniciar el proceso de autenticación con TikTok. Requiere token JWT.",
+          "responses": {
+            "200": {
+              "description": "URL de autenticación generada para TikTok.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "example": "https://accounts.google.com/o/oauth2/v2/auth?client_id=...&redirect_uri=..."
+                }
+              }
+            },
+            "500": {
+              "description": "Error del servidor."
+            }
+          }
+        }
+      },
+      "/authentication/google/callback": {
+        "get": {
+          "tags": [
+            "Authentication"
+          ],
+          "summary": "Callback de autenticación para Google",
+          "description": "Recibe `code` y `state`, autentica con Google y redirige con `accessToken` y `refreshToken` en query params.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "code",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "Código de autorización proporcionado por Google."
+            },
+            {
+              "in": "query",
+              "name": "state",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "Estado enviado en la solicitud de autenticación."
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Autenticación con TikTok exitosa. Retorna mensaje con Access Token.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "No se recibió el código o estado, o el estado es inválido."
+            },
+            "401": {
+              "description": "Usuario no autenticado."
+            },
+            "500": {
+              "description": "Error durante la autenticación con TikTok."
+            }
+          }
+        }
+      },
+      "/admin/scenes": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Lista escenas (admin)",
+          "description": "Obtiene una lista paginada de escenas. Permite búsqueda por título.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por título"
+            },
+            {
+              "in": "query",
+              "name": "season",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Escenas por temporada"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de escenas y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "scenes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Scene"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Crea una nueva escena",
+          "description": "Crea una nueva escena con precios asociados.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "public": {
+                      "type": "boolean"
+                    },
+                    "hash": {
+                      "type": "string",
+                      "description": "Hash for the scene, used for neurobundle"
+                    },
+                    "prices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ScenePriceInput"
+                      }
+                    },
+                    "sceneTags": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tag"
+                      }
+                    },
+                    "scenePornStars": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PornStar"
+                      }
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description",
+                    "prices"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Escena creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Scene"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/scenes/{sceneId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Obtiene una escena por ID",
+          "description": "Obtiene los detalles de una escena específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Escena encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Scene"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Actualiza una escena",
+          "description": "Actualiza los datos de una escena existente.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "public": {
+                      "type": "boolean"
+                    },
+                    "hash": {
+                      "type": "string"
+                    },
+                    "prices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ScenePriceInput"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Escena actualizada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Scene"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Elimina una escena",
+          "description": "Elimina una escena existente por ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Eliminada correctamente"
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/scenes/{sceneId}/hash": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Establece el hash de una escena",
+          "description": "Actualiza el hash de una escena específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "hash": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "hash"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Hash actualizado correctamente",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Scene"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/scenes/{sceneId}/images": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Establece las imágenes de una escena",
+          "description": "Actualiza las imágenes de una escena específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "images": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "images"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": "Imágenes actualizadas correctamente"
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/scenes/{sceneId}/trailers": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Admin"
+          ],
+          "summary": "Establece los trailers de una escena",
+          "description": "Actualiza los trailers de una escena específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trailers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "trailers"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": "Trailers actualizados correctamente"
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Lista escenas públicas (client)",
+          "description": "Obtiene una lista paginada de escenas públicas accesibles para el usuario autenticado. Indica si el usuario tiene acceso a cada escena.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por título"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de escenas públicas y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "scenes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/SceneWithAccess"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/owned": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Lista escenas públicas y compradas (client)",
+          "description": "Obtiene una lista paginada de escenas públicas accesibles y compradas para el usuario autenticado.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por título"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de escenas públicas y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "scenes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Scene"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/free": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Lista escenas públicas y gratuitas (client)",
+          "description": "Obtiene una lista paginada de escenas públicas accesibles y gratuitas para el usuario autenticado.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por título"
+            },
+            {
+              "in": "query",
+              "name": "season",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Escenas por temporada"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de escenas públicas y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "scenes": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Scene"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/{sceneId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Obtiene una escena por ID (client)",
+          "description": "Obtiene los detalles de una escena específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Escena encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Scene"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/{sceneId}/auth": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Obtiene token de acceso a una escena",
+          "description": "Devuelve un JWT temporal para acceder a la visualización de una escena si el usuario tiene acceso (compra o suscripción activa).",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Token de acceso generado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "token": {
+                        "type": "string",
+                        "description": "JWT de acceso a la escena"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "No tiene acceso a la escena"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/{sceneId}/buy/paypal": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Inicia la compra de una escena con PayPal",
+          "description": "Devuelve la URL de aprobación de PayPal para que el usuario complete la compra de la escena especificada.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena a comprar"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "URL de aprobación de PayPal generada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "approvalLink": {
+                        "type": "string",
+                        "description": "URL de PayPal para completar la compra"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Scene not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/{sceneId}/request-download": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Solicita token de descarga para una escena",
+          "description": "Genera un token temporal para descargar la escena si el usuario tiene acceso (compra o suscripción activa).",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Enlace temporal generado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "description": "URL temporal para descargar la escena"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "No tiene acceso a la escena"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/scenes/{sceneId}/download/{token}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Scenes / Client"
+          ],
+          "summary": "Descarga la escena usando un token temporal",
+          "description": "Permite descargar la escena si el token es válido, no ha expirado y el usuario tiene acceso.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "sceneId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la escena"
+            },
+            {
+              "in": "path",
+              "name": "token",
+              "schema": {
+                "type": "string"
+              },
+              "required": true,
+              "description": "Token temporal de descarga"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "URL firmada para descargar la escena",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "description": "URL firmada de descarga"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "403": {
+              "description": "Enlace inválido, caducado o ya usado"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Lista todas las suscripciones",
+          "description": "Obtiene una lista paginada de suscripciones. Permite filtrar por estado.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "filter",
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionStatus"
+              },
+              "description": "Filtrar por estado"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de suscripciones y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "integer"
+                      },
+                      "results": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/SubscriptionListItem"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Buscar suscripciones",
+          "description": "Busca suscripciones por email de usuario o estado.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "searchText": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "searchText"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Resultados de búsqueda",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/SubscriptionListItem"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "All parameters required"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions/statuses": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Lista los estados posibles de suscripción",
+          "description": "Devuelve los valores posibles del enum SubscriptionStatus.",
+          "responses": {
+            "200": {
+              "description": "Array de estados",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/SubscriptionStatus"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions/summary": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Resumen de suscripciones por estado",
+          "description": "Devuelve un resumen con el total de suscripciones por estado.",
+          "responses": {
+            "200": {
+              "description": "Resumen por estado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions/{id}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Obtiene una suscripción por ID",
+          "description": "Devuelve los detalles de una suscripción específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la suscripción"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Suscripción encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SubscriptionDetail"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid subscription ID"
+            },
+            "404": {
+              "description": "Not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions/create": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Crea una suscripción",
+          "description": "Crea una nueva suscripción para un usuario y plan.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "integer"
+                    },
+                    "planId": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/SubscriptionStatus"
+                    }
+                  },
+                  "required": [
+                    "userId",
+                    "planId",
+                    "startDate",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Suscripción creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SubscriptionDetail"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "All inputs required"
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions/{id}/update": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Actualiza una suscripción",
+          "description": "Actualiza los datos de una suscripción existente.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la suscripción"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "planId": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "status": {
+                      "$ref": "#/components/schemas/SubscriptionStatus"
+                    }
+                  },
+                  "required": [
+                    "planId",
+                    "startDate",
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Suscripción actualizada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SubscriptionDetail"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "All inputs required"
+            },
+            "404": {
+              "description": "Suscription not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/subscriptions/{id}/delete": {
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Subscriptions / Admin"
+          ],
+          "summary": "Elimina una suscripción",
+          "description": "Elimina una suscripción existente por ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la suscripción"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Subscription deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Lista todos los usuarios",
+          "description": "Obtiene una lista paginada de usuarios con roles, suscripciones, escenas compradas y órdenes.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "roleId",
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID del rol"
+            },
+            {
+              "in": "query",
+              "name": "sortBy",
+              "schema": {
+                "type": "string",
+                "default": "createdAt"
+              },
+              "description": "Campo por el cual ordenar"
+            },
+            {
+              "in": "query",
+              "name": "sortOrder",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "asc",
+                  "desc"
+                ],
+                "default": "desc"
+              },
+              "description": "Orden de la clasificación"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de usuarios y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "integer"
+                      },
+                      "results": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/UserFull"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/list": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Lista simple de usuarios",
+          "description": "Devuelve una lista simple con id, nombre, apellido y email.",
+          "responses": {
+            "200": {
+              "description": "Lista de usuarios",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserSimple"
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/{id}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Obtiene un usuario por ID",
+          "description": "Devuelve los detalles completos de un usuario por su ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del usuario"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuario encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserFull"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid user ID"
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/search": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Buscar usuarios",
+          "description": "Busca usuarios por nombre, apellido o email.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "searchText": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "searchText"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Resultados de búsqueda",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserFull"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "All parameters required"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/with_role/{id}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Usuarios por rol",
+          "description": "Devuelve los usuarios que tienen el rol especificado.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del rol"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuarios con ese rol",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/UserFull"
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid role ID"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/{id}/password_request": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Solicitar reseteo de contraseña",
+          "description": "Envía un email de reseteo de contraseña al usuario.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del usuario"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Email sent",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/create": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Crear usuario",
+          "description": "Crea un nuevo usuario y opcionalmente una suscripción inicial.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "planId": {
+                      "type": "integer"
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "funnelId": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "name",
+                    "lastName"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserSimple"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "All inputs required"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/{id}/update": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Actualizar usuario",
+          "description": "Actualiza los datos básicos de un usuario.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del usuario"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "lastName"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserSimple"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "All inputs required"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/{id}/delete": {
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Eliminar usuario",
+          "description": "Elimina un usuario por ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del usuario"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User deleted",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/users/{id}/impersonate": {
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Admin"
+          ],
+          "summary": "Impersonar usuario",
+          "description": "Genera un token de acceso para impersonar al usuario indicado.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del usuario"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Token y datos de usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "user": {
+                        "$ref": "#/components/schemas/UserSimple"
+                      },
+                      "accessToken": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/users/my_user": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Client"
+          ],
+          "summary": "Obtiene los datos del usuario autenticado",
+          "description": "Devuelve los datos del usuario autenticado, incluyendo perfil, datos personales, escenas compradas y suscripciones.",
+          "responses": {
+            "200": {
+              "description": "Datos del usuario",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Not authorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/users/update_data": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Client"
+          ],
+          "summary": "Actualiza los datos del usuario",
+          "description": "Actualiza los datos personales y el avatar del usuario autenticado.",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "lastName": {
+                      "type": "string"
+                    },
+                    "country": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "address1": {
+                      "type": "string"
+                    },
+                    "address2": {
+                      "type": "string"
+                    },
+                    "zip": {
+                      "type": "string"
+                    },
+                    "avatar": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "lastName"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Datos actualizados"
+            },
+            "400": {
+              "description": "Campos obligatorios faltantes"
+            },
+            "401": {
+              "description": "Not authorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/users/update_phone": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Client"
+          ],
+          "summary": "Actualiza el teléfono del usuario",
+          "description": "Actualiza el teléfono del usuario autenticado y requiere validación posterior.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "phoneExt": {
+                      "type": "string"
+                    },
+                    "phoneNumber": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "phoneExt",
+                    "phoneNumber"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Teléfono actualizado, validación necesaria"
+            },
+            "400": {
+              "description": "Campos obligatorios faltantes o valores iguales"
+            },
+            "401": {
+              "description": "Not authorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/users/update_language": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Users / Client"
+          ],
+          "summary": "Actualiza el idioma del usuario",
+          "description": "Actualiza el idioma preferido del usuario autenticado.",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "language": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "language"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Idioma actualizado"
+            },
+            "400": {
+              "description": "Language is required"
+            },
+            "401": {
+              "description": "Not authorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/pornstars": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Admin"
+          ],
+          "summary": "Lista pornstars (admin)",
+          "description": "Obtiene una lista paginada de pornstars. Permite búsqueda por nombre.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por nombre"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de pornstars y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "pornStars": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/PornStar"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Admin"
+          ],
+          "summary": "Crea una nueva pornstar",
+          "description": "Crea una nueva pornstar y asigna tags/escenas si se proporcionan.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "surname": {
+                      "type": "string"
+                    },
+                    "age": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Fecha de nacimiento"
+                    },
+                    "gender": {
+                      "type": "string"
+                    },
+                    "bio": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tag"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Scene"
+                      }
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email para la cuenta de usuario asociada"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "email",
+                    "surname",
+                    "age",
+                    "gender",
+                    "bio"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Pornstar creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PornStar"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/pornstars/{pornStarId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Admin"
+          ],
+          "summary": "Obtiene una pornstar por ID",
+          "description": "Obtiene los detalles de una pornstar específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pornStarId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la pornstar"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Pornstar encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PornStar"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Admin"
+          ],
+          "summary": "Actualiza una pornstar",
+          "description": "Actualiza los datos de una pornstar existente.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pornStarId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la pornstar"
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "surname": {
+                      "type": "string"
+                    },
+                    "referalCode": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "age": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "gender": {
+                      "type": "string"
+                    },
+                    "bio": {
+                      "type": "string"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Tag"
+                      }
+                    },
+                    "scenes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Scene"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Pornstar actualizada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PornStar"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Admin"
+          ],
+          "summary": "Elimina una pornstar",
+          "description": "Elimina una pornstar existente por ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pornStarId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la pornstar"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Eliminada correctamente"
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/pornstars": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Client"
+          ],
+          "summary": "Lista pornstars (client)",
+          "description": "Obtiene una lista paginada de pornstars. Permite búsqueda por nombre.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por nombre"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de pornstars y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "pornStars": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/PornStar"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/pornstars/{pornStarId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "PornStars / Client"
+          ],
+          "summary": "Obtiene una pornstar por ID (client)",
+          "description": "Obtiene los detalles de una pornstar específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "pornStarId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la pornstar"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Pornstar encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/PornStar"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/tags": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Tags / Admin"
+          ],
+          "summary": "Lista tags (admin)",
+          "description": "Obtiene una lista paginada de tags.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de tags y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "integer"
+                      },
+                      "results": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Tag"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Tags / Admin"
+          ],
+          "summary": "Crea un nuevo tag",
+          "description": "Crea un nuevo tag.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Tag creado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/tags/{tagId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Tags / Admin"
+          ],
+          "summary": "Obtiene un tag por ID",
+          "description": "Obtiene los detalles de un tag específico.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "tagId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del tag"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Tag encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrado"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Tags / Admin"
+          ],
+          "summary": "Actualiza un tag",
+          "description": "Actualiza los datos de un tag existente.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "tagId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del tag"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Tag actualizado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrado"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Tags / Admin"
+          ],
+          "summary": "Elimina un tag",
+          "description": "Elimina un tag existente por ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "tagId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del tag"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Eliminado correctamente"
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrado"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/tags": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Tags / Client"
+          ],
+          "summary": "Lista tags (client)",
+          "description": "Obtiene una lista paginada de tags.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de tags y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "total": {
+                        "type": "integer"
+                      },
+                      "results": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Tag"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/tags/{tagId}": {
+        "get": {
+          "tags": [
+            "Tags / Client"
+          ],
+          "summary": "Obtiene un tag por ID (client)",
+          "description": "Obtiene los detalles de un tag específico.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "tagId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID del tag"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Tag encontrado",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Tag"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "404": {
+              "description": "No encontrado"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/seasons": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Lista seasons (admin)",
+          "description": "Obtiene una lista paginada de seasons. Permite búsqueda por título.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por título"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de seasons y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "seasons": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Season"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "post": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Crea una nueva season",
+          "description": "Crea una nueva season.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Season creada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/seasons/{seasonId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Obtiene una season por ID",
+          "description": "Obtiene los detalles de una season específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "seasonId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la season"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Season encontrada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Actualiza una season",
+          "description": "Actualiza los datos de una season existente.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "seasonId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la season"
+            }
+          ],
+          "requestBody": {
+            "required": false,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Season actualizada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        },
+        "delete": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Elimina una season",
+          "description": "Elimina una season existente por ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "seasonId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la season"
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "Eliminada correctamente"
+            },
+            "400": {
+              "description": "ID inválido"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/seasons/{seasonId}/images": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Establece las imágenes de una temporada",
+          "description": "Actualiza las imágenes de una temporada específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "seasonId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la temporada"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "images": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "images"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": "Imágenes actualizadas correctamente"
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/admin/seasons/{seasonId}/trailers": {
+        "put": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Admin"
+          ],
+          "summary": "Establece los trailers de una temporada",
+          "description": "Actualiza los trailers de una temporada específica.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "seasonId",
+              "schema": {
+                "type": "integer"
+              },
+              "required": true,
+              "description": "ID de la temporada"
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "trailers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "trailers"
+                  ]
+                }
+              }
+            }
+          },
+          "responses": {
+            "204": {
+              "description": "Trailers actualizados correctamente"
+            },
+            "400": {
+              "description": "ID inválido o datos inválidos"
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "No encontrada"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/seasons": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Client"
+          ],
+          "summary": "Lista de temporadas (client)",
+          "description": "Obtiene una lista paginada de temporadas. Permite búsqueda por título.",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "limit",
+              "schema": {
+                "type": "integer",
+                "default": 20
+              },
+              "description": "Cantidad de resultados por página"
+            },
+            {
+              "in": "query",
+              "name": "offset",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "description": "Desplazamiento para paginación"
+            },
+            {
+              "in": "query",
+              "name": "searchText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Texto de búsqueda por nombre"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Lista de temporadas y total",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "seasons": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/Season"
+                        }
+                      },
+                      "total": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      },
+      "/seasons/{seasonId}": {
+        "get": {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": [
+            "Seasons / Client"
+          ],
+          "summary": "Obtener temporada por ID (client)",
+          "description": "Obtiene los detalles de una temporada específica utilizando su ID.",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "seasonId",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "ID de la temporada a obtener"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalles de la temporada",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Season"
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Unauthorized"
+            },
+            "404": {
+              "description": "Season not found"
+            },
+            "500": {
+              "description": "Server Error."
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "name": {
+              "type": "string"
+            },
+            "referralCode": {
+              "type": "string"
+            },
+            "facebookId": {
+              "type": "string"
+            },
+            "googleId": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "secretContent": {
+              "type": "boolean",
+              "description": "Indicates if the user has access to secret content"
+            },
+            "updatedAt": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "Season": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            }
+          }
+        },
+        "Scene": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "public": {
+              "type": "boolean"
+            },
+            "hash": {
+              "type": "string",
+              "description": "Hash for the scene, used for neurobundle"
+            },
+            "prices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ScenePrice"
+              }
+            },
+            "scenePornStars": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PornStar"
+              }
+            },
+            "seasonId": {
+              "type": "integer"
+            },
+            "sceneTags": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Tag"
+              }
+            },
+            "sceneImages": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "sceneTrailers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "PornStar": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "surname": {
+              "type": "string"
+            },
+            "age": {
+              "type": "integer"
+            },
+            "gender": {
+              "type": "string"
+            },
+            "bio": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "integer"
+            }
+          }
+        },
+        "Tag": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "ScenePrice": {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            }
+          }
+        },
+        "ScenePriceInput": {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number",
+              "description": "The price amount for the scene in CENTS example (15.00 € -> 1500)"
+            }
+          },
+          "required": [
+            "currency",
+            "amount"
+          ]
+        },
+        "SceneWithAccess": {
+          "allOf": [
+            {
+              "$ref": "#/components/schemas/Scene"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "accessible": {
+                  "type": "boolean",
+                  "description": "Indica si el usuario puede acceder a la escena"
+                }
+              }
+            }
+          ]
+        },
+        "SubscriptionStatus": {
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "ACTIVE",
+            "CANCELLED",
+            "EXPIRED",
+            "PAUSED"
+          ]
+        },
+        "SubscriptionListItem": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "planId": {
+              "type": "integer"
+            },
+            "status": {
+              "$ref": "#/components/schemas/SubscriptionStatus"
+            },
+            "startDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "paypalId": {
+              "type": "string"
+            },
+            "ccbillId": {
+              "type": "string"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            },
+            "plan": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "externalPlan": {
+                  "type": "object",
+                  "properties": {
+                    "origin": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "_count": {
+              "type": "object",
+              "properties": {
+                "payments": {
+                  "type": "integer"
+                },
+                "promocodeUsages": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "SubscriptionDetail": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "planId": {
+              "type": "integer"
+            },
+            "status": {
+              "$ref": "#/components/schemas/SubscriptionStatus"
+            },
+            "startDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "paypalId": {
+              "type": "string"
+            },
+            "ccbillId": {
+              "type": "string"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            },
+            "plan": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "externalPlan": {
+                  "type": "object",
+                  "properties": {
+                    "origin": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "payments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "amount": {
+                    "type": "integer"
+                  },
+                  "currency": {
+                    "type": "string"
+                  },
+                  "paymentDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "refunds": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "amount": {
+                          "type": "integer"
+                        },
+                        "refundDate": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "reason": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "promocodeUsages": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "UserSimple": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "UserFull": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "lastName": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "userRoles": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "subscriptions": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "boughtScenes": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "orders": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "tags": []
+  }
+}
