@@ -8,25 +8,8 @@ import CartItem from "@/components/cart/CartItem";
 import AuthSection from "@/components/cart/AuthSection";
 import PaymentOptions from "@/components/cart/PaymentOptions";
 import { ArrowRightIcon, ShoppingCart } from "lucide-react";
-import { generatePageMetadata } from "@/lib/metadata";
-import type { Locale } from "@/i18n/config";
-import type { Metadata } from "next";
 
 type PaymentMethod = "paypal" | "card";
-
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ locale: string }> 
-}): Promise<Metadata> {
-  const { locale } = await params;
-  
-  return await generatePageMetadata(locale as Locale, {
-    titleKey: "Cart",
-    descriptionKey: "Cart",
-    path: `/cart`,
-  });
-}
 
 export default function CartPage() {
   const t = useT();
