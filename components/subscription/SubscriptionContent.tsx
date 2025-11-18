@@ -54,7 +54,7 @@ export default function SubscriptionContent() {
   const t = useT();
 
   return (
-    <section className="max-w-[1459px] mx-auto px-6 pt-8 pb-20 md:pb-28">
+    <section className="max-w-[1459px] mx-auto px-4 md:px-8 pt-8 pb-20 md:pb-28">
       <div className="text-center mb-1">
         <span
           className="text-xs font-[500] tracking-[0.28em] uppercase text-[var(--color-brand-500)] z-10 bg-transparent"

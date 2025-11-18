@@ -18,7 +18,7 @@ export async function generateMetadata({
 
 export default function CookiesPolicy() {
   return (
-    <section className="text-white max-w-[1459px] mx-auto px-8">
+    <section className="text-white max-w-[1459px] mx-auto px-4 md:px-8">
       <h1 className="text-[32px] md:text-[48px] uppercase text-[var(--color-brand-500)] mb-6">
         Cookies Policy
       </h1>

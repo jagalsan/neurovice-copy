@@ -53,4 +53,13 @@ export const queryKeys = {
       [...queryKeys.seasons.lists(), params] as const,
     detail: (id: number) => [...queryKeys.seasons.all, "detail", id] as const,
   },
+
+  blog: {
+    all: ["blog"] as const,
+    lists: () => [...queryKeys.blog.all, "list"] as const,
+    list: (params?: Record<string, unknown>) =>
+      [...queryKeys.blog.lists(), params] as const,
+    detail: (idOrSlug: number | string) =>
+      [...queryKeys.blog.all, "detail", idOrSlug] as const,
+  },
 } as const;

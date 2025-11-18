@@ -49,7 +49,7 @@ export default function Breadcrumbs() {
               <span className="mx-2 text-[var(--color-brand-300)]">/</span>
 
               {isLast ? (
-                <span className="text-white">{translatedName}</span>
+                <span className="text-[#17FBF880]">{translatedName}</span>
               ) : (
                 <Link
                   href={href}

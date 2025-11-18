@@ -20,6 +20,7 @@ export type ChapterCardProps = {
   accentColor: string;
   viewMoreHref?: string;
   buyHref?: string;
+  variant?: "default" | "stars";
 };
 
 const platformIconMap: Record<string, React.ComponentType<any>> = {
@@ -37,36 +38,55 @@ export default function ChapterCard({
   accentColor,
   viewMoreHref = "#",
   buyHref = "#",
+  variant = "default",
 }: ChapterCardProps) {
   const t = useT();
-  const accentStyle = {
-    "--accent-color": accentColor,
-  } as CSSProperties;
-
   const { addToCart } = useAddToCart();
 
+  const accentStyle = { "--accent-color": accentColor } as CSSProperties;
+
   return (
-    <article
+    <div
       style={accentStyle}
-      className="flex flex-col items-start text-left"
+      className={`flex flex-col items-start text-left ${
+        variant === "stars" ? "max-w-[300px]" : ""
+      }`}
     >
       <div className="w-full flex justify-center">
-        <div className="relative w-full pt-[140%]">
+        <div
+          className={`relative w-full overflow-hidden rounded-[18px] ${
+            variant === "stars" ? "min-w-[291px] min-h-[410px]" : "pt-[140%]"
+          }`}
+        >
           <Image
             src={coverSrc}
             alt={coverAlt}
             fill
-            className="object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)] z-4"
+            className={`${
+              variant === "stars"
+                ? "object-cover rounded-[18px] border-[2px] border-[#17FBF899]"
+                : "object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)]"
+            } z-10`}
           />
+
+          {variant === "stars" && (
+            <div
+              className="
+          pointer-events-none absolute inset-[2px] rounded-[16px] z-20
+        "
+              style={{
+                background:
+                  "linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 18%, rgba(0,0,0,0.35) 36%, rgba(0,0,0,0.18) 56%, rgba(0,0,0,0) 78%)",
+              }}
+            />
+          )}
         </div>
       </div>
 
-      <div className="mt-[8px] w-ful">
+      <div className="mt-[8px] w-full">
         <p
           className="text-[12px] font-[500] tracking-[0.25em] uppercase text-[color:var(--accent-color)] mb-[8px]"
-          style={{
-            textShadow: `0 0 15px ${accentColor}`,
-          }}
+          style={{ textShadow: `0 0 15px ${accentColor}` }}
         >
           {releaseLabel}
         </p>
@@ -75,9 +95,8 @@ export default function ChapterCard({
           <div className="flex items-center gap-3 mb-[8px]">
             {platforms.map((p) => {
               const key = p.toUpperCase();
-              const IconComponent = platformIconMap[key];
-
-              if (!IconComponent) {
+              const Icon = platformIconMap[key];
+              if (!Icon) {
                 return (
                   <span
                     key={p}
@@ -87,10 +106,9 @@ export default function ChapterCard({
                   </span>
                 );
               }
-
               return (
                 <div key={p} className="flex items-center justify-center">
-                  <IconComponent className="w-[22px] h-[22px] text-[color:var(--accent-color)]" />
+                  <Icon className="w-[22px] h-[22px] text-[color:var(--accent-color)]" />
                   <span className="sr-only">{key}</span>
                 </div>
               );
@@ -105,42 +123,27 @@ export default function ChapterCard({
         <div className="flex gap-3 text-[11px] font-heading uppercase tracking-[0.18em]">
           <Link
             href={viewMoreHref}
-            className="
-              flex-1 h-10 px-4
-              rounded-full border border-[color:var(--accent-color)]
-              text-[color:var(--accent-color)]
-              flex items-center justify-center
-              hover:bg-[color:var(--accent-color)] hover:text-black
-              transition-colors duration-200
-              text-[15px]
-            "
+            className="flex-1 h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] max-w-[150px]"
           >
             {t("actions.view_more")}
           </Link>
           <button
-            onClick={() => addToCart({
-              id: "turbofap-1year",
-              title: "TURBOFAP",
-              subtitle: "1 YEAR SUBSCRIPTION",
-              oldPrice: 480,
-              price: 149,
-              imageSrc: "/mock/video_placeholder.png",
-            })}
-            className="
-              h-10
-              px-4
-              rounded-full border border-[color:var(--accent-color)]
-              text-[color:var(--accent-color)]
-              flex items-center justify-center
-              hover:bg-[color:var(--accent-color)] hover:text-black
-              transition-colors duration-200
-              text-[15px]
-            "
+            onClick={() =>
+              addToCart({
+                id: "turbofap-1year",
+                title: "TURBOFAP",
+                subtitle: "1 YEAR SUBSCRIPTION",
+                oldPrice: 480,
+                price: 149,
+                imageSrc: "/mock/video_placeholder.png",
+              })
+            }
+            className="h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] uppercase"
           >
             {t("actions.buy")}
           </button>
         </div>
       </div>
-    </article>
+    </div>
   );
 }

@@ -8,6 +8,7 @@ import MobileMenu from "./MobileMenu";
 import CartMenu from "./CartMenu";
 import AuthModal from "../../AuthModal";
 import ProfileModal from "../../ProfileModal";
+import HowToInstallModal from "../../HowToInstallModal";
 import { useState, useEffect } from "react";
 import { useT } from "@/providers/I18nProvider";
 import InstallModal from "@/components/InstallModal";
@@ -19,6 +20,7 @@ export default function Navbar() {
   const [openAuth, setOpenAuth] = useState(false);
   const [openInstall, setOpenInstall] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openHowToInstall, setOpenHowToInstall] = useState(false);
   const locale = useLocale();
   const t = useT();
   const { data: user, refetch } = useCurrentUser();
@@ -51,6 +53,11 @@ export default function Navbar() {
   const handleOpenProfile = () => {
     setOpenMenu(false);
     setOpenProfile(true);
+  };
+
+  const handleOpenHowToInstall = () => {
+    setOpenInstall(false);
+    setOpenHowToInstall(true);
   };
 
   return (
@@ -136,6 +143,11 @@ export default function Navbar() {
       <InstallModal
         isOpen={openInstall}
         onClose={() => setOpenInstall(false)}
+        onHowToInstall={handleOpenHowToInstall}
+      />
+      <HowToInstallModal
+        isOpen={openHowToInstall}
+        onClose={() => setOpenHowToInstall(false)}
       />
       <ProfileModal
         isOpen={openProfile}

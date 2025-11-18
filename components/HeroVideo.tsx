@@ -1,68 +1,96 @@
 "use client";
+
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { useT } from "@/providers/I18nProvider";
 
-export default function HeroVideo() {
+type Props = {
+  src?: string;
+  posterSrc?: string;
+  heightClass?: string;
+  className?: string;
+  title?: string;
+  subtitle?: string;
+  showTitle?: boolean;
+};
+
+export default function HeroVideo({
+  src = "/hero-video.mp4",
+  posterSrc = "/mock/video_placeholder.png",
+  heightClass = "h-[600px] md:h-[810px]",
+  className = "",
+  title,
+  subtitle,
+  showTitle = false,
+}: Props) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
   const t = useT();
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
+    if (!videoRef.current) return;
+    if (isPlaying) videoRef.current.pause();
+    else videoRef.current.play();
+    setIsPlaying((v) => !v);
   };
 
   const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
-      setIsMuted(!isMuted);
-    }
+    if (!videoRef.current) return;
+    videoRef.current.muted = !isMuted;
+    setIsMuted((v) => !v);
   };
 
   return (
-    <section className="relative w-full h-[600px] md:h-[810px] overflow-hidden">
+    <section
+      className={`relative w-full ${heightClass} overflow-hidden ${className}`}
+    >
       <video
-        poster="/mock/video_placeholder.png"
         ref={videoRef}
+        poster={posterSrc}
         className="absolute inset-0 w-full h-full object-cover"
         muted={isMuted}
         loop
         playsInline
       >
-        <source src="/hero-video.mp4" type="video/mp4" />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900" />
+        <source src={src} type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0" />
+      {showTitle && (
+        <div className="absolute left-4 md:left-6 bottom-45 md:bottom-6 z-10">
+          {subtitle && (
+            <p className="font-heading text-xs tracking-[0.24em] uppercase text-[#17FBF8] mb-1">
+              {subtitle}
+            </p>
+          )}
+          {title && (
+            <h1 className="font-heading text-2xl md:text-4xl text-[#17FBF8] drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)]">
+              {title}
+            </h1>
+          )}
+        </div>
+      )}
 
       <div className="absolute bottom-6 right-6 flex gap-3 z-10">
         <button
           onClick={toggleMute}
-          className="font-bold text-[16px] w-[93px] h-[78px] rounded-[12px] bg-[#FFFFFF0D] backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-[#FFFFFF1A] transition-colors relative"
+          className="font-heading text-[12px] md:text-[14px] w-[96px] h-[72px] rounded-[12px] bg-[#FFFFFF0D] backdrop-blur-md border border-white/20 flex items-center justify-center gap-2 hover:bg-[#FFFFFF14] transition"
         >
-          {t('actions.mute')}
+          {t("actions.mute")}
           {isMuted ? (
-            <VolumeX className="w-[18px] h-[18px] ml-1" />
+            <VolumeX className="w-[18px] h-[18px]" />
           ) : (
-            <Volume2 className="w-[18px] h-[18px] ml-1" />
+            <Volume2 className="w-[18px] h-[18px]" />
           )}
         </button>
         <button
           onClick={togglePlay}
-          className="font-bold w-[93px] h-[78px] rounded-[12px] bg-[#FFFFFF0D] backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-[#FFFFFF1A] transition-colors"
+          className="w-[96px] h-[72px] rounded-[12px] bg-[#FFFFFF0D] backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-[#FFFFFF14] transition"
         >
           {isPlaying ? (
-            <Pause className="w-[48px] h-[48px]" />
+            <Pause className="w-[42px] h-[42px]" />
           ) : (
-            <Play className="w-[48px] h-[48px]" />
+            <Play className="w-[42px] h-[42px]" />
           )}
         </button>
       </div>

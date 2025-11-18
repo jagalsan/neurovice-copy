@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { Download, SquareArrowUpRightIcon } from "lucide-react";
 import type { InstallVariant } from "./types";
 import { variantStyles } from "./types";
@@ -14,6 +14,7 @@ interface InstallCardProps {
   extraLabel?: string;
   primaryLabel: string;
   secondaryLabel: string;
+  onHowToInstall?: () => void;
 }
 
 export function InstallCard({
@@ -25,6 +26,7 @@ export function InstallCard({
   extraLabel,
   primaryLabel,
   secondaryLabel,
+  onHowToInstall,
 }: InstallCardProps) {
   const styles = variantStyles[variant];
 
@@ -88,6 +90,7 @@ export function InstallCard({
       </article>
 
       <button
+        onClick={onHowToInstall}
         className="
           relative mt-[-8px] h-[77px] w-[90%] mx-auto
           rounded-b-[15px]

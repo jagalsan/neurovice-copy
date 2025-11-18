@@ -4,9 +4,10 @@ type TFn = (key: string) => string;
 
 interface InstallCardsGridProps {
   t: TFn;
+  onHowToInstall?: () => void;
 }
 
-export function InstallCardsGrid({ t }: InstallCardsGridProps) {
+export function InstallCardsGrid({ t, onHowToInstall }: InstallCardsGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
       <InstallCard
@@ -18,6 +19,7 @@ export function InstallCardsGrid({ t }: InstallCardsGridProps) {
         extraLabel={t("labels.includes_2d_viewer")}
         primaryLabel={t("actions.download_for_windows")}
         secondaryLabel={t("actions.how_to_install")}
+        onHowToInstall={onHowToInstall}
       />
       <InstallCard
         variant="apk"
@@ -27,6 +29,7 @@ export function InstallCardsGrid({ t }: InstallCardsGridProps) {
         description={t("messages.install_android_description")}
         primaryLabel={t("actions.download_apk")}
         secondaryLabel={t("actions.how_to_install")}
+        onHowToInstall={onHowToInstall}
       />
       <InstallCard
         variant="meta"
@@ -36,6 +39,7 @@ export function InstallCardsGrid({ t }: InstallCardsGridProps) {
         description={t("messages.install_meta_description")}
         primaryLabel={t("actions.open_in_meta_store")}
         secondaryLabel={t("actions.how_to_install")}
+        onHowToInstall={onHowToInstall}
       />
     </div>
   );

@@ -18,7 +18,7 @@ export async function generateMetadata({
 
 export default function PrivacyPolicy() {
   return (
-    <section className="text-white px-8 max-w-[1459px] mx-auto">
+    <section className="text-white px-4 md:px-8 max-w-[1459px] mx-auto">
       <h1 className="text-[32px] md:text-[48px] uppercase text-[var(--color-brand-500)] mb-6">
         Privacy Policy
       </h1>

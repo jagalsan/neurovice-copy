@@ -8,8 +8,25 @@ import CartItem from "@/components/cart/CartItem";
 import AuthSection from "@/components/cart/AuthSection";
 import PaymentOptions from "@/components/cart/PaymentOptions";
 import { ArrowRightIcon, ShoppingCart } from "lucide-react";
+import { generatePageMetadata } from "@/lib/metadata";
+import type { Locale } from "@/i18n/config";
+import type { Metadata } from "next";
 
 type PaymentMethod = "paypal" | "card";
+
+export async function generateMetadata({ 
+  params 
+}: { 
+  params: Promise<{ locale: string }> 
+}): Promise<Metadata> {
+  const { locale } = await params;
+  
+  return await generatePageMetadata(locale as Locale, {
+    titleKey: "Cart",
+    descriptionKey: "Cart",
+    path: `/cart`,
+  });
+}
 
 export default function CartPage() {
   const t = useT();
@@ -22,8 +39,8 @@ export default function CartPage() {
   const totalPrice = getTotalPrice();
 
   return (
-    <section className="max-w-[1459px] mx-auto">
-      <div className="px-4 py-16">
+    <section className="max-w-[1159px] mx-auto">
+      <div className="px-4 md:px-8 py-16">
         <div className="rounded-[16px] overflow-hidden shadow-[0px_0px_15px_0px_#17fbf873]">
           <div className="grid lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1.4fr)] gap-0 bg-[#161D21]">
             <div className="px-4 pt-6 pb-8 md:px-10 md:pt-10 border-r border-white/10">
@@ -85,9 +102,9 @@ export default function CartPage() {
                   <div className="flex flex-col justify-between h-full">
                     <div className="space-y-2">
                       <h2 className="font-heading text-[20px] uppercase text-[#17FBF8]">
-                        {t("labels.hello") || "Hello"}, {user.name}
+                        Logged in as:
                       </h2>
-                      <p className="text-[13px] text-[var(--color-brand-300)]">
+                      <p className="text-[13px] text-[var(--color-brand-300)] uppercase ">
                         {user.email}
                       </p>
                     </div>

@@ -28,7 +28,7 @@ export default async function BlogArticlePage({
   const { locale, slug } = await params;
   const typedLocale = locale as Locale;
   return (
-    <div className="w-full bg-[#171614] text-white pb-24">
+    <section className="w-full bg-[#171614] text-white pb-24">
       <div className="max-w-[996px] mx-auto px-4 md:px-6 pt-16">
         <div className="max-w-[756px] mx-auto text-center mb-10">
           <span 
@@ -136,6 +136,6 @@ export default async function BlogArticlePage({
       </div>
 
       <OtherPostsSection locale={typedLocale} />
-    </div>
+    </section>
   );
 }
