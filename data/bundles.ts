@@ -33,7 +33,6 @@ export const bundles: Bundle[] = [
         coverAlt: "Angela White",
         platforms: ["META", "WINDOWS", "APK"],
         viewMoreHref: "/chapters/angela-1",
-        buyHref: "/chapters/angela-1",
       },
       {
         title: "Angela White II",
