@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { primaryButtonBase } from "@/lib/styles/buttons";
+import { useT } from "@/providers/I18nProvider";
 
 type Props = {
   name: string;
@@ -9,16 +11,9 @@ type Props = {
   onBuyAll?: () => void;
 };
 
-
-const primaryButtonBase =
-  "w-full h-[67px] px-[10px] py-[20px] rounded-[10px] border border-[rgba(255,255,255,0.4)] " +
-  "flex items-center justify-center gap-[10px] font-heading text-[18px] tracking-[0.24em] uppercase " +
-  "bg-[linear-gradient(90deg,#A6F9F8,#17C5C3)] text-[#050608] " +
-  "shadow-[0_0_40px_rgba(23,197,195,0.5),0_0_10px_rgba(23,197,195,0.6)] " +
-  "transition-transform duration-200 hover:scale-[1.02]";
-
 export default function AlsoAppearedIn({ name, items, onBuyAll }: Props) {
   const gridColor = "rgba(23,251,248,0.25)";
+  const t = useT();
 
   return (
     <motion.section
@@ -51,14 +46,14 @@ export default function AlsoAppearedIn({ name, items, onBuyAll }: Props) {
             </h3>
 
             <p className="mt-4 font-heading text-[11px] tracking-[0.24em] uppercase text-[#7FF7F5]">
-              Also appeared in
+              {t("labels.also_appeared_in")}
             </p>
 
             <button
               onClick={onBuyAll}
               className={primaryButtonBase}
             >
-              Buy all
+              {t("actions.buy_all")}
             </button>
           </div>
 

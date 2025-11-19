@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import ChapterCard from "@/components/chapters/ChapterCard";
+import { CartItem } from "@/lib/stores/cart.store";
 
 type Chapter = {
   coverSrc: string;
@@ -11,7 +12,7 @@ type Chapter = {
   platforms?: string[];
   accentColor: string;
   viewMoreHref?: string;
-  buyHref?: string;
+  cartItem?: CartItem;
 };
 
 export default function TagChaptersGridAnimated({
@@ -23,8 +24,8 @@ export default function TagChaptersGridAnimated({
     <motion.section
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.15 }}
-      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, delay: 0.2 }}
+      viewport={{ once: true, amount: 0 }}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {chapters.map((c, i) => (
@@ -37,7 +38,7 @@ export default function TagChaptersGridAnimated({
             platforms={c.platforms}
             accentColor={c.accentColor}
             viewMoreHref={c.viewMoreHref}
-            buyHref={c.buyHref}
+            cartItem={c.cartItem}
             variant="default"
           />
         ))}

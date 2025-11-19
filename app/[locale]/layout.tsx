@@ -2,6 +2,7 @@ import { locales, type Locale } from "@/i18n/config";
 import { I18nProvider } from "@/providers/I18nProvider";
 import { LocaleProvider } from "@/providers/LocaleProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
+import { ToastProvider } from "@/providers/ToastProvider";
 import Navbar from "@/components/layout/header/Navbar";
 import Footer from "@/components/layout/footer/Footer";
 import FaqSection from "@/components/layout/FaqSection";
@@ -72,13 +73,15 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
     <LocaleProvider locale={locale}>
       <QueryProvider>
         <I18nProvider key={locale} initialLocale={locale}>
-          <Navbar />
-          <div className="pt-16">
-            <Breadcrumbs />
-            {children}
-          </div>
-          <FaqSection />
-          <Footer />
+          <ToastProvider>
+            <Navbar />
+            <div className="pt-16">
+              <Breadcrumbs />
+              {children}
+            </div>
+            <FaqSection />
+            <Footer />
+          </ToastProvider>
         </I18nProvider>
       </QueryProvider>
     </LocaleProvider>

@@ -10,6 +10,7 @@ import {
 } from "@/components/icons/PlatformIcons";
 import { useT } from "@/providers/I18nProvider";
 import { useAddToCart } from "@/lib/hooks/useAddToCart";
+import { CartItem } from "@/lib/stores/cart.store";
 
 export type ChapterCardProps = {
   coverSrc: string;
@@ -19,7 +20,7 @@ export type ChapterCardProps = {
   platforms?: string[];
   accentColor: string;
   viewMoreHref?: string;
-  buyHref?: string;
+  cartItem?: CartItem;
   variant?: "default" | "stars";
 };
 
@@ -37,7 +38,7 @@ export default function ChapterCard({
   platforms = ["META", "WINDOWS", "APK"],
   accentColor,
   viewMoreHref = "#",
-  buyHref = "#",
+  cartItem,
   variant = "default",
 }: ChapterCardProps) {
   const t = useT();
@@ -127,23 +128,18 @@ export default function ChapterCard({
           >
             {t("actions.view_more")}
           </Link>
-          <button
+          {cartItem ? (
+            <button
             onClick={() =>
-              addToCart({
-                id: "turbofap-1year",
-                title: "TURBOFAP",
-                subtitle: "1 YEAR SUBSCRIPTION",
-                oldPrice: 480,
-                price: 149,
-                imageSrc: "/mock/video_placeholder.png",
-              })
+              addToCart(cartItem!)
             }
             className="h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] uppercase"
           >
             {t("actions.buy")}
           </button>
+          ) : ''}
         </div>
-      </div>
+    </div>
     </div>
   );
 }

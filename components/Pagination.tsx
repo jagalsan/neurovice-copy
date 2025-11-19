@@ -1,14 +1,16 @@
-'use client'
+"use client";
 import { useT } from "@/providers/I18nProvider";
 
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  onPageChange?: (page: number) => void;
 }
 
 export default function Pagination({
   currentPage,
   totalPages,
+  onPageChange,
 }: PaginationProps) {
   const pages = Array.from({ length: totalPages }).map((_, i) => i + 1);
   const t = useT();
@@ -38,6 +40,11 @@ export default function Pagination({
             transition-colors
           `}
           disabled={currentPage === 1}
+          onClick={
+            currentPage === 1 || !onPageChange
+              ? undefined
+              : () => onPageChange(currentPage - 1)
+          }
         >
           {t("actions.back")}
         </button>
@@ -55,6 +62,11 @@ export default function Pagination({
                 }
               `}
               aria-current={page === currentPage ? "page" : undefined}
+              onClick={
+                page === currentPage || !onPageChange
+                  ? undefined
+                  : () => onPageChange(page)
+              }
             >
               {page}
             </button>
@@ -72,6 +84,11 @@ export default function Pagination({
             transition-colors
           `}
           disabled={currentPage === totalPages}
+          onClick={
+            currentPage === totalPages || !onPageChange
+              ? undefined
+              : () => onPageChange(currentPage + 1)
+          }
         >
           {t("actions.next")}
         </button>

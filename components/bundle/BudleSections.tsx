@@ -191,34 +191,6 @@ function BundleRow({
               </div>
             </div>
 
-            <div className="flex md:hidden items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={handlePrevMobile}
-                  disabled={!canPrevMobile}
-                  className={`${arrowBase} ${
-                    canPrevMobile
-                      ? `${colors.arrowFillBg} ${colors.arrowFillBorder} ${colors.arrowFillText} hover:brightness-125 shadow-[0_0_20px_rgba(0,0,0,0.6)]`
-                      : `${colors.arrowDisabledBorder} ${colors.arrowDisabledText} bg-transparent cursor-not-allowed`
-                  }`}
-                >
-                  &#8592;
-                </button>
-
-                <button
-                  onClick={handleNextMobile}
-                  disabled={!canNextMobile}
-                  className={`${arrowBase} ${
-                    canNextMobile
-                      ? `${colors.arrowFillBg} ${colors.arrowFillBorder} ${colors.arrowFillText} hover:brightness-125 shadow-[0_0_20px_rgba(0,0,0,0.6)]`
-                      : `${colors.arrowDisabledBorder} ${colors.arrowDisabledText} bg-transparent cursor-not-allowed`
-                  }`}
-                >
-                  &#8594;
-                </button>
-              </div>
-            </div>
-
             <div className="pl-4 flex flex-col max-w-[380px]">
               <p
                 className={`font-heading text-lg md:text-4xl tracking-[0.18em] uppercase mb-[10px] ${colors.text}`}
@@ -286,7 +258,7 @@ function BundleRow({
               </AnimatePresence>
             </div>
 
-            <div className="md:hidden overflow-hidden">
+            <div className="md:hidden overflow-hidden relative mt-6">
               <AnimatePresence custom={mobileDirection} mode="wait">
                 <motion.div
                   key={mobilePageKey}
@@ -317,6 +289,30 @@ function BundleRow({
                   </div>
                 </motion.div>
               </AnimatePresence>
+
+              <button
+                onClick={handlePrevMobile}
+                disabled={!canPrevMobile}
+                className={`absolute left-5 top-1/2 -translate-y-1/2 -translate-x-1/2 ${arrowBase} ${
+                  canPrevMobile
+                    ? `${colors.arrowFillBg} ${colors.arrowFillBorder} ${colors.arrowFillText} hover:brightness-125 shadow-[0_0_20px_rgba(0,0,0,0.6)]`
+                    : `${colors.arrowDisabledBorder} ${colors.arrowDisabledText} bg-transparent cursor-not-allowed`
+                }`}
+              >
+                &#8592;
+              </button>
+
+              <button
+                onClick={handleNextMobile}
+                disabled={!canNextMobile}
+                className={`absolute right-5 top-1/2 -translate-y-1/2 translate-x-1/2 ${arrowBase} ${
+                  canNextMobile
+                    ? `${colors.arrowFillBg} ${colors.arrowFillBorder} ${colors.arrowFillText} hover:brightness-125 shadow-[0_0_20px_rgba(0,0,0,0.6)]`
+                    : `${colors.arrowDisabledBorder} ${colors.arrowDisabledText} bg-transparent cursor-not-allowed`
+                }`}
+              >
+                &#8594;
+              </button>
             </div>
           </div>
         </div>

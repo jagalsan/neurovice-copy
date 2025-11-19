@@ -12,6 +12,13 @@ export default function Footer() {
   const locale = useLocale();
   const footerLinks = getFooterLinks(locale);
 
+  const handleHowToRunChapters = () => {
+    const event = new CustomEvent("open-how-to-run-chapters-modal");
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(event);
+    }
+  };
+
   return (
     <footer className="w-full border-t border-[var(--color-border-green)] bg-[#171614] text-white">
       <div className="mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1459px]">
@@ -24,7 +31,11 @@ export default function Footer() {
             />
           </div>
 
-          <FooterLinkColumns t={t} footerLinks={footerLinks} />
+          <FooterLinkColumns
+            t={t}
+            footerLinks={footerLinks}
+            onHowToRunChapters={handleHowToRunChapters}
+          />
         </div>
 
         <div className="flex flex-col gap-10 lg:col-span-4 xl:mt-16">

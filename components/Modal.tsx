@@ -80,7 +80,7 @@ export default function Modal({
             shadow-[0px_0px_15px_0px_#17fbf873]
             animate-scaleIn
             mb-4 md:mb-0
-            max-h-[calc(100vh-4rem)] overflow-y-auto
+            max-h-[702px] overflow-y-auto
           `}
         >
           {children}

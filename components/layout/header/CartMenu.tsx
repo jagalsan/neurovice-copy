@@ -17,18 +17,23 @@ export default function CartMenu({ isMobile = false }: CartMenuProps) {
   const locale = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [badgeAnimate, setBadgeAnimate] = useState(false);
+  const [hydrated, setHydrated] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   const { items, removeItem, getTotalItems, getTotalPrice } = useCartStore();
   const totalItems = getTotalItems();
 
   useEffect(() => {
-    if (totalItems > 0) {
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (hydrated && totalItems > 0) {
       setBadgeAnimate(true);
       const timer = setTimeout(() => setBadgeAnimate(false), 300);
       return () => clearTimeout(timer);
     }
-  }, [totalItems]);
+  }, [totalItems, hydrated]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -52,7 +57,7 @@ export default function CartMenu({ isMobile = false }: CartMenuProps) {
       >
         <div className="relative">
           <ShoppingCart className="w-5 h-5" />
-          {totalItems > 0 && (
+          {hydrated && totalItems > 0 && (
             <span
               className={[
                 "absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1",
@@ -83,7 +88,7 @@ export default function CartMenu({ isMobile = false }: CartMenuProps) {
       >
         <ShoppingCart className="w-6 h-6" />
 
-        {totalItems > 0 && (
+        {hydrated && totalItems > 0 && (
           <span
             className={[
               "absolute -top-1 -right-1 min-w-[20px] h-5 px-1.5",

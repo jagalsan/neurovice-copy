@@ -40,6 +40,23 @@ export default function Navbar() {
     }
   }, [openMenu]);
 
+  useEffect(() => {
+    const handleOpenAuthFromEvent = () => {
+      setOpenMenu(false);
+      setOpenAuth(true);
+    };
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("open-auth-modal", handleOpenAuthFromEvent);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("open-auth-modal", handleOpenAuthFromEvent);
+      }
+    };
+  }, []);
+
   const handleOpenAuth = () => {
     setOpenMenu(false);
     setOpenAuth(true);
@@ -135,6 +152,7 @@ export default function Navbar() {
           onLoginClick={handleOpenAuth}
           onInstallClick={handleOpenInstall}
           onProfileClick={handleOpenProfile}
+          onClose={() => setOpenMenu(false)}
           user={user ?? undefined}
         />
       </header>

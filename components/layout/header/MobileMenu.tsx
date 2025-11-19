@@ -12,12 +12,14 @@ export default function MobileMenu({
   onLoginClick,
   onInstallClick,
   onProfileClick,
+  onClose,
   user,
 }: {
   open: boolean;
   onLoginClick: () => void;
   onInstallClick: () => void;
   onProfileClick: () => void;
+  onClose: () => void;
   user?: User;
 }) {
   const locale = useLocale();
@@ -64,19 +66,27 @@ export default function MobileMenu({
           {t("actions.install_app")}
         </li>
 
-        <UnlockAllBtn mobileVersion={true} />
-        <li className="px-6">
+        <UnlockAllBtn mobileVersion={true} onClick={onClose} />
+        <li className="px-6" onClick={onClose}>
           <CartMenu isMobile={true} />
         </li>
 
         <div className="flex flex-col gap-3 pl-6 text-sm text-[var(--color-brand-300)]">
-          <Link href={`#`}>{t("actions.how_to_run_chapter")}</Link>
-          <Link href={`#`}>{t("actions.download_app")}</Link>
-          <Link href={`${locale}/privacy-policy`}>{t("views.privacy")}</Link>
-          <Link href={`${locale}/terms-of-use`}>{t("views.terms")}</Link>
+          <Link href={`#`} onClick={onClose}>
+            {t("actions.how_to_run_chapter")}
+          </Link>
+          <Link href={`#`} onClick={onClose}>
+            {t("actions.download_app")}
+          </Link>
+          <Link href={`${locale}/privacy-policy`} onClick={onClose}>
+            {t("views.privacy")}
+          </Link>
+          <Link href={`${locale}/terms-of-use`} onClick={onClose}>
+            {t("views.terms")}
+          </Link>
         </div>
 
-        <div className="pt-6 px-4">
+        <div className="pt-6 px-4" onClick={onClose}>
           <DiscordBtn />
         </div>
       </ul>

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import ChapterCard from "@/components/chapters/ChapterCard";
+import { useLocale } from "@/providers/LocaleProvider";
 
 type Star = {
   coverSrc: string;
@@ -9,9 +10,11 @@ type Star = {
   title: string;
   releaseLabel: string;
   accentColor: string;
+  id: number;
 };
 
 export default function StarsGridAnimated({ stars }: { stars: Star[] }) {
+  const locale = useLocale();
   return (
     <motion.section
       initial={{ opacity: 0, y: 40 }}
@@ -29,8 +32,7 @@ export default function StarsGridAnimated({ stars }: { stars: Star[] }) {
             releaseLabel={s.releaseLabel}
             accentColor={s.accentColor}
             platforms={[]}
-            viewMoreHref="#"
-            buyHref="#"
+            viewMoreHref={`/${locale}/stars/${s.id}`}
             variant="stars"
           />
         ))}

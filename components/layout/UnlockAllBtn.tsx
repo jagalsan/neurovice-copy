@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useLocale } from "@/providers/LocaleProvider";
 
-export default function UnlockAllBtn({ mobileVersion }: { mobileVersion: boolean }) {
+export default function UnlockAllBtn({ mobileVersion, onClick }: { mobileVersion: boolean, onClick?: () => void }) {
   const locale = useLocale();
   
   return (
     <Link
       href={`/${locale}/subscription`}
+      onClick={onClick}
       className={`
         relative flex items-center ${mobileVersion ? 'px-6 justify-start w-full h-[62px]' : 'justify-center w-[220px] h-full'}
         font-heading text-pink-500 text-md tracking-wider uppercase

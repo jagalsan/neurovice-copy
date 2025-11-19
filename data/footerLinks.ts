@@ -1,28 +1,5 @@
 import type { Locale } from "@/i18n/config";
-
-interface FooterLink {
-  labelKey: string;
-  href: string;
-}
-
-interface FooterSection {
-  titleKey: string;
-  items: FooterLink[];
-}
-
-interface SocialLink {
-  icon: string;
-  href: string;
-}
-
-interface FooterLinks {
-  left: FooterSection[];
-  social: SocialLink[];
-  company: {
-    email: string;
-    address: string;
-  };
-}
+import type { FooterLinks } from "@/types/footer";
 
 export const getFooterLinks = (locale: Locale): FooterLinks => ({
   left: [
@@ -32,7 +9,7 @@ export const getFooterLinks = (locale: Locale): FooterLinks => ({
         { labelKey: "messages.how_to_run_chapters", href: "#" },
         { labelKey: "messages.report_inappropriate_content", href: "#" },
         { labelKey: "actions.download_app", href: "#" },
-        { labelKey: "labels.pornstars", href: "#" },
+        { labelKey: "labels.pornstars", href: `/${locale}/stars` },
         { labelKey: "labels.blog", href: `/${locale}/blog` },
         { labelKey: "messages.reach_customer_support", href: "#" },
       ],
@@ -58,7 +35,7 @@ export const getFooterLinks = (locale: Locale): FooterLinks => ({
   ],
 
   social: [
-    { icon: "github", href: "#" },
+    { icon: "github", href: "" },
     { icon: "discord", href: "#" },
     { icon: "twitter", href: "#" },
     { icon: "youtube", href: "#" },
