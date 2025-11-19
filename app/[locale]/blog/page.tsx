@@ -7,9 +7,9 @@ import { generatePageMetadata } from "@/lib/metadata";
 export async function generateMetadata({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
 
   return await generatePageMetadata(locale as Locale, {
     titleKey: "seo.blog_title",
@@ -21,9 +21,9 @@ export async function generateMetadata({
 export default async function BlogPage({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
   const typedLocale = locale as Locale;
 
   return (
