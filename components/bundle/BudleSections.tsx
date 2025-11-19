@@ -293,7 +293,7 @@ function BundleRow({
               <button
                 onClick={handlePrevMobile}
                 disabled={!canPrevMobile}
-                className={`absolute left-5 top-1/2 -translate-y-1/2 -translate-x-1/2 ${arrowBase} ${
+                className={`absolute left-5 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 ${arrowBase} ${
                   canPrevMobile
                     ? `${colors.arrowFillBg} ${colors.arrowFillBorder} ${colors.arrowFillText} hover:brightness-125 shadow-[0_0_20px_rgba(0,0,0,0.6)]`
                     : `${colors.arrowDisabledBorder} ${colors.arrowDisabledText} bg-transparent cursor-not-allowed`
@@ -305,7 +305,7 @@ function BundleRow({
               <button
                 onClick={handleNextMobile}
                 disabled={!canNextMobile}
-                className={`absolute right-5 top-1/2 -translate-y-1/2 translate-x-1/2 ${arrowBase} ${
+                className={`absolute right-5 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 ${arrowBase} ${
                   canNextMobile
                     ? `${colors.arrowFillBg} ${colors.arrowFillBorder} ${colors.arrowFillText} hover:brightness-125 shadow-[0_0_20px_rgba(0,0,0,0.6)]`
                     : `${colors.arrowDisabledBorder} ${colors.arrowDisabledText} bg-transparent cursor-not-allowed`
