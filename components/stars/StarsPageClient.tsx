@@ -14,6 +14,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 1,
+    cartItem: {
+      id: "star-1",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_1_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_2_mock.png",
@@ -22,6 +30,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 2,
+    cartItem: {
+      id: "star-2",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_2_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_3_mock.png",
@@ -30,6 +46,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 3,
+    cartItem: {
+      id: "star-3",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_3_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_1_mock.png",
@@ -38,6 +62,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 4,
+    cartItem: {
+      id: "star-4",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_1_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_2_mock.png",
@@ -46,6 +78,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 5,
+    cartItem: {
+      id: "star-5",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_2_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_3_mock.png",
@@ -54,6 +94,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 6,
+    cartItem: {
+      id: "star-6",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_3_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_1_mock.png",
@@ -62,6 +110,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 7,
+    cartItem: {
+      id: "star-7",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_1_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_2_mock.png",
@@ -70,6 +126,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 8,
+    cartItem: {
+      id: "star-8",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_2_mock.png",
+    },
   },
   {
     coverSrc: "/mock/star_3_mock.png",
@@ -78,6 +142,14 @@ const stars = [
     releaseLabel: "2 CHAPTERS",
     accentColor: "#17FBF8",
     id: 9,
+    cartItem: {
+      id: "star-9",
+      title: "ANGELA WHITE II",
+      subtitle: "2 CHAPTERS",
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: "/mock/star_3_mock.png",
+    },
   },
 ];
 

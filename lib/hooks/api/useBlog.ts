@@ -24,6 +24,10 @@ export function useBlogPosts(params?: BlogListParams) {
   return useQuery({
     queryKey: queryKeys.blog.list(params as Record<string, unknown>),
     queryFn: () => blogService.getPosts(params),
+    staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+    gcTime: 1000 * 60 * 10, // Keep unused data in cache for 10 minutes
+    refetchOnWindowFocus: false, // Don't refetch when window regains focus
+    refetchOnMount: false, // Don't refetch on component mount if data exists
   });
 }
 

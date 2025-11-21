@@ -50,7 +50,9 @@
     "view_all": "Ver todas",
     "view_cart": "Ver Carrito",
     "view_more": "Ver más",
-    "view_profile": "Ver perfil"
+    "view_profile": "Ver perfil",
+    "confirm_age": "Sí, soy mayor de 18",
+    "deny_age": "No, soy menor de 18"
   },
   "forms": {
     "agree_to_terms": "Acepto los Términos de Servicio y Política de Privacidad",
@@ -172,6 +174,8 @@
     "windows_pcvr_title": "Windows PCVR",
     "with_email": "Con Email",
     "write_comment": "Escribe un comentario",
+    "age_verification": "Verificación de Edad",
+    "adult_content_warning": "Advertencia de Contenido Adulto",
     "your_email": "Tu Email",
     "our_stars": "Nuestras Estrellas",
     "top_vr_stars": "Estrellas VR destacadas",
@@ -231,7 +235,9 @@
     "vr_porn_special_description": "El porno en realidad virtual ofrece una experiencia sin igual que combina realismo e interactividad. La naturaleza inmersiva de la realidad virtual permite a los espectadores interactuar con el contenido como nunca antes.",
     "what_makes_tag_special": "¿Qué hace que el porno en realidad virtual de {param} sea especial?",
     "star_quote_example": "A veces envidio a los demás que pueden hacerse una paja conmigo en Braindance, mientras yo no puedo. Es así de bueno",
-    "star_about_copy_example": "VIXENP_ ha hecho una entrada impresionante en el universo Braindance, cautivando a los fans desde su debut en nuestro vídeo instructivo. Tras semanas de peticiones de nuestros braindancers más dedicados, finalmente se unió, y sus dos tarjetas de capítulos son un soplo de aire fresco en nuestro catálogo. Ofreciendo un enfoque más suave y delicado, estos lanzamientos muestran una configuración diferente y un enfoque innovador del contenido Braindance, diferenciándose de los lanzamientos anteriores."
+    "star_about_copy_example": "VIXENP_ ha hecho una entrada impresionante en el universo Braindance, cautivando a los fans desde su debut en nuestro vídeo instructivo. Tras semanas de peticiones de nuestros braindancers más dedicados, finalmente se unió, y sus dos tarjetas de capítulos son un soplo de aire fresco en nuestro catálogo. Ofreciendo un enfoque más suave y delicado, estos lanzamientos muestran una configuración diferente y un enfoque innovador del contenido Braindance, diferenciándose de los lanzamientos anteriores.",
+    "age_verification_message": "Este sitio web contiene contenido para adultos. Al entrar, confirmas que tienes al menos 18 años y aceptas nuestros Términos de Servicio.",
+    "age_verification_warning": "Debes tener 18 años o más para acceder a este contenido. Si eres menor de 18, por favor abandona este sitio."
   },
   "notices": {
     "content_loading_error": "Error al cargar el contenido. Por favor, inténtalo de nuevo más tarde.",

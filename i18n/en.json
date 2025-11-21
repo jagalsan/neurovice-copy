@@ -50,7 +50,9 @@
     "view_all": "View all",
     "view_cart": "View Cart",
     "view_more": "View more",
-    "view_profile": "View profile"
+    "view_profile": "View profile",
+    "confirm_age": "Yes, I'm 18+",
+    "deny_age": "No, I'm under 18"
   },
   "forms": {
     "agree_to_terms": "I agree to the Terms of Service and Privacy Policy",
@@ -172,6 +174,8 @@
     "windows_pcvr_title": "Windows PCVR",
     "with_email": "With Email",
     "write_comment": "Write a comment",
+    "age_verification": "Age Verification",
+    "adult_content_warning": "Adult Content Warning",
     "your_email": "Your Email",
     "our_stars": "Our Stars",
     "top_vr_stars": "Top VR stars",
@@ -232,7 +236,9 @@
     "vr_porn_special_description": "VR porn offers an unparalleled experience that combines realism with interactivity. The immersive nature of virtual reality allows viewers to engage with the content like never before.",
     "what_makes_tag_special": "What makes {param} VR porn special",
     "star_quote_example": "I kinda envy other people who can jerk-off to me in Braindance, while I can’t. It’s just that good",
-    "star_about_copy_example": "VIXENP_ has made a stunning entrance into the Braindance universe, captivating fans since her debut in our instructional video. After weeks of eager requests from our dedicated braindancers, she finally joined the fold, and her two chapters cards are a breath of fresh air in our catalogue. Offering a softer and gentler approach, these releases showcase a different setup and an innovative approach to Braindance content, setting them apart from previous releases."
+    "star_about_copy_example": "VIXENP_ has made a stunning entrance into the Braindance universe, captivating fans since her debut in our instructional video. After weeks of eager requests from our dedicated braindancers, she finally joined the fold, and her two chapters cards are a breath of fresh air in our catalogue. Offering a softer and gentler approach, these releases showcase a different setup and an innovative approach to Braindance content, setting them apart from previous releases.",
+    "age_verification_message": "This website contains adult content. By entering, you confirm that you are at least 18 years old and agree to our Terms of Service.",
+    "age_verification_warning": "You must be 18 or older to access this content. If you are under 18, please leave this site."
   },
   "notices": {
     "content_loading_error": "Error loading content. Please try again later.",

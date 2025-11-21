@@ -190,7 +190,7 @@ export default function CartMenu({ isMobile = false }: CartMenuProps) {
                   {t("labels.total")}
                 </span>
                 <span className="font-heading text-[20px] tracking-[0.12em] text-[#17FBF8]">
-                  ${getTotalPrice()}
+                  ${getTotalPrice().toFixed(2)}
                 </span>
               </div>
             </div>

@@ -16,7 +16,14 @@ const chapters = Array.from({ length: 12 }).map((_, i) => ({
   platforms: ["META", "WINDOWS", "APK"] as string[],
   accentColor: "#17FBF8",
   viewMoreHref: "#",
-  buyHref: "#",
+  cartItem: {
+    id: `tag-chapter-${i + 1}`,
+    title: "TURBOFAP",
+    subtitle: "1 YEAR SUBSCRIPTION",
+    price: 49.99,
+    oldPrice: 79.99,
+    imageSrc: `/mock/example_${(i % 3) + 1}_x.png`,
+  },
 }));
 
 interface TagPageClientProps {

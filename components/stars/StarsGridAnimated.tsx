@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ChapterCard from "@/components/chapters/ChapterCard";
 import { useLocale } from "@/providers/LocaleProvider";
+import { CartItem } from "@/lib/stores/cart.store";
 
 type Star = {
   coverSrc: string;
@@ -11,6 +12,7 @@ type Star = {
   releaseLabel: string;
   accentColor: string;
   id: number;
+  cartItem?: Omit<CartItem, "quantity">;
 };
 
 export default function StarsGridAnimated({ stars }: { stars: Star[] }) {
@@ -33,6 +35,7 @@ export default function StarsGridAnimated({ stars }: { stars: Star[] }) {
             accentColor={s.accentColor}
             platforms={[]}
             viewMoreHref={`/${locale}/stars/${s.id}`}
+            cartItem={s.cartItem}
             variant="stars"
           />
         ))}

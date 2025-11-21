@@ -68,13 +68,13 @@ export default function CartPageClient() {
               <div className="mt-10 rounded-[14px] border border-white/10 bg-[#11111880] px-8 py-6 flex items-center justify-between">
                 <div className="flex items-center justify-center w-full gap-4 uppercase">
                   <span className="text-white/40 text-[32px] font-bold">
-                    ${totalOldPrice}
+                    ${totalOldPrice.toFixed(2)}
                   </span>
                   <span className="text-[#17FBF8]">
                     <ArrowRightIcon />
                   </span>
                   <span className="text-white text-[32px] font-bold">
-                    ${totalPrice}
+                    ${totalPrice.toFixed(2)}
                   </span>
                 </div>
               </div>

@@ -3,6 +3,7 @@ import { I18nProvider } from "@/providers/I18nProvider";
 import { LocaleProvider } from "@/providers/LocaleProvider";
 import { QueryProvider } from "@/providers/QueryProvider";
 import { ToastProvider } from "@/providers/ToastProvider";
+import { AgeVerificationProvider } from "@/providers/AgeVerificationProvider";
 import Navbar from "@/components/layout/header/Navbar";
 import Footer from "@/components/layout/footer/Footer";
 import FaqSection from "@/components/layout/FaqSection";
@@ -74,13 +75,15 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
       <QueryProvider>
         <I18nProvider key={locale} initialLocale={locale}>
           <ToastProvider>
-            <Navbar />
-            <div className="pt-16">
-              <Breadcrumbs />
-              {children}
-            </div>
-            <FaqSection />
-            <Footer />
+            <AgeVerificationProvider>
+              <Navbar />
+              <div className="pt-16">
+                <Breadcrumbs />
+                {children}
+              </div>
+              <FaqSection />
+              <Footer />
+            </AgeVerificationProvider>
           </ToastProvider>
         </I18nProvider>
       </QueryProvider>

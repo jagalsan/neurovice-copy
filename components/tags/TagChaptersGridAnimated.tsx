@@ -12,7 +12,7 @@ type Chapter = {
   platforms?: string[];
   accentColor: string;
   viewMoreHref?: string;
-  cartItem?: CartItem;
+  cartItem?: Omit<CartItem, "quantity">;
 };
 
 export default function TagChaptersGridAnimated({

@@ -20,7 +20,7 @@ export type ChapterCardProps = {
   platforms?: string[];
   accentColor: string;
   viewMoreHref?: string;
-  cartItem?: CartItem;
+  cartItem?: Omit<CartItem, "quantity">;
   variant?: "default" | "stars";
 };
 

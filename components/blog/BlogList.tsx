@@ -29,10 +29,12 @@ export function BlogList({ locale }: BlogListProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = Number(searchParams.get("page") ?? "1");
+  const searchText = searchParams.get("search") ?? undefined;
 
   const { data, isLoading } = useBlogPosts({
     limit: PAGE_SIZE,
     offset: (currentPage - 1) * PAGE_SIZE,
+    searchText,
   });
 
   const total = data?.total ?? 0;
