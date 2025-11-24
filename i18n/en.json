@@ -4,6 +4,7 @@
     "back": "Back",
     "buy": "Buy",
     "buy_all": "Buy all",
+    "buy_all_var": "Buy all {param} chapters",
     "buy_all_for": "Buy all for",
     "buy_now": "Buy now",
     "cancel": "Cancel",
@@ -51,8 +52,9 @@
     "view_cart": "View Cart",
     "view_more": "View more",
     "view_profile": "View profile",
-    "confirm_age": "Yes, I'm 18+",
-    "deny_age": "No, I'm under 18"
+    "confirm_age": "I’m over 18",
+    "deny_age": "No, I’m under 18",
+    "exit": "Exit"
   },
   "forms": {
     "agree_to_terms": "I agree to the Terms of Service and Privacy Policy",
@@ -237,7 +239,7 @@
     "what_makes_tag_special": "What makes {param} VR porn special",
     "star_quote_example": "I kinda envy other people who can jerk-off to me in Braindance, while I can’t. It’s just that good",
     "star_about_copy_example": "VIXENP_ has made a stunning entrance into the Braindance universe, captivating fans since her debut in our instructional video. After weeks of eager requests from our dedicated braindancers, she finally joined the fold, and her two chapters cards are a breath of fresh air in our catalogue. Offering a softer and gentler approach, these releases showcase a different setup and an innovative approach to Braindance content, setting them apart from previous releases.",
-    "age_verification_message": "This website contains adult content. By entering, you confirm that you are at least 18 years old and agree to our Terms of Service.",
+    "age_verification_message": "THIS PAGE CONTENTS AGE-RESTRICTED CONTENT. YOU MUST BE AT LEAST 18 YEARS OLD TO ACCESS THE PAGE. PLEASE CONFIRM YOUR AGE TO HAVE ACCESS TO THE PAGE.",
     "age_verification_warning": "You must be 18 or older to access this content. If you are under 18, please leave this site."
   },
   "notices": {

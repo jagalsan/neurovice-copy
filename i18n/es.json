@@ -4,6 +4,7 @@
     "back": "Atrás",
     "buy": "Comprar",
     "buy_all": "Comprar todo",
+    "buy_all_var": "Comprar todos los capítulos de {param}",
     "buy_all_for": "Comprar todo por",
     "buy_now": "Comprar ahora",
     "cancel": "Cancelar",
@@ -52,7 +53,8 @@
     "view_more": "Ver más",
     "view_profile": "Ver perfil",
     "confirm_age": "Sí, soy mayor de 18",
-    "deny_age": "No, soy menor de 18"
+    "deny_age": "No, soy menor de 18",
+    "exit": "Salir"
   },
   "forms": {
     "agree_to_terms": "Acepto los Términos de Servicio y Política de Privacidad",
@@ -236,7 +238,7 @@
     "what_makes_tag_special": "¿Qué hace que el porno en realidad virtual de {param} sea especial?",
     "star_quote_example": "A veces envidio a los demás que pueden hacerse una paja conmigo en Braindance, mientras yo no puedo. Es así de bueno",
     "star_about_copy_example": "VIXENP_ ha hecho una entrada impresionante en el universo Braindance, cautivando a los fans desde su debut en nuestro vídeo instructivo. Tras semanas de peticiones de nuestros braindancers más dedicados, finalmente se unió, y sus dos tarjetas de capítulos son un soplo de aire fresco en nuestro catálogo. Ofreciendo un enfoque más suave y delicado, estos lanzamientos muestran una configuración diferente y un enfoque innovador del contenido Braindance, diferenciándose de los lanzamientos anteriores.",
-    "age_verification_message": "Este sitio web contiene contenido para adultos. Al entrar, confirmas que tienes al menos 18 años y aceptas nuestros Términos de Servicio.",
+    "age_verification_message": "CONTENIDO DE ESTA PÁGINA CONTENIDO CON RESTRICCIÓN DE EDAD. DEBE TENER AL MENOS 18 AÑOS PARA ACCEDER A LA PÁGINA. CONFIRME SU EDAD PARA ACCEDER A LA PÁGINA.",
     "age_verification_warning": "Debes tener 18 años o más para acceder a este contenido. Si eres menor de 18, por favor abandona este sitio."
   },
   "notices": {

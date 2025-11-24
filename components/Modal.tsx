@@ -9,6 +9,7 @@ interface ModalProps {
   children: React.ReactNode;
   t: TFn;
   size?: "md" | "lg";
+  showCloseButton?: boolean;
 }
 
 export default function Modal({
@@ -17,6 +18,7 @@ export default function Modal({
   children,
   t,
   size = "md",
+  showCloseButton = true,
 }: ModalProps) {
   useEffect(() => {
     if (isOpen) {
@@ -59,18 +61,20 @@ export default function Modal({
         className="flex flex-col items-center w-full min-h-full md:min-h-0 justify-start md:justify-center py-safe"
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          onClick={onClose}
-          className={`
-            flex items-center justify-end ${widthClasses}
-            pb-4 md:pb-6
-            text-[var(--color-brand-500)]
+        {showCloseButton && (
+          <button
+            onClick={onClose}
+            className={`
+              flex items-center justify-end ${widthClasses}
+              pb-4 md:pb-6
+              text-[var(--color-brand-500)]
             hover:text-white transition
             font-heading uppercase tracking-widest text-sm
           `}
         >
           {t("actions.close")}
         </button>
+        )}
 
         <div
           className={`

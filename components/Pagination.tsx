@@ -49,16 +49,16 @@ export default function Pagination({
           {t("actions.back")}
         </button>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           {pages.map((page) => (
             <button
               key={page}
               className={`
-                px-1
+                h-8 min-w-[32px] px-2 rounded-full transition-all
                 ${
                   page === currentPage
-                    ? "text-[var(--color-brand-500)]"
-                    : "text-[var(--color-brand-300)] hover:text-[var(--color-brand-500)]"
+                    ? "bg-[#17FBF8] text-black font-bold shadow-[0_0_15px_rgba(23,251,248,0.6)]"
+                    : "text-[#17FBF8] hover:bg-[rgba(23,251,248,0.1)] border border-transparent hover:border-[rgba(23,251,248,0.3)]"
                 }
               `}
               aria-current={page === currentPage ? "page" : undefined}

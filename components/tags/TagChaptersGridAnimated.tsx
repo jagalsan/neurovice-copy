@@ -2,17 +2,12 @@
 
 import { motion } from "framer-motion";
 import ChapterCard from "@/components/chapters/ChapterCard";
-import { CartItem } from "@/lib/stores/cart.store";
 
 type Chapter = {
   coverSrc: string;
   coverAlt: string;
   title: string;
-  releaseLabel: string;
-  platforms?: string[];
   accentColor: string;
-  viewMoreHref?: string;
-  cartItem?: Omit<CartItem, "quantity">;
 };
 
 export default function TagChaptersGridAnimated({
@@ -33,12 +28,7 @@ export default function TagChaptersGridAnimated({
             key={`${c.title}-${i}`}
             coverSrc={c.coverSrc}
             coverAlt={c.coverAlt}
-            title={c.title}
-            releaseLabel={c.releaseLabel}
-            platforms={c.platforms}
             accentColor={c.accentColor}
-            viewMoreHref={c.viewMoreHref}
-            cartItem={c.cartItem}
             variant="default"
           />
         ))}

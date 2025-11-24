@@ -15,8 +15,8 @@ import { CartItem } from "@/lib/stores/cart.store";
 export type ChapterCardProps = {
   coverSrc: string;
   coverAlt: string;
-  title: string;
-  releaseLabel: string;
+  title?: string;
+  releaseLabel?: string;
   platforms?: string[];
   accentColor: string;
   viewMoreHref?: string;
@@ -37,7 +37,7 @@ export default function ChapterCard({
   releaseLabel,
   platforms = ["META", "WINDOWS", "APK"],
   accentColor,
-  viewMoreHref = "#",
+  viewMoreHref,
   cartItem,
   variant = "default",
 }: ChapterCardProps) {
@@ -85,14 +85,16 @@ export default function ChapterCard({
       </div>
 
       <div className="mt-[8px] w-full">
-        <p
-          className="text-[12px] font-[500] tracking-[0.25em] uppercase text-[color:var(--accent-color)] mb-[8px]"
-          style={{ textShadow: `0 0 15px ${accentColor}` }}
-        >
-          {releaseLabel}
-        </p>
+        {releaseLabel && (
+          <p
+            className="text-[12px] font-[500] tracking-[0.25em] uppercase text-[color:var(--accent-color)] mb-[8px]"
+            style={{ textShadow: `0 0 15px ${accentColor}` }}
+          >
+            {releaseLabel}
+          </p>
+        )}
 
-        {platforms.length > 0 && (
+        {title && platforms.length > 0 && (
           <div className="flex items-center gap-3 mb-[8px]">
             {platforms.map((p) => {
               const key = p.toUpperCase();
@@ -117,29 +119,35 @@ export default function ChapterCard({
           </div>
         )}
 
-        <h3 className="font-heading uppercase text-[20px] leading-none text-[color:var(--accent-color)] mb-[8px]">
-          {title}
-        </h3>
+        {title && (
+          <h3 className="font-heading uppercase text-[20px] leading-none text-[color:var(--accent-color)] mb-[8px]">
+            {title}
+          </h3>
+        )}
 
         <div className="flex gap-3 text-[11px] font-heading uppercase tracking-[0.18em]">
-          <Link
-            href={viewMoreHref}
-            className="flex-1 h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] max-w-[150px]"
-          >
-            {t("actions.view_more")}
-          </Link>
+          {viewMoreHref ? (
+            <Link
+              href={viewMoreHref}
+              className="flex-1 h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] max-w-[150px]"
+            >
+              {t("actions.view_more")}
+            </Link>
+          ) : (
+            ""
+          )}
           {cartItem ? (
             <button
-            onClick={() =>
-              addToCart(cartItem!)
-            }
-            className="h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] uppercase"
-          >
-            {t("actions.buy")}
-          </button>
-          ) : ''}
+              onClick={() => addToCart(cartItem!)}
+              className="h-10 px-4 rounded-full border border-[color:var(--accent-color)] text-[color:var(--accent-color)] flex items-center justify-center hover:bg-[color:var(--accent-color)] hover:text-black transition-colors duration-200 text-[15px] uppercase"
+            >
+              {t("actions.buy")}
+            </button>
+          ) : (
+            ""
+          )}
         </div>
-    </div>
+      </div>
     </div>
   );
 }

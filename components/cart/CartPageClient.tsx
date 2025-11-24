@@ -24,10 +24,10 @@ export default function CartPageClient() {
 
   return (
     <section className="max-w-[1159px] mx-auto">
-      <div className="px-4 md:px-8 py-16">
+      <div className="px-4 md:px-8 py-8 md:py-16">
         <div className="rounded-[16px] overflow-hidden shadow-[0px_0px_15px_0px_#17fbf873]">
-          <div className="grid lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1.4fr)] gap-0 bg-[#161D21]">
-            <div className="px-4 pt-6 pb-8 md:px-10 md:pt-10 border-r border-white/10">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,2.1fr)_minmax(0,1.4fr)] gap-0 bg-[#161D21]">
+            <div className="px-4 pt-6 pb-8 md:px-10 md:pt-10 lg:border-r border-white/10">
               <div className="mb-8">
                 <h1 className="font-heading text-[40px] md:text-[48px] tracking-[0.18em] uppercase text-[#17FBF8]">
                   {t("views.cart")}
@@ -65,35 +65,35 @@ export default function CartPageClient() {
                 ))
               )}
 
-              <div className="mt-10 rounded-[14px] border border-white/10 bg-[#11111880] px-8 py-6 flex items-center justify-between">
-                <div className="flex items-center justify-center w-full gap-4 uppercase">
-                  <span className="text-white/40 text-[32px] font-bold">
+              <div className="mt-10 rounded-[14px] border border-white/10 bg-[#11111880] px-4 py-4 md:px-8 md:py-6 flex items-center justify-between">
+                <div className="flex items-center justify-center w-full gap-2 md:gap-4 uppercase">
+                  <span className="text-white/40 text-[20px] md:text-[28px] lg:text-[32px] font-bold">
                     ${totalOldPrice.toFixed(2)}
                   </span>
-                  <span className="text-[#17FBF8]">
-                    <ArrowRightIcon />
+                  <span className="text-[#17FBF8] flex-shrink-0">
+                    <ArrowRightIcon className="w-5 h-5 md:w-6 md:h-6" />
                   </span>
-                  <span className="text-white text-[32px] font-bold">
+                  <span className="text-white text-[20px] md:text-[28px] lg:text-[32px] font-bold">
                     ${totalPrice.toFixed(2)}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="px-10 pt-10 pb-8 bg-[rgba(3,10,15,0.96)]">
+            <div className="px-4 pt-6 pb-6 md:px-8 md:pt-8 md:pb-8 lg:px-10 lg:pt-10 bg-[rgba(3,10,15,0.96)] border-t lg:border-t-0 border-white/10">
               <div className="space-y-6 h-full">
                 {!isLoading && user ? (
                   <div className="flex flex-col justify-between h-full">
                     <div className="space-y-2">
-                      <h2 className="font-heading text-[20px] uppercase text-[#17FBF8]">
+                      <h2 className="font-heading text-[18px] md:text-[20px] uppercase text-[#17FBF8]">
                         Logged in as:
                       </h2>
-                      <p className="text-[13px] text-[var(--color-brand-300)] uppercase ">
+                      <p className="text-[13px] text-[var(--color-brand-300)] uppercase break-all">
                         {user.email}
                       </p>
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 lg:mt-6">
                       <PaymentOptions
                         t={t}
                         selected={paymentMethod}
@@ -102,7 +102,7 @@ export default function CartPageClient() {
 
                       <button
                         disabled={items.length === 0}
-                        className={`${primaryButtonBase} mt-4 h-[78px]`}
+                        className={`${primaryButtonBase} mt-4 h-[60px] md:h-[70px] lg:h-[78px] text-sm md:text-base`}
                       >
                         {t("actions.proceed_to_payment")}
                       </button>

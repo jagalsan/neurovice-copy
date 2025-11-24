@@ -5,6 +5,8 @@ import Pagination from "@/components/Pagination";
 import TagChaptersGridAnimated from "@/components/tags/TagChaptersGridAnimated";
 import { useT } from "@/providers/I18nProvider";
 import { primaryButtonBase } from "@/lib/styles/buttons";
+import Link from "next/link";
+import { useLocale } from "@/providers/LocaleProvider";
 
 const chips = ["ROLEPLAY", "LATINA", "PETITE", "PIERCED NIPPLES", "TATTOOS"];
 
@@ -32,12 +34,13 @@ interface TagPageClientProps {
 
 export default function TagPageClient({ tag }: TagPageClientProps) {
   const t = useT();
+  const locale = useLocale();
 
   return (
-    <section className="text-white px-4 md:px-8 max-w-[1024px] mx-auto py-8 space-y-12">
+    <section className="text-white px-4 md:px-8 max-w-[1024px] mx-auto py-8 space-y-12 max-w-[944px]">
       <Card className="bg-[transparent] space-y-0">
         <span
-          className="text-[10px] md:text-xs font-[600] uppercase text-[#7FF7F5] mb-0"
+          className="text-[10px] md:text-xs font-[600] uppercase text-[#17FBF8] mb-0"
           style={{ textShadow: "0 0 15px #00FFFC" }}
         >
           {t("views.tags")}
@@ -50,7 +53,7 @@ export default function TagPageClient({ tag }: TagPageClientProps) {
           {t("messages.best_tag_var", { param: tag })}
         </h2>
 
-        <p className="max-w-[980px] text-[14px] md:text-[15px] text-[#7FF7F5] mb-8 uppercase">
+        <p className="max-w-[980px] text-[14px] md:text-[15px] text-[#17FBF8] mb-8 uppercase">
           {t("messages.tag_description_var", { param: tag })}
         </p>
 
@@ -58,7 +61,7 @@ export default function TagPageClient({ tag }: TagPageClientProps) {
           {t("messages.what_makes_tag_special", { param: tag })}
         </h3>
 
-        <p className="max-w-[980px] text-[14px] md:text-[15px] leading-relaxed text-[#7FF7F5] mb-4 uppercase">
+        <p className="max-w-[980px] text-[14px] md:text-[15px] leading-relaxed text-[#17FBF8] mb-4 uppercase">
           {t("messages.vr_porn_special_description")}
         </p>
 
@@ -74,11 +77,11 @@ export default function TagPageClient({ tag }: TagPageClientProps) {
           ))}
         </div>
 
-        <button className={primaryButtonBase}>
+        <Link href={`/${locale}/subscription`} className={primaryButtonBase}>
           <span className="relative z-10">
             {t("actions.unlock_with_subscription")}
           </span>
-        </button>
+        </Link>
       </Card>
 
       <Card title={`Chapters tagged as #${tag}`}>
