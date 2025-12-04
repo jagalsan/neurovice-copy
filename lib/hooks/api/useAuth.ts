@@ -15,6 +15,7 @@ import {
   SignInRequest,
   RequestResetPasswordRequest,
   ResetPasswordRequest,
+  UpdatePasswordRequest,
 } from "@/lib/api/types";
 
 /**
@@ -130,6 +131,19 @@ export function useResetPassword() {
       authenticationService.resetPassword(payload),
     onError: (error) => {
       console.error("Reset password failed:", getErrorMessage(error));
+    },
+  });
+}
+
+/**
+ * Update password for authenticated user
+ */
+export function useUpdatePassword() {
+  return useMutation({
+    mutationFn: (payload: UpdatePasswordRequest) =>
+      authenticationService.updatePassword(payload),
+    onError: (error) => {
+      console.error("Update password failed:", getErrorMessage(error));
     },
   });
 }

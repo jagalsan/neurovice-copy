@@ -28,6 +28,9 @@ class SeasonsService {
       this.basePath,
       { params }
     );
+    if (data.seasons && !data.results) {
+      data.results = data.seasons;
+    }
     return data;
   }
 

@@ -2,11 +2,40 @@
  * Seasons related types and interfaces
  */
 
+import { SceneWithAccess } from "./scenes";
+
+export interface SeasonImage {
+  id: number;
+  seasonId: number;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SeasonTrailer {
+  id: number;
+  seasonId: number;
+  videoUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Season {
   id: number;
   title: string;
   description?: string;
   color?: string;
+  mainImageUrl?: string;
+  mainVideoUrl?: string;
+  createdAt: string;
+  updatedAt: string;
+  scenes?: SceneWithAccess[];
+  seasonImages?: SeasonImage[];
+  seasonTrailers?: SeasonTrailer[];
+  
+  // TODO: CAMPOS FALTANTES - Agregar al backend:
+  price?: number;         // Precio de la temporada completa
+  currency?: string;      // Moneda (USD, EUR, etc.)
 }
 
 export interface CreateSeasonRequest {

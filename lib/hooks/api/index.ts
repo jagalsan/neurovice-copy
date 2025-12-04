@@ -9,3 +9,4 @@ export * from "./usePornStars";
 export * from "./useTags";
 export * from "./useSeasons";
 export * from "./useBlog";
+export * from "./useUser";

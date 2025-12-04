@@ -5,8 +5,8 @@ import { useRef, useState } from "react";
 import { useT } from "@/providers/I18nProvider";
 
 type Props = {
-  src?: string;
-  posterSrc?: string;
+  src: string;
+  posterSrc: string;
   heightClass?: string;
   className?: string;
   title?: string;
@@ -15,8 +15,8 @@ type Props = {
 };
 
 export default function HeroVideo({
-  src = "/hero-video.mp4",
-  posterSrc = "/mock/video_placeholder.png",
+  src,
+  posterSrc,
   heightClass = "h-[600px] md:h-[810px]",
   className = "",
   title,

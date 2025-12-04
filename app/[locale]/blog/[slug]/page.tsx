@@ -7,6 +7,8 @@ import { generatePageMetadata } from "@/lib/metadata";
 import type { BlogPost } from "@/lib/api/types";
 import { blogService } from "@/lib/api/services/blog.service";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 export const dynamicParams = true;
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;

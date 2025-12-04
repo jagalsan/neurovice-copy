@@ -62,4 +62,9 @@ export const queryKeys = {
     detail: (idOrSlug: number | string) =>
       [...queryKeys.blog.all, "detail", idOrSlug] as const,
   },
+
+  users: {
+    all: ["users"] as const,
+    me: () => [...queryKeys.users.all, "me"] as const,
+  },
 } as const;

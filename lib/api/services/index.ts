@@ -1,7 +1,3 @@
-/**
- * Central export point for all API services
- */
-
 export { authenticationService } from "./authentication.service";
 export { scenesService } from "./scenes.service";
 export { subscriptionsService } from "./subscriptions.service";

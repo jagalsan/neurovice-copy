@@ -9,7 +9,7 @@ import {
   sectionTitleClass,
   fieldShellClass,
 } from "./shared";
-import { authenticationService } from "@/lib/api/services/authentication.service";
+import { useUpdatePassword } from "@/lib/hooks/api/useAuth";
 
 interface MyProfileViewProps {
   t: (k: string) => string;
@@ -22,7 +22,8 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
   const [newPassword, setNewPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
+  
+  const updatePassword = useUpdatePassword();
 
   const handleChangePassword = async () => {
     setError("");
@@ -33,9 +34,8 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
       return;
     }
 
-    setLoading(true);
     try {
-      await authenticationService.updatePassword({
+      await updatePassword.mutateAsync({
         oldPassword,
         newPassword,
       });
@@ -47,8 +47,6 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
       setError(t("messages.password_change_error"));
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -123,8 +121,8 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
         <PrimaryCta
           label={t("actions.change_password")}
           onClick={handleChangePassword}
-          loading={loading}
-          disabled={!oldPassword || !newPassword}
+          loading={updatePassword.isPending}
+          disabled={!oldPassword || !newPassword || updatePassword.isPending}
         />
       </section>
 

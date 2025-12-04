@@ -1,8 +1,12 @@
-import BundlesSection from "@/components/bundle/BudleSections";
+import SeasonsSection from "@/components/seasons/SeasonsSection";
 import HeroVideo from "@/components/HeroVideo";
 import type { Metadata } from "next";
 import type { Locale } from "@/i18n/config";
 import { generatePageMetadata } from "@/lib/metadata";
+import { seasonsService } from "@/lib/api/services";
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function generateMetadata({ 
   params 
@@ -23,11 +27,19 @@ export default async function Home({
 }: { 
   params: Promise<{ locale: string }> 
 }) {
-  const { locale } = await params;
+  
+  const seasonsResponse = await seasonsService.getSeasons({
+    limit: 50,
+    offset: 0
+  });
+
   return (
     <div className="min-h-screen">
-      <HeroVideo />
-      <BundlesSection />
+      <HeroVideo 
+        src="/hero-video.mp4"
+        posterSrc="/hero-poster.jpg"
+      />
+      <SeasonsSection seasons={seasonsResponse.results} />
     </div>
   );
 }

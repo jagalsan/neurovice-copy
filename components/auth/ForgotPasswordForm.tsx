@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import AuthField from "./AuthField";
-import { authenticationService } from "@/lib/api/services/authentication.service";
+import { useRequestResetPassword } from "@/lib/hooks/api/useAuth";
 import type { RequestResetPasswordRequest } from "@/lib/api/types";
 
 type TFn = (key: string) => string;
@@ -19,23 +19,20 @@ export default function ForgotPasswordForm({
   primaryButtonClass,
 }: ForgotPasswordFormProps) {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const requestResetPassword = useRequestResetPassword();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
 
     try {
       const payload: RequestResetPasswordRequest = { email };
-      await authenticationService.requestResetPassword(payload);
+      await requestResetPassword.mutateAsync(payload);
       setSuccess(true);
     } catch (err: any) {
       setError(err.response?.data?.message || t("notices.something_went_wrong"));
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -86,10 +83,10 @@ export default function ForgotPasswordForm({
 
       <button 
         type="submit"
-        disabled={loading || !email}
+        disabled={requestResetPassword.isPending || !email}
         className={primaryButtonClass + " disabled:opacity-50 disabled:cursor-not-allowed"}
       >
-        {loading ? t("labels.loading") : t("forms.send_link")}
+        {requestResetPassword.isPending ? t("labels.loading") : t("forms.send_link")}
       </button>
 
       <button

@@ -16,6 +16,7 @@
     "download_app": "Descargar App",
     "download_for_windows": "Descargar .MSI",
     "edit": "Editar",
+    "explore_all": "Explorar Todo",
     "filter": "Filtrar",
     "forgot_password": "¿Olvidaste tu contraseña?",
     "get_lifetime_access": "Obtener acceso de por vida",
@@ -188,11 +189,19 @@
     "hair_color": "Color de pelo",
     "ethnicity": "Etnia",
     "age": "Edad",
+    "gender": "Género",
+    "scenes": "Escenas",
+    "bio": "Biografía",
     "gallery": "Galería",
+    "no_gallery_available": "No hay galería disponible",
     "minimum_pcvr_requirements": "Requisitos mínimos de sistema para PCVR",
-    "all_videos": "Todos los vídeos"
+    "all_videos": "Todos los vídeos",
+    "chapter": "Capítulo",
+    "chapters": "Capítulos"
   },
   "messages": {
+    "no_seasons_available": "No hay temporadas disponibles",
+    "exclusive_content_quality": "Contenido exclusivo en calidad impresionante",
     "added_to_cart": "¡Añadido al carrito!",
     "auto_switching_copy": "Elige si las escenas cambian automáticamente o manualmente.",
     "best_tag_var": "La mejor {param} VR: Porno en realidad virtual",
@@ -239,7 +248,9 @@
     "star_quote_example": "A veces envidio a los demás que pueden hacerse una paja conmigo en Braindance, mientras yo no puedo. Es así de bueno",
     "star_about_copy_example": "VIXENP_ ha hecho una entrada impresionante en el universo Braindance, cautivando a los fans desde su debut en nuestro vídeo instructivo. Tras semanas de peticiones de nuestros braindancers más dedicados, finalmente se unió, y sus dos tarjetas de capítulos son un soplo de aire fresco en nuestro catálogo. Ofreciendo un enfoque más suave y delicado, estos lanzamientos muestran una configuración diferente y un enfoque innovador del contenido Braindance, diferenciándose de los lanzamientos anteriores.",
     "age_verification_message": "CONTENIDO DE ESTA PÁGINA CONTENIDO CON RESTRICCIÓN DE EDAD. DEBE TENER AL MENOS 18 AÑOS PARA ACCEDER A LA PÁGINA. CONFIRME SU EDAD PARA ACCEDER A LA PÁGINA.",
-    "age_verification_warning": "Debes tener 18 años o más para acceder a este contenido. Si eres menor de 18, por favor abandona este sitio."
+    "age_verification_warning": "Debes tener 18 años o más para acceder a este contenido. Si eres menor de 18, por favor abandona este sitio.",
+    "no_scenes_for_tag": "No se encontraron escenas para {param}",
+    "check_back_later_tag_content": "Vuelve más tarde para ver nuevo contenido etiquetado con {param}"
   },
   "notices": {
     "content_loading_error": "Error al cargar el contenido. Por favor, inténtalo de nuevo más tarde.",
@@ -270,6 +281,8 @@
     "dmca_title": "Política DMCA - Neurovice | Derechos de Autor y Eliminación de Contenido",
     "home_description": "Adéntrate en el siguiente nivel de VR para adultos con Neurovice. Lanzamientos semanales de experiencias VR interactivas de alta calidad con modelos fotorrealistas e inmersión total.",
     "home_title": "Neurovice - Entretenimiento Adulto VR Premium | Experiencias de Realidad Virtual Inmersivas",
+    "scenes_title": "Escena VR | Neurovice",
+    "scenes_description": "Experimenta escenas VR inmersivas en calidad impresionante. Entretenimiento adulto premium en realidad virtual.",
     "privacy_description": "Lee nuestra política de privacidad para entender cómo Neurovice recopila, usa y protege tu información personal. Cumplimos con UK GDPR, EU GDPR y regulaciones CCPA.",
     "privacy_title": "Política de Privacidad - Neurovice | Protección de Datos y Seguridad",
     "subscription_description": "Elige tu plan de suscripción VR perfecto. Obtén acceso ilimitado a paquetes Neurovice, temporadas de coleccionista y contenido exclusivo. Opciones mensuales, anuales y de por vida disponibles.",

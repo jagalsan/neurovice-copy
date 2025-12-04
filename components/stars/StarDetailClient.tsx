@@ -5,52 +5,48 @@ import Image from "next/image";
 import { SiInstagram, SiOnlyfans, SiX } from "react-icons/si";
 import { primaryButtonBase } from "@/lib/styles/buttons";
 import { useT } from "@/providers/I18nProvider";
-import ScreenshotGallery from "@/components/chapters/ScreenshotGallery";
-import ChipList from "@/components/chapters/ChipList";
+import ScreenshotGallery from "@/components/ScreenshotGallery";
+import ChipList from "@/components/scenes/ChipList";
 import Link from "next/link";
 import { useAddToCart } from "@/lib/hooks/useAddToCart";
-
-const starName = "Punky Natalie";
-const starTags = [
-  "ROLEPLAY",
-  "LATINA",
-  "PETITE",
-  "PIERCED NIPPLES",
-  "TATTOOS",
-];
-
-const screenshots = [
-  "/mock/star_1_mock.png",
-  "/mock/star_2_mock.png",
-  "/mock/star_3_mock.png",
-];
-
-const allVideos = [
-  "/mock/example_1_x.png",
-  "/mock/example_2_x.png",
-  "/mock/example_3_x.png",
-  "/mock/example_1_x.png",
-  "/mock/example_2_x.png",
-  "/mock/example_3_x.png",
-  "/mock/example_3_x.png",
-];
+import type { PornStar } from "@/lib/api/types";
 
 interface StarDetailClientProps {
-  slug: string;
+  starData: PornStar;
 }
 
-export default function StarDetailClient({ slug }: StarDetailClientProps) {
+export default function StarDetailClient({ starData }: StarDetailClientProps) {
   const gridColor = "rgba(23,251,248,0.25)";
   const t = useT();
   const { addToCart } = useAddToCart();
 
+  const starName = `${starData.name} ${starData.surname}`.toUpperCase();
+  const starTags = starData.pornStarsTags.map(tag => ({
+    id: tag.tag.id,
+    name: tag.tag.name
+  }));
+  const screenshots = starData.galleryImages || [];
+  
+  const calculateAge = (birthDate: string): number => {
+    const birth = new Date(birthDate);
+    const today = new Date();
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    return age;
+  };
+  
+  const ageInYears = calculateAge(starData.age);
+
   const allChaptersCartItem = {
-    id: `${slug}-all-chapters`,
+    id: `${starData.id}-all-chapters`,
     title: starName,
     subtitle: "All Chapters",
     oldPrice: 299,
     price: 149,
-    imageSrc: "/mock/star_1_mock.png",
+    imageSrc: starData.profileImage || "/placeholder-star.png",
   };
 
   return (
@@ -58,14 +54,22 @@ export default function StarDetailClient({ slug }: StarDetailClientProps) {
         <div className="max-w-[1459px] mx-auto px-4 md:px-8 py-8 md:py-10 space-y-10">
         <section className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px] gap-6">
           <Card className="bg-[#111118]" padded={false}>
-            <div className="relative w-full h-[520px] md:h-[640px] rounded-[18px] overflow-hidden">
-              <Image
-                src="/mock/star_1_mock.png"
-                alt="Punky Natalie portrait"
-                fill
-                className="object-cover"
-                priority
-              />
+            <div className="relative w-full h-[520px] md:h-[640px] rounded-[18px] overflow-hidden bg-[#171614]">
+              {starData.profileImage ? (
+                <Image
+                  src={starData.profileImage}
+                  alt={`${starName} portrait`}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center">
+                  <p className="text-[#17FBF8] text-center px-4">
+                    {starName}
+                  </p>
+                </div>
+              )}
             </div>
           </Card>
 
@@ -82,85 +86,111 @@ export default function StarDetailClient({ slug }: StarDetailClientProps) {
                 className="font-heading uppercase text-[38px] leading-[0.95] text-[#17FBF8]"
                 style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
               >
-                PUNKY
+                {starData.name.toUpperCase()}
                 <br />
-                NATALIE
+                {starData.surname.toUpperCase()}
               </h1>
 
               <div className="grid grid-cols-3 gap-4 text-[12px] uppercase">
-                <div>
-                  <p className="text-[#7FF7F5]/50">{t("labels.height")}</p>
-                  <p
-                    className="text-[#17FBF8]"
-                    style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                  >
-                    5.11&quot;
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#7FF7F5]/50">{t("labels.breast")}</p>
-                  <p
-                    className="text-[#17FBF8]"
-                    style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                  >
-                    36DD
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#7FF7F5]/50">{t("labels.weight")}</p>
-                  <p
-                    className="text-[#17FBF8]"
-                    style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                  >
-                    123 lbs
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#7FF7F5]/50">{t("labels.hair_color")}</p>
-                  <p
-                    className="text-[#17FBF8]"
-                    style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                  >
-                    Blue
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#7FF7F5]/50">{t("labels.ethnicity")}</p>
-                  <p
-                    className="text-[#17FBF8]"
-                    style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                  >
-                    White
-                  </p>
-                </div>
+                {starData.height && (
+                  <div>
+                    <p className="text-[#7FF7F5]/50">{t("labels.height")}</p>
+                    <p
+                      className="text-[#17FBF8]"
+                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+                    >
+                      {starData.height}
+                    </p>
+                  </div>
+                )}
+                {starData.breast && (
+                  <div>
+                    <p className="text-[#7FF7F5]/50">{t("labels.breast")}</p>
+                    <p
+                      className="text-[#17FBF8]"
+                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+                    >
+                      {starData.breast}
+                    </p>
+                  </div>
+                )}
+                {starData.weight && (
+                  <div>
+                    <p className="text-[#7FF7F5]/50">{t("labels.weight")}</p>
+                    <p
+                      className="text-[#17FBF8]"
+                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+                    >
+                      {starData.weight}
+                    </p>
+                  </div>
+                )}
+                {starData.hairColor && (
+                  <div>
+                    <p className="text-[#7FF7F5]/50">{t("labels.hair_color")}</p>
+                    <p
+                      className="text-[#17FBF8]"
+                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+                    >
+                      {starData.hairColor}
+                    </p>
+                  </div>
+                )}
+                {starData.ethnicity && (
+                  <div>
+                    <p className="text-[#7FF7F5]/50">{t("labels.ethnicity")}</p>
+                    <p
+                      className="text-[#17FBF8]"
+                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+                    >
+                      {starData.ethnicity}
+                    </p>
+                  </div>
+                )}
                 <div>
                   <p className="text-[#7FF7F5]/50">{t("labels.age")}</p>
                   <p
                     className="text-[#17FBF8]"
                     style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
                   >
-                    27
+                    {ageInYears}
                   </p>
                 </div>
               </div>
 
-              <p className="uppercase text-[13px] leading-relaxed text-[#7FF7F5]">
-                {t("messages.star_quote_example")}
-              </p>
+              {starData.quote && (
+                <p className="uppercase text-[13px] leading-relaxed text-[#7FF7F5]">
+                  {starData.quote}
+                </p>
+              )}
+              
+              {starData.bio && (
+                <p className="text-[14px] leading-relaxed text-[#7FF7F5]">
+                  {starData.bio}
+                </p>
+              )}
 
               <ChipList items={starTags} linkable type="genre" />
 
-              <div className="flex items-center gap-4 text-[#17FBF8]">
-                <Link href="https://onlyfans.com" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                  <SiOnlyfans className="w-5 h-5 opacity-80" />
-                </Link>
-                <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                  <SiInstagram className="w-5 h-5 opacity-80" />
-                </Link>
-                <Link href="https://x.com" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
-                  <SiX className="w-5 h-5 opacity-80" />
-                </Link>
-              </div>
+              {starData.socialMedia && (
+                <div className="flex items-center gap-4 text-[#17FBF8]">
+                  {starData.socialMedia.onlyfans && (
+                    <Link href={starData.socialMedia.onlyfans} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                      <SiOnlyfans className="w-5 h-5 opacity-80" />
+                    </Link>
+                  )}
+                  {starData.socialMedia.instagram && (
+                    <Link href={starData.socialMedia.instagram} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                      <SiInstagram className="w-5 h-5 opacity-80" />
+                    </Link>
+                  )}
+                  {starData.socialMedia.x && (
+                    <Link href={starData.socialMedia.x} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                      <SiX className="w-5 h-5 opacity-80" />
+                    </Link>
+                  )}
+                </div>
+              )}
 
               <div className="mt-4">
                 <button 
@@ -174,20 +204,24 @@ export default function StarDetailClient({ slug }: StarDetailClientProps) {
           </Card>
         </section>
 
-        <Card className="bg-[#111118]" title={t("labels.gallery")}>
-          <div className="space-y-4">
-            <ScreenshotGallery screenshots={screenshots} />
-          </div>
-        </Card>
+        {screenshots.length > 0 && (
+          <Card className="bg-[#111118]" title={t("labels.gallery")}>
+            <div className="space-y-4">
+              <ScreenshotGallery screenshots={screenshots} />
+            </div>
+          </Card>
+        )}
 
-        <Card
-          className="bg-[#111118]"
-          title={t("labels.minimum_pcvr_requirements")}
-        >
-          <p className="uppercase text-[14px] leading-relaxed text-[#7FF7F5]">
-            {t("messages.star_about_copy_example")}
-          </p>
-        </Card>
+        {starData.bio && (
+          <Card
+            className="bg-[#111118]"
+            title={t("labels.bio")}
+          >
+            <p className="text-[14px] leading-relaxed text-[#7FF7F5]">
+              {starData.bio}
+            </p>
+          </Card>
+        )}
 
         <div className="relative">
           <div
@@ -208,9 +242,9 @@ export default function StarDetailClient({ slug }: StarDetailClientProps) {
                     className="font-heading text-[40px] leading-[0.95] md:text-[56px] text-[#17FBF8] uppercase"
                     style={{ textShadow: "0 0 15px #00FFFC" }}
                   >
-                    PUNKY
+                    {starData.name.toUpperCase()}
                     <br />
-                    NATALIE
+                    {starData.surname.toUpperCase()}
                   </h3>
 
                   <p className="mt-4 font-heading text-[11px] tracking-[0.24em] uppercase text-[#7FF7F5]">
@@ -226,33 +260,67 @@ export default function StarDetailClient({ slug }: StarDetailClientProps) {
                 </div>
               </div>
 
-              {allVideos.slice(0, 3).map((src, i) => (
+              {starData.scenePornStars.slice(0, 3).map((scenePornStar, i) => (
                 <div
-                  key={i}
-                  className="relative w-full aspect-[175/240] rounded-[18px] overflow-hidden"
+                  key={scenePornStar.sceneId}
+                  className="relative w-full aspect-[175/240] rounded-[18px] overflow-hidden bg-[#171614]"
                 >
-                  <Image
-                    src={src}
-                    alt={`video-${i}`}
-                    fill
-                    className="object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)]"
-                  />
+                  {scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage ? (
+                    <Image
+                      src={scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage!}
+                      alt={scenePornStar.scene.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full flex items-center justify-center p-4"
+                      style={{
+                        backgroundImage: `
+                          linear-gradient(${gridColor} 1px, transparent 1px),
+                          linear-gradient(90deg, ${gridColor} 1px, transparent 1px)
+                        `,
+                        backgroundSize: "20px 20px",
+                      }}
+                    >
+                      <p className="text-[#17FBF8] text-center text-sm">
+                        {scenePornStar.scene.title}
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {allVideos.slice(3).map((src, i) => (
+              {starData.scenePornStars.slice(3).map((scenePornStar, i) => (
                 <div
-                  key={i + 3}
-                  className="relative w-full aspect-[175/240] rounded-[18px] overflow-hidden"
+                  key={scenePornStar.sceneId}
+                  className="relative w-full aspect-[175/240] rounded-[18px] overflow-hidden bg-[#171614]"
                 >
-                  <Image
-                    src={src}
-                    alt={`video-${i + 3}`}
-                    fill
-                    className="object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)]"
-                  />
+                  {scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage ? (
+                    <Image
+                      src={scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage!}
+                      alt={scenePornStar.scene.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div 
+                      className="w-full h-full flex items-center justify-center p-4"
+                      style={{
+                        backgroundImage: `
+                          linear-gradient(${gridColor} 1px, transparent 1px),
+                          linear-gradient(90deg, ${gridColor} 1px, transparent 1px)
+                        `,
+                        backgroundSize: "20px 20px",
+                      }}
+                    >
+                      <p className="text-[#17FBF8] text-center text-sm">
+                        {scenePornStar.scene.title}
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

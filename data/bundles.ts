@@ -1,4 +1,4 @@
-import type { ChapterCardProps } from "@/components/chapters/ChapterCard";
+import type { ChapterCardProps } from "@/components/scenes/SceneCard";
 
 export type BundleColorKey = "purple" | "yellow" | "pink" | "red";
 
@@ -32,7 +32,7 @@ export const bundles: Bundle[] = [
         coverSrc: "/mock/example_1_x.png",
         coverAlt: "Angela White",
         platforms: ["META", "WINDOWS", "APK"],
-        viewMoreHref: "/chapters/angela-1",
+        viewMoreHref: "/scenes/angela-1",
         cartItem: {
           id: "bundle-1-angela-1",
           title: "Angela White",
@@ -48,7 +48,7 @@ export const bundles: Bundle[] = [
         accentColor: "#7A4FF4",
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_3_x.png",
-        viewMoreHref: "/chapters/angela-2",
+        viewMoreHref: "/scenes/angela-2",
         coverAlt: "Angela White II",
         cartItem: {
           id: "bundle-1-angela-2",
@@ -63,7 +63,7 @@ export const bundles: Bundle[] = [
         title: "Punny Natalie",
         releaseLabel: "RELEASE: SEPTEMBER 2024",
         platforms: ["META", "WINDOWS", "APK"],
-        viewMoreHref: "/chapters/punny-natalie",
+        viewMoreHref: "/scenes/punny-natalie",
         coverSrc: "/mock/example_2_x.png",
         coverAlt: "Punny Natalie",
         accentColor: "#7A4FF4",
@@ -94,7 +94,7 @@ export const bundles: Bundle[] = [
         accentColor: "#EFB710",
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_1_x.png",
-        viewMoreHref: "/chapters/angela-white",
+        viewMoreHref: "/scenes/angela-white",
         coverAlt: "Angela White",
         cartItem: {
           id: "bundle-2-angela-1",
@@ -112,7 +112,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_2_x.png",
         coverAlt: "Angela White II",
-        viewMoreHref: "/chapters/angela-white-ii",
+        viewMoreHref: "/scenes/angela-white-ii",
         cartItem: {
           id: "bundle-2-angela-2",
           title: "Angela White II",
@@ -128,7 +128,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_3_x.png",
         coverAlt: "Punny Natalie",
-        viewMoreHref: "/chapters/punny-natalie",
+        viewMoreHref: "/scenes/punny-natalie",
         accentColor: "#EFB710",
         cartItem: {
           id: "bundle-2-natalie",
@@ -158,7 +158,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_1_x.png",
         coverAlt: "Angela White",
-        viewMoreHref: "/chapters/angela-white",
+        viewMoreHref: "/scenes/angela-white",
         cartItem: {
           id: "bundle-3-angela-1",
           title: "Angela White",
@@ -175,7 +175,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_2_x.png",
         coverAlt: "Angela White II",
-        viewMoreHref: "/chapters/angela-white-ii",
+        viewMoreHref: "/scenes/angela-white-ii",
 
         cartItem: {
           id: "bundle-3-angela-2",
@@ -192,7 +192,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_3_x.png",
         coverAlt: "Punny Natalie",
-        viewMoreHref: "/chapters/punny-natalie",
+        viewMoreHref: "/scenes/punny-natalie",
 
         accentColor: "#E41D8D",
         cartItem: {
@@ -223,7 +223,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_1_x.png",
         coverAlt: "Angela White",
-        viewMoreHref: "/chapters/angela-white",
+        viewMoreHref: "/scenes/angela-white",
         cartItem: {
           id: "bundle-4-angela-1",
           title: "Angela White",
@@ -240,7 +240,7 @@ export const bundles: Bundle[] = [
         platforms: ["META", "WINDOWS", "APK"],
         coverSrc: "/mock/example_2_x.png",
         coverAlt: "Angela White II",
-        viewMoreHref: "/chapters/angela-white-ii",
+        viewMoreHref: "/scenes/angela-white-ii",
         cartItem: {
           id: "bundle-4-angela-2",
           title: "Angela White II",
@@ -257,7 +257,7 @@ export const bundles: Bundle[] = [
         coverSrc: "/mock/example_3_x.png",
         coverAlt: "Punny Natalie",
         accentColor: "#E41D3B",
-        viewMoreHref: "/chapters/punny-natalie",
+        viewMoreHref: "/scenes/punny-natalie",
         cartItem: {
           id: "bundle-4-natalie",
           title: "Punny Natalie",
@@ -274,7 +274,7 @@ export const bundles: Bundle[] = [
         coverSrc: "/mock/example_2_x.png",
         coverAlt: "Punny sadsadsa",
         accentColor: "#E41D3B",
-        viewMoreHref: "/chapters/punny-sadsadsa",
+        viewMoreHref: "/scenes/punny-sadsadsa",
         cartItem: {
           id: "bundle-4-sadsadsa",
           title: "Punny sadsadsa",

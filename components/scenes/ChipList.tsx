@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 
+type ChipItem = string | { id: number; name: string };
+
 interface ChipListProps {
-  items: string[];
+  items: ChipItem[];
   linkable?: boolean;
   type?: "feature" | "genre";
   interactive?: boolean;
@@ -17,7 +19,12 @@ export default function ChipList({
 }: ChipListProps) {
   return (
     <div className="flex flex-wrap gap-2">
-      {items.map((item) => {
+      {items.map((item, index) => {
+        const isObject = typeof item === "object";
+        const displayName = isObject ? item.name : item;
+        const itemId = isObject ? item.id : index;
+        const key = isObject ? `${item.id}-${item.name}` : item;
+        
         const baseClasses = "rounded-[4px] px-3 py-2 border border-[#17FBF84D] bg-[#111118CC] text-[#17FBF8] text-[14px] uppercase";
         const interactiveClasses = interactive 
           ? "cursor-pointer hover:bg-[#17FBF810] transition-colors" 
@@ -25,18 +32,26 @@ export default function ChipList({
         
         const chip = (
           <span
-            key={item}
+            key={key}
             className={`${baseClasses} ${interactiveClasses}`}
             style={{ boxShadow: "0px 0px 15px 0px #17FBF833" }}
           >
-            {item}
+            {displayName}
           </span>
         );
 
-        if (linkable && type === "genre") {
-          const slug = item.toLowerCase().replace(/\s+/g, "-");
+        if (linkable && type === "genre" && isObject) {
           return (
-            <Link key={item} href={`/tags/${slug}`}>
+            <Link key={key} href={`/tags/${itemId}`}>
+              {chip}
+            </Link>
+          );
+        }
+
+        if (linkable && type === "genre" && !isObject) {
+          const slug = displayName.toLowerCase().replace(/\s+/g, "-");
+          return (
+            <Link key={key} href={`/tags/${slug}`}>
               {chip}
             </Link>
           );

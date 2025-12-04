@@ -8,9 +8,7 @@ const eslintConfig = defineConfig([
   {
     "extends": ["next/core-web-vitals", "plugin:prettier/recommended"]
   },
-  // Override default ignores of eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",

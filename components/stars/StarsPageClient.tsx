@@ -1,160 +1,53 @@
 "use client";
 
+import { useState } from "react";
 import Pagination from "@/components/Pagination";
 import Card from "@/components/Card";
 import StarsGridAnimated from "@/components/stars/StarsGridAnimated";
 import { primaryButtonBase } from "@/lib/styles/buttons";
 import { useT } from "@/providers/I18nProvider";
+import type { PornStar } from "@/lib/api/types";
 
-const stars = [
-  {
-    coverSrc: "/mock/star_1_mock.png",
-    coverAlt: "Star 1",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 1,
-    cartItem: {
-      id: "star-1",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_1_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_2_mock.png",
-    coverAlt: "Star 2",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 2,
-    cartItem: {
-      id: "star-2",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_2_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_3_mock.png",
-    coverAlt: "Star 3",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 3,
-    cartItem: {
-      id: "star-3",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_3_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_1_mock.png",
-    coverAlt: "Star 4",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 4,
-    cartItem: {
-      id: "star-4",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_1_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_2_mock.png",
-    coverAlt: "Star 5",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 5,
-    cartItem: {
-      id: "star-5",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_2_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_3_mock.png",
-    coverAlt: "Star 6",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 6,
-    cartItem: {
-      id: "star-6",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_3_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_1_mock.png",
-    coverAlt: "Star 7",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 7,
-    cartItem: {
-      id: "star-7",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_1_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_2_mock.png",
-    coverAlt: "Star 8",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 8,
-    cartItem: {
-      id: "star-8",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_2_mock.png",
-    },
-  },
-  {
-    coverSrc: "/mock/star_3_mock.png",
-    coverAlt: "Star 9",
-    title: "ANGELA WHITE II",
-    releaseLabel: "2 CHAPTERS",
-    accentColor: "#17FBF8",
-    id: 9,
-    cartItem: {
-      id: "star-9",
-      title: "ANGELA WHITE II",
-      subtitle: "2 CHAPTERS",
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: "/mock/star_3_mock.png",
-    },
-  },
-];
+interface StarsPageClientProps {
+  pornStarsData?: PornStar[];
+}
 
-export default function StarsPageClient() {
+export default function StarsPageClient({ pornStarsData }: StarsPageClientProps) {
   const t = useT();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const starsPerPage = 12;
+  const totalStars = pornStarsData?.length || 0;
+  const totalPages = Math.ceil(totalStars / starsPerPage);
+
+  const startIndex = (currentPage - 1) * starsPerPage;
+  const endIndex = startIndex + starsPerPage;
+  const currentStars = (pornStarsData || []).slice(startIndex, endIndex);
+
+  const PLACEHOLDER_IMAGE = "/placeholder-star.jpg";
+
+  const stars = currentStars.map((pornStar) => ({
+    coverSrc: pornStar.profileImage || PLACEHOLDER_IMAGE,
+    coverAlt: `${pornStar.name} ${pornStar.surname}`,
+    title: `${pornStar.name} ${pornStar.surname}`.toUpperCase(),
+    releaseLabel: `${pornStar.scenePornStars.length} CHAPTERS`,
+    accentColor: "#17FBF8",
+    id: pornStar.id,
+    cartItem: {
+      id: `star-${pornStar.id}`,
+      title: `${pornStar.name} ${pornStar.surname}`.toUpperCase(),
+      subtitle: `${pornStar.scenePornStars.length} CHAPTERS`,
+      price: 29.99,
+      oldPrice: 39.99,
+      imageSrc: pornStar.profileImage || PLACEHOLDER_IMAGE,
+    },
+  }));
+
+  const hasStars = stars.length > 0;
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <section className="text-white px-4 md:px-8 max-w-[1024px] mx-auto py-8">
@@ -188,7 +81,14 @@ export default function StarsPageClient() {
 
         <StarsGridAnimated stars={stars} />
       </div>
-      <Pagination currentPage={1} totalPages={3} />
+      
+      {hasStars && totalPages > 1 && (
+        <Pagination 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          onPageChange={handlePageChange}
+        />
+      )}
     </section>
   );
 }

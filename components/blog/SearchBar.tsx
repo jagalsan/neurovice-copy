@@ -12,7 +12,6 @@ export function SearchBar() {
   const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // Skip the effect on first render to avoid unnecessary URL update
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
@@ -23,11 +22,10 @@ export function SearchBar() {
       const currentSearch = searchParams.get("search") ?? "";
       const newSearch = searchValue.trim();
       
-      // Only update URL if the search value actually changed
       if (currentSearch !== newSearch) {
         if (newSearch) {
           params.set("search", newSearch);
-          params.delete("page"); // Reset to first page on new search
+          params.delete("page"); 
         } else {
           params.delete("search");
           params.delete("page");
@@ -35,7 +33,7 @@ export function SearchBar() {
         
         router.push(`${pathname}?${params.toString()}`, { scroll: false });
       }
-    }, 800); // Increased debounce to 800ms for better UX
+    }, 800); 
 
     return () => clearTimeout(timeoutId);
   }, [searchValue]);

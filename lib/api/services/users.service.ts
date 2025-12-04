@@ -4,10 +4,35 @@
  */
 
 import { apiClient } from "../client/axios-client";
-import { UpdateUserPhoneRequest, UpdateUserLanguageRequest } from "../types";
+import { 
+  User,
+  MyUserResponse,
+  UpdateUserDataRequest,
+  UpdateUserPhoneRequest, 
+  UpdateUserLanguageRequest 
+} from "../types";
 
 class UsersService {
   private readonly basePath = "/users";
+
+  /**
+   * Get current authenticated user data
+   */
+  async getMyUser(): Promise<MyUserResponse> {
+    const { data } = await apiClient.get<MyUserResponse>(`${this.basePath}/my_user`);
+    return data;
+  }
+
+  /**
+   * Update user data (name, lastName, etc.)
+   */
+  async updateData(payload: UpdateUserDataRequest): Promise<User> {
+    const { data } = await apiClient.put<User>(
+      `${this.basePath}/update_data`,
+      payload
+    );
+    return data;
+  }
 
   /**
    * Update user phone

@@ -71,7 +71,7 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
       if (value && typeof value === 'object' && k in value) {
         value = value[k];
       } else {
-        console.warn(`Translation key not found: ${key}`);
+        // console.warn(`Translation key not found: ${key}`);
         return key;
       }
     }

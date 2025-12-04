@@ -6,8 +6,8 @@ import { persist } from "zustand/middleware";
 export interface CartItem {
   id: string;
   title: string;
-  subtitle: string;
-  oldPrice: number;
+  subtitle?: string;
+  oldPrice?: number;
   price: number;
   imageSrc: string;
   quantity: number;
@@ -78,7 +78,7 @@ export const useCartStore = create<CartState>()(
 
       getTotalOldPrice: () => {
         return get().items.reduce(
-          (total, item) => total + item.oldPrice * item.quantity,
+          (total, item) => total + (item.oldPrice || 0) * item.quantity,
           0
         );
       },

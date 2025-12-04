@@ -15,18 +15,77 @@ export interface ScenePriceInput {
   amount: number;
 }
 
+export interface SceneImage {
+  id: number;
+  sceneId: number;
+  imageUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SceneTrailer {
+  id: number;
+  sceneId: number;
+  videoUrl: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SceneTag {
+  sceneId: number;
+  tagId: number;
+  tag: Tag;
+}
+
+export interface ScenePornStar {
+  sceneId: number;
+  pornStarId: number;
+  pornStar: PornStar;
+}
+
 export interface Scene {
   id: number;
   title: string;
   description: string;
   public: boolean;
   hash?: string;
+  mainImageUrl?: string;
+  mainVideoUrl?: string;
+  createdAt?: string;
+  updatedAt?: string;
   prices: ScenePrice[];
-  scenePornStars?: PornStar[];
+  scenePornStars?: ScenePornStar[];
   seasonId?: number;
-  sceneTags?: Tag[];
-  sceneImages?: string[];
-  sceneTrailers?: string[];
+  season?: {
+    id: number;
+    title: string;
+    description?: string;
+    color?: string;
+    mainImageUrl?: string;
+    mainVideoUrl?: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  sceneTags?: SceneTag[];
+  sceneImages?: SceneImage[];
+  sceneTrailers?: SceneTrailer[];
+  
+  // TODO: CAMPOS FALTANTES - Solicitar al backend:
+  features?: string[];           // Lista de características (ROLEPLAY, FUN VIBRATORS, etc.)
+  platforms?: string[];          // Plataformas soportadas (META QUEST, WINDOWS PCVR, etc.)
+  releaseDate?: string;          // Fecha de lanzamiento
+  language?: string;             // Idioma (ENGLISH, SPANISH, etc.)
+  resolution?: string;           // Resolución (UP TO 8K, etc.)
+  degree?: string;               // Grados de visión (195, 180, etc.)
+  fileSize?: string;             // Tamaño del archivo (14.6GB, etc.)
+  requirements?: {               // Requisitos del sistema
+    deviceSupport?: string;
+    os?: string;
+    cpu?: string;
+    gpu?: string;
+    ram?: string;
+    diskSpace?: string;
+  };
 }
 
 export interface SceneWithAccess extends Scene {

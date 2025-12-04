@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { authenticationService } from "@/lib/api/services/authentication.service";
+import { useGoogleAuthUrl, useFacebookAuthUrl } from "@/lib/hooks/api/useAuth";
 import { MetaIcon } from "../icons/PlatformIcons";
 
 type TFn = (key: string) => string;
@@ -13,12 +13,14 @@ interface QuickLoginProps {
 
 export default function QuickLogin({ t }: QuickLoginProps) {
   const [loading, setLoading] = useState<"google" | "facebook" | null>(null);
+  const { refetch: getGoogleUrl } = useGoogleAuthUrl();
+  const { refetch: getFacebookUrl } = useFacebookAuthUrl();
 
   const handleGoogleLogin = async () => {
     try {
       setLoading("google");
-      const url = await authenticationService.getGoogleAuthUrl();
-      window.location.href = url;
+      const { data: url } = await getGoogleUrl();
+      if (url) window.location.href = url;
     } catch (err) {
       console.error("Google OAuth error:", err);
       setLoading(null);
@@ -28,8 +30,8 @@ export default function QuickLogin({ t }: QuickLoginProps) {
   const handleFacebookLogin = async () => {
     try {
       setLoading("facebook");
-      const url = await authenticationService.getFacebookAuthUrl();
-      window.location.href = url;
+      const { data: url } = await getFacebookUrl();
+      if (url) window.location.href = url;
     } catch (err) {
       console.error("Facebook OAuth error:", err);
       setLoading(null);

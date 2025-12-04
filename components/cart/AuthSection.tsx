@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useSignIn, useSignUp } from "@/lib/hooks/api/useAuth";
-import { authenticationService } from "@/lib/api/services/authentication.service";
+import { useSignIn, useSignUp, useRequestResetPassword, useFacebookAuthUrl, useGoogleAuthUrl } from "@/lib/hooks/api/useAuth";
 import { MetaIcon } from "@/components/icons/PlatformIcons";
 
 type AuthMode = "login" | "register" | "forgot";
@@ -46,12 +45,14 @@ function AuthField({
 
 function SocialLoginButtons({ t }: { t: (key: string) => string }) {
   const [loading, setLoading] = useState<"google" | "meta" | null>(null);
+  const { refetch: getGoogleUrl } = useGoogleAuthUrl();
+  const { refetch: getFacebookUrl } = useFacebookAuthUrl();
 
   const handleGoogle = async () => {
     try {
       setLoading("google");
-      const url = await authenticationService.getGoogleAuthUrl();
-      window.location.href = url;
+      const { data: url } = await getGoogleUrl();
+      if (url) window.location.href = url;
     } finally {
       setLoading(null);
     }
@@ -60,8 +61,8 @@ function SocialLoginButtons({ t }: { t: (key: string) => string }) {
   const handleMeta = async () => {
     try {
       setLoading("meta");
-      const url = await authenticationService.getFacebookAuthUrl();
-      window.location.href = url;
+      const { data: url } = await getFacebookUrl();
+      if (url) window.location.href = url;
     } finally {
       setLoading(null);
     }
@@ -106,6 +107,7 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
 
   const signInMutation = useSignIn();
   const signUpMutation = useSignUp();
+  const requestResetPassword = useRequestResetPassword();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,7 +148,7 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
     }
 
     try {
-      await authenticationService.requestResetPassword({ email });
+      await requestResetPassword.mutateAsync({ email });
       setError("");
       alert(t("messages.password_reset_sent") || "Password reset link sent to your email");
       setMode("login");
