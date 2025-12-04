@@ -22,10 +22,8 @@ export function useAddToCart(): UseAddToCartReturn {
   const addToCart = useCallback(
     (item: AddToCartItem) => {
       addItem(item);
-      // Mostrar toast solo cuando estamos en mobile
-      if (typeof window !== "undefined" && window.innerWidth < 768) {
-        showToast(t("messages.added_to_cart"), "success");
-      }
+
+      showToast(t("messages.added_to_cart"), "success");
     },
     [addItem, showToast, t]
   );
