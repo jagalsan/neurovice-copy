@@ -55,7 +55,7 @@ export default function CartPageClient() {
                   <CartItem
                     key={item.id}
                     title={item.title}
-                    subtitle={item.subtitle}
+                    subtitle={item.subtitle || ""}
                     oldPrice={`$${item.oldPrice}`}
                     price={`$${item.price}`}
                     imageSrc={item.imageSrc}
