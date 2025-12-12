@@ -2,111 +2,50 @@
 
 import Image from "next/image";
 import { BackHeader, sectionTitleClass } from "./shared";
-import { SubscriptionListItem, SubscriptionStatus } from "@/lib/api/types";
+import { BoughtScene, UserSubscription } from "@/lib/api/types";
+import { useCurrentUser } from "@/lib/hooks/api";
 
-const mockSubscriptions: SubscriptionListItem[] = [
-  {
-    id: 2522311230,
-    planId: 1,
-    status: SubscriptionStatus.ACTIVE,
-    startDate: "2024-01-15",
-    endDate: "2025-01-15",
-    user: {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-    },
-    plan: {
-      name: "1 YEAR SUBSCRIPTION",
-      externalPlan: {
-        origin: "PayPal",
-      },
-    },
-    _count: {
-      payments: 1,
-      promocodeUsages: 0,
-    },
-  },
-  {
-    id: 2522311231,
-    planId: 2,
-    status: SubscriptionStatus.CANCELLED,
-    startDate: "2023-06-01",
-    endDate: "2024-06-01",
-    user: {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-    },
-    plan: {
-      name: "CHAPTER 1 - THE BEGINNING",
-      externalPlan: {
-        origin: "Credit Card",
-      },
-    },
-    _count: {
-      payments: 1,
-      promocodeUsages: 0,
-    },
-  },
-  {
-    id: 2522311232,
-    planId: 3,
-    status: SubscriptionStatus.CANCELLED,
-    startDate: "2023-08-10",
-    endDate: "2024-08-10",
-    user: {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-    },
-    plan: {
-      name: "CHAPTER 2 - RISING ACTION",
-      externalPlan: {
-        origin: "Credit Card",
-      },
-    },
-    _count: {
-      payments: 1,
-      promocodeUsages: 0,
-    },
-  },
-];
 
 interface PurchasesViewProps {
   t: (k: string) => string;
   onBack: () => void;
 }
 
-interface PurchaseRowProps {
-  subscription: SubscriptionListItem;
+interface SubscriptionRowProps {
+  subscription: UserSubscription;
 }
 
-function PurchaseRow({ subscription }: PurchaseRowProps) {
+interface SceneRowProps {
+  scene: BoughtScene;
+}
+
+function SubscriptionRow({ subscription }: SubscriptionRowProps) {
+  const isActive = subscription.status.toLowerCase() === "active";
+  
   return (
     <div className="flex gap-4">
       <div className="relative w-[64px] h-[90px] rounded-[10px] overflow-hidden border border-white/10 bg-black/40">
         <Image
           src="/mock/video_placeholder.png"
-          alt="Chapter"
+          alt="Subscription"
           fill
           className="object-cover"
         />
       </div>
       <div className="flex-1 flex flex-col gap-1 text-[11px]">
         <p className="text-[12px] tracking-[0.18em] uppercase text-[#17FBF8]">
-          TURBOFAP
+          NEUROVICE
         </p>
         <p className="text-[11px] tracking-[0.18em] uppercase text-white">
-          {subscription.plan.name}
+          {subscription.plan?.name || "Subscription"}
         </p>
         <p className="text-[11px] text-[var(--color-brand-300)]">
-          {subscription.plan.externalPlan.origin}
+          {subscription.plan?.externalPlan?.origin || "N/A"}
         </p>
         <div className="mt-1 flex items-center gap-3">
           <span className={[
             "px-3 py-1 rounded-[6px] uppercase tracking-[0.18em] text-[10px]",
-            subscription.status === SubscriptionStatus.ACTIVE ? "bg-[#002A26] text-[#17FBF8]" : "bg-[#7A1133] text-[#FF4AB0]"
+            isActive ? "bg-[#002A26] text-[#17FBF8]" : "bg-[#7A1133] text-[#FF4AB0]"
           ].join(" ")}>
             {subscription.status}
           </span>
@@ -119,11 +58,41 @@ function PurchaseRow({ subscription }: PurchaseRowProps) {
   );
 }
 
+function SceneRow({ scene }: SceneRowProps) {
+  return (
+    <div className="flex gap-4">
+      <div className="relative w-[64px] h-[90px] rounded-[10px] overflow-hidden border border-white/10 bg-black/40">
+        <Image
+          src={scene.mainImageUrl || "/placeholder-scene.jpg"}
+          alt={scene.title}
+          fill
+          className="object-cover"
+        />
+      </div>
+      <div className="flex-1 flex flex-col gap-1 text-[11px]">
+        <p className="text-[12px] tracking-[0.18em] uppercase text-[#17FBF8]">
+          NEUROVICE
+        </p>
+        <p className="text-[11px] tracking-[0.18em] uppercase text-white">
+          {scene.title}
+        </p>
+        <p className="text-[11px] text-[var(--color-brand-300)]">
+          Scene #{scene.sceneId}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function PurchasesView({ t, onBack }: PurchasesViewProps) {
-  const subscriptions = mockSubscriptions;
+  const { data: userData } = useCurrentUser();
+  const user = (userData as any)?.user || userData;
   
-  const activeSubscriptions = subscriptions.filter((s) => s.status === SubscriptionStatus.ACTIVE);
-  const otherPurchases = subscriptions.filter((s) => s.status !== SubscriptionStatus.ACTIVE);
+  const subscriptions = user?.subscriptions || [];
+  const boughtScenes = user?.boughtScenes || [];
+  
+  const activeSubscriptions = subscriptions.filter((s: UserSubscription) => s.status.toLowerCase() === "active");
+  const inactiveSubscriptions = subscriptions.filter((s: UserSubscription) => s.status.toLowerCase() !== "active");
 
   return (
     <div className="font-heading text-white text-[13px] space-y-6">
@@ -132,22 +101,31 @@ export default function PurchasesView({ t, onBack }: PurchasesViewProps) {
       {activeSubscriptions.length > 0 && (
         <section className="space-y-4 md:px-8">
           <p className={sectionTitleClass}>{t("labels.subscription")}</p>
-          {activeSubscriptions.map((sub) => (
-            <PurchaseRow key={sub.id} subscription={sub} />
+          {activeSubscriptions.map((sub: UserSubscription) => (
+            <SubscriptionRow key={sub.id} subscription={sub} />
           ))}
         </section>
       )}
 
-      {otherPurchases.length > 0 && (
+      {inactiveSubscriptions.length > 0 && (
         <section className="space-y-4 pt-4 md:px-8">
-          <p className={sectionTitleClass}>{t("labels.chapters")}</p>
-          {otherPurchases.map((sub) => (
-            <PurchaseRow key={sub.id} subscription={sub} />
+          <p className={sectionTitleClass}>Past Subscriptions</p>
+          {inactiveSubscriptions.map((sub: UserSubscription) => (
+            <SubscriptionRow key={sub.id} subscription={sub} />
           ))}
         </section>
       )}
 
-      {subscriptions.length === 0 && (
+      {boughtScenes.length > 0 && (
+        <section className="space-y-4 pt-4 md:px-8">
+          <p className={sectionTitleClass}>{t("labels.scenes")}</p>
+          {boughtScenes.map((scene: BoughtScene) => (
+            <SceneRow key={scene.id} scene={scene} />
+          ))}
+        </section>
+      )}
+
+      {subscriptions.length === 0 && boughtScenes.length === 0 && (
         <p className="text-center text-[var(--color-brand-300)] md:px-8">
           {t("messages.no_active_subscription")}
         </p>

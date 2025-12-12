@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import ChapterCard from "@/components/scenes/SceneCard";
+import ContentCard from "@/components/cards/ContentCard";
 import { useLocale } from "@/providers/LocaleProvider";
 import { CartItem } from "@/lib/stores/cart.store";
 
@@ -25,7 +25,7 @@ export default function StarsGridAnimated({ stars }: { stars: Star[] }) {
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-[80px] justify-items-center">
         {stars.map((s, i) => (
-          <ChapterCard
+          <ContentCard
             key={i}
             coverSrc={s.coverSrc}
             coverAlt={s.coverAlt}

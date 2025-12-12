@@ -9,12 +9,12 @@ import SceneSidebar from "./SceneSidebar";
 import AlsoAppearedIn from "./AlsoAppearedIn";
 import { useAddToCart } from "@/lib/hooks/useAddToCart";
 import { CartItem } from "@/lib/stores/cart.store";
+import { useT } from "@/providers";
 
 interface SceneClientProps {
   title: string;
   posterSrc: string;
   screenshots: string[];
-  features: string[];
   genres: Array<{ id: number; name: string }> | string[];  
   info: [string, string][];
   requirements: [string, string][];
@@ -38,7 +38,6 @@ export default function SceneClient({
   title,
   posterSrc,
   screenshots,
-  features,
   genres,
   info,
   requirements,
@@ -57,6 +56,7 @@ export default function SceneClient({
   allScenesCartItem,
   alsoAppearedItems,
 }: SceneClientProps) {
+  const t = useT();
   const { addToCart } = useAddToCart();
 
   const handleBuyAll = () => {
@@ -78,25 +78,19 @@ export default function SceneClient({
               />
             </Card>
 
-            <Card className="bg-[#111118]" title="VR scenes (screenshots)">
+            <Card className="bg-[#111118]" title={t("labels.vr_scenes_screenshots")}>
               <div className="space-y-4">
                 <ScreenshotGallery screenshots={screenshots} />
               </div>
             </Card>
 
-            <Card className="bg-[#111118]" title="Features">
-              <div className="space-y-4">
-                <ChipList items={features} interactive={false} />
-              </div>
-            </Card>
-
-            <Card className="bg-[#111118]" title="Genre">
+            <Card className="bg-[#111118]" title={t("labels.genre")}>
               <div className="space-y-4">
                 <ChipList items={genres} linkable type="genre" />
               </div>
             </Card>
 
-            <Card className="bg-[#111118]" title="General info">
+            <Card className="bg-[#111118]" title={t("labels.general_info")}>
               <div className="space-y-4">
                 <InfoTable data={info} />
               </div>
@@ -104,7 +98,7 @@ export default function SceneClient({
 
             <Card
               className="bg-[#111118] mb-8"
-              title="Minimum system requirements for PCVR"
+              title={t("labels.minimum_pcvr_requirements")}
             >
               <div className="space-y-4">
                 <InfoTable data={requirements} />

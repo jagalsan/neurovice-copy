@@ -12,7 +12,7 @@ import { useT } from "@/providers/I18nProvider";
 import { useAddToCart } from "@/lib/hooks/useAddToCart";
 import { CartItem } from "@/lib/stores/cart.store";
 
-export type ChapterCardProps = {
+export type ContentCardProps = {
   coverSrc: string;
   coverAlt: string;
   title?: string;
@@ -30,7 +30,7 @@ const platformIconMap: Record<string, React.ComponentType<any>> = {
   APK: ApkIcon,
 };
 
-export default function ChapterCard({
+export default function ContentCard({
   coverSrc,
   coverAlt,
   title,
@@ -40,7 +40,7 @@ export default function ChapterCard({
   viewMoreHref,
   cartItem,
   variant = "default",
-}: ChapterCardProps) {
+}: ContentCardProps) {
   const t = useT();
   const { addToCart } = useAddToCart();
 

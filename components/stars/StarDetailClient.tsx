@@ -92,36 +92,14 @@ export default function StarDetailClient({ starData }: StarDetailClientProps) {
               </h1>
 
               <div className="grid grid-cols-3 gap-4 text-[12px] uppercase">
-                {starData.height && (
+                {starData.gender && (
                   <div>
-                    <p className="text-[#7FF7F5]/50">{t("labels.height")}</p>
+                    <p className="text-[#7FF7F5]/50">{t("labels.gender")}</p>
                     <p
                       className="text-[#17FBF8]"
                       style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
                     >
-                      {starData.height}
-                    </p>
-                  </div>
-                )}
-                {starData.breast && (
-                  <div>
-                    <p className="text-[#7FF7F5]/50">{t("labels.breast")}</p>
-                    <p
-                      className="text-[#17FBF8]"
-                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                    >
-                      {starData.breast}
-                    </p>
-                  </div>
-                )}
-                {starData.weight && (
-                  <div>
-                    <p className="text-[#7FF7F5]/50">{t("labels.weight")}</p>
-                    <p
-                      className="text-[#17FBF8]"
-                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                    >
-                      {starData.weight}
+                      {starData.gender === 'male' ? t('labels.male') : t('labels.female')}
                     </p>
                   </div>
                 )}
@@ -133,17 +111,6 @@ export default function StarDetailClient({ starData }: StarDetailClientProps) {
                       style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
                     >
                       {starData.hairColor}
-                    </p>
-                  </div>
-                )}
-                {starData.ethnicity && (
-                  <div>
-                    <p className="text-[#7FF7F5]/50">{t("labels.ethnicity")}</p>
-                    <p
-                      className="text-[#17FBF8]"
-                      style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
-                    >
-                      {starData.ethnicity}
                     </p>
                   </div>
                 )}
@@ -260,14 +227,14 @@ export default function StarDetailClient({ starData }: StarDetailClientProps) {
                 </div>
               </div>
 
-              {starData.scenePornStars.slice(0, 3).map((scenePornStar, i) => (
+              {starData.scenePornStars.slice(0, 3).map((scenePornStar) => (
                 <div
                   key={scenePornStar.sceneId}
                   className="relative w-full aspect-[175/240] rounded-[18px] overflow-hidden bg-[#171614]"
                 >
-                  {scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage ? (
+                  {scenePornStar.scene.thumbnailUrl ? (
                     <Image
-                      src={scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage!}
+                      src={scenePornStar.scene.thumbnailUrl}
                       alt={scenePornStar.scene.title}
                       fill
                       className="object-cover"
@@ -293,14 +260,14 @@ export default function StarDetailClient({ starData }: StarDetailClientProps) {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {starData.scenePornStars.slice(3).map((scenePornStar, i) => (
+              {starData.scenePornStars.slice(3).map((scenePornStar) => (
                 <div
                   key={scenePornStar.sceneId}
                   className="relative w-full aspect-[175/240] rounded-[18px] overflow-hidden bg-[#171614]"
                 >
-                  {scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage ? (
+                  {scenePornStar.scene.thumbnailUrl ? (
                     <Image
-                      src={scenePornStar.scene.thumbnailUrl || scenePornStar.scene.coverImage!}
+                      src={scenePornStar.scene.thumbnailUrl}
                       alt={scenePornStar.scene.title}
                       fill
                       className="object-cover"

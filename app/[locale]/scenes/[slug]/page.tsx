@@ -45,12 +45,12 @@ export default async function SceneDetailPage({
     
     const screenshots = sceneData.sceneImages?.map(img => img.imageUrl) || [];
     
-    const features = sceneData.features || [];
-    
     const genres = sceneData.sceneTags?.map(st => ({
       id: st.tag.id,
       name: st.tag.name.toUpperCase()
     })) || [];
+    
+    const platforms = ["WINDOWS PCVR", "META QUEST 3/3S", "PICO 4 ULTRA", "HTC VIVE", "VALVE INDEX"];
     
     const info: [string, string][] = [];
     
@@ -59,9 +59,7 @@ export default async function SceneDetailPage({
     } else if (sceneData.createdAt) {
       info.push(["RELEASE DATE", new Date(sceneData.createdAt).toLocaleDateString()]);
     }
-    if (sceneData.platforms && sceneData.platforms.length > 0) {
-      info.push(["PLATFORMS", sceneData.platforms.join(", ")]);
-    }
+    info.push(["PLATFORMS", platforms.join(", ")]);
     if (starName && starName !== "Unknown") {
       info.push(["PORNSTAR", starName]);
     }
@@ -75,30 +73,18 @@ export default async function SceneDetailPage({
       info.push(["DEGREE", sceneData.degree]);
     }
     
-    const requirements: [string, string][] = [];
-    
-    if (sceneData.requirements?.deviceSupport) {
-      requirements.push(["DEVICE SUPPORT", sceneData.requirements.deviceSupport]);
-    }
-    if (sceneData.requirements?.os) {
-      requirements.push(["OS", sceneData.requirements.os]);
-    }
-    if (sceneData.requirements?.cpu) {
-      requirements.push(["CPU", sceneData.requirements.cpu]);
-    }
-    if (sceneData.requirements?.gpu) {
-      requirements.push(["GPU", sceneData.requirements.gpu]);
-    }
-    if (sceneData.requirements?.ram) {
-      requirements.push(["RAM", sceneData.requirements.ram]);
-    }
-    if (sceneData.requirements?.diskSpace || sceneData.fileSize) {
-      requirements.push(["DISK SPACE", sceneData.requirements?.diskSpace || sceneData.fileSize!]);
-    }
+    const requirements: [string, string][] = [
+      ["DEVICE SUPPORT", "ANY PCVR HEADSET WITH OPENXR RUNTIME SUPPORT"],
+      ["OS", "MS WINDOWS 10"],
+      ["CPU", "INTEL CORE I3 OR AMD RYZEN 3 3200"],
+      ["GPU", "NVIDIA RTX 2060 OR AMD RX 5600 WITH LATEST DRIVERS"],
+      ["RAM", "8GB"],
+      ["DISK SPACE", "15GB"]
+    ];
 
     const eurPrice = sceneData.prices.find(p => p.currency === "EUR");
-    const price = eurPrice ? Number((eurPrice.amount / 100).toFixed(2)) : 19.99;
-    const oldPrice = Number((price * 1.5).toFixed(2));
+    const price = eurPrice;
+    const oldPrice = null;
 
     const starBio = firstPornStar?.bio || "";
     const starTags = firstPornStar?.pornStarsTags?.map(t => t.tag.name.toUpperCase()) || [];
@@ -111,7 +97,6 @@ export default async function SceneDetailPage({
         title={sceneData.title}
         posterSrc={sceneData.mainVideoUrl || PLACEHOLDER_VIDEO}
         screenshots={screenshots}
-        features={features}
         genres={genres}
         info={info}
         requirements={requirements}
@@ -125,11 +110,11 @@ export default async function SceneDetailPage({
         fileSize={sceneData.fileSize || "N/A"}
         description={sceneData.description}
         releaseDate={sceneData.releaseDate || sceneData.createdAt}
-        platforms={sceneData.platforms}
+        platforms={platforms}
         cartItem={{
           id: sceneData.id.toString(),
           title: sceneData.title,
-          price: price,
+          price: eurPrice?.amount ?? 0,
           oldPrice: oldPrice,
           imageSrc: sceneData.mainImageUrl || PLACEHOLDER_IMAGE,
         }}

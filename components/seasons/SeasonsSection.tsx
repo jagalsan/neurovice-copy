@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ChapterCard from "@/components/scenes/SceneCard";
+import ContentCard from "@/components/cards/ContentCard";
 import type { Season } from "@/lib/api/types";
 import { useT } from "@/providers/I18nProvider";
 
@@ -359,7 +359,7 @@ function SeasonRow({ season, chapters, colorVariant, seasonIndex }: SeasonRowPro
                         className="grid grid-cols-3 gap-6"
                       >
                         {desktopVisible.map((chapter) => (
-                          <ChapterCard key={chapter.title} {...chapter} />
+                          <ContentCard key={chapter.title} {...chapter} />
                         ))}
                       </motion.div>
                     </AnimatePresence>
@@ -385,7 +385,7 @@ function SeasonRow({ season, chapters, colorVariant, seasonIndex }: SeasonRowPro
                         onDragEnd={handleMobileDragEnd}
                       >
                         <div className="w-[85%] mx-auto">
-                          <ChapterCard {...chapters[mobileIndex]} />
+                          <ContentCard {...chapters[mobileIndex]} />
                         </div>
                       </motion.div>
                     </AnimatePresence>

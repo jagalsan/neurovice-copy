@@ -49,10 +49,15 @@ export interface Scene {
   description: string;
   public: boolean;
   hash?: string;
-  mainImageUrl?: string;
-  mainVideoUrl?: string;
+  mainImageUrl?: string | null;
+  mainVideoUrl?: string | null;
   createdAt?: string;
   updatedAt?: string;
+  releaseDate?: string | null;
+  language?: string | null;
+  resolution?: string | null;
+  degree?: string | null;
+  fileSize?: string | null;
   prices: ScenePrice[];
   scenePornStars?: ScenePornStar[];
   seasonId?: number;
@@ -69,23 +74,7 @@ export interface Scene {
   sceneTags?: SceneTag[];
   sceneImages?: SceneImage[];
   sceneTrailers?: SceneTrailer[];
-  
-  // TODO: CAMPOS FALTANTES - Solicitar al backend:
-  features?: string[];           // Lista de características (ROLEPLAY, FUN VIBRATORS, etc.)
-  platforms?: string[];          // Plataformas soportadas (META QUEST, WINDOWS PCVR, etc.)
-  releaseDate?: string;          // Fecha de lanzamiento
-  language?: string;             // Idioma (ENGLISH, SPANISH, etc.)
-  resolution?: string;           // Resolución (UP TO 8K, etc.)
-  degree?: string;               // Grados de visión (195, 180, etc.)
-  fileSize?: string;             // Tamaño del archivo (14.6GB, etc.)
-  requirements?: {               // Requisitos del sistema
-    deviceSupport?: string;
-    os?: string;
-    cpu?: string;
-    gpu?: string;
-    ram?: string;
-    diskSpace?: string;
-  };
+  accessible?: boolean;
 }
 
 export interface SceneWithAccess extends Scene {

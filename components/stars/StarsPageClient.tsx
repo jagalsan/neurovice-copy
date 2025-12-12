@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import Card from "@/components/Card";
 import StarsGridAnimated from "@/components/stars/StarsGridAnimated";
 import { primaryButtonBase } from "@/lib/styles/buttons";
 import { useT } from "@/providers/I18nProvider";
+import { useLocale } from "@/providers/LocaleProvider";
 import type { PornStar } from "@/lib/api/types";
 
 interface StarsPageClientProps {
@@ -14,7 +15,10 @@ interface StarsPageClientProps {
 
 export default function StarsPageClient({ pornStarsData }: StarsPageClientProps) {
   const t = useT();
-  const [currentPage, setCurrentPage] = useState(1);
+  const locale = useLocale();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const currentPage = Number(searchParams.get("page") ?? "1");
 
   const starsPerPage = 12;
   const totalStars = pornStarsData?.length || 0;
@@ -33,20 +37,14 @@ export default function StarsPageClient({ pornStarsData }: StarsPageClientProps)
     releaseLabel: `${pornStar.scenePornStars.length} CHAPTERS`,
     accentColor: "#17FBF8",
     id: pornStar.id,
-    cartItem: {
-      id: `star-${pornStar.id}`,
-      title: `${pornStar.name} ${pornStar.surname}`.toUpperCase(),
-      subtitle: `${pornStar.scenePornStars.length} CHAPTERS`,
-      price: 29.99,
-      oldPrice: 39.99,
-      imageSrc: pornStar.profileImage || PLACEHOLDER_IMAGE,
-    },
   }));
 
   const hasStars = stars.length > 0;
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
+    router.push(`/${locale}/stars?${params.toString()}`);
   };
 
   return (

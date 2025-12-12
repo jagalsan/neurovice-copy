@@ -1,4 +1,4 @@
-import type { ChapterCardProps } from "@/components/scenes/SceneCard";
+import type { ContentCardProps } from "@/components/cards/ContentCard";
 
 export type BundleColorKey = "purple" | "yellow" | "pink" | "red";
 
@@ -11,7 +11,7 @@ export type Bundle = {
   accent: BundleColorKey;
   originalPrice?: string;
   salePrice: string;
-  chapters: ChapterCardProps[];
+  chapters: ContentCardProps[];
 };
 
 export const bundles: Bundle[] = [

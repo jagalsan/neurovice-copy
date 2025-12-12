@@ -10,6 +10,7 @@ import {
   fieldShellClass,
 } from "./shared";
 import { useUpdatePassword } from "@/lib/hooks/api/useAuth";
+import { useCurrentUser } from "@/lib/hooks/api";
 
 interface MyProfileViewProps {
   t: (k: string) => string;
@@ -17,6 +18,9 @@ interface MyProfileViewProps {
 }
 
 export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
+  const { data: userData } = useCurrentUser();
+  const user = (userData as any)?.user || userData;
+  
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -24,6 +28,10 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
   const [success, setSuccess] = useState(false);
   
   const updatePassword = useUpdatePassword();
+  
+  const activeSubscription = user?.subscriptions?.find(
+    (sub: any) => sub.status.toLowerCase() === "active"
+  );
 
   const handleChangePassword = async () => {
     setError("");
@@ -128,9 +136,20 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
 
       <section className="pt-4 md:px-8">
         <p className={sectionTitleClass}>{t("labels.subscription")}</p>
-        <p className="mt-3 text-[11px] text-[var(--color-brand-300)]">
-          {t("messages.no_active_subscription")}
-        </p>
+        {activeSubscription ? (
+          <div className="mt-3 space-y-2">
+            <p className="text-[12px] tracking-[0.18em] uppercase text-[#17FBF8]">
+              {activeSubscription.plan?.name || "Active Subscription"}
+            </p>
+            <p className="text-[11px] text-[var(--color-brand-300)]">
+              Valid until: {new Date(activeSubscription.endDate).toLocaleDateString()}
+            </p>
+          </div>
+        ) : (
+          <p className="mt-3 text-[11px] text-[var(--color-brand-300)]">
+            {t("messages.no_active_subscription")}
+          </p>
+        )}
       </section>
     </div>
   );

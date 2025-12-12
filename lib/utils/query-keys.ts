@@ -67,4 +67,10 @@ export const queryKeys = {
     all: ["users"] as const,
     me: () => [...queryKeys.users.all, "me"] as const,
   },
+
+  playback: {
+    all: ["playback"] as const,
+    insights: (params?: Record<string, unknown>) =>
+      [...queryKeys.playback.all, "insights", params] as const,
+  },
 } as const;
