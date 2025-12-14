@@ -32,10 +32,6 @@ export interface Season {
   scenes?: SceneWithAccess[];
   seasonImages?: SeasonImage[];
   seasonTrailers?: SeasonTrailer[];
-  
-  // TODO: CAMPOS FALTANTES - Agregar al backend:
-  price?: number;         // Precio de la temporada completa
-  currency?: string;      // Moneda (USD, EUR, etc.)
 }
 
 export interface CreateSeasonRequest {

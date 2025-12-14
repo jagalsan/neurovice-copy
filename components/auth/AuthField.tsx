@@ -1,5 +1,7 @@
 "use client";
 
+type TFn = (key: string) => string;
+
 interface AuthFieldProps {
   label: string;
   placeholder?: string;
@@ -8,6 +10,7 @@ interface AuthFieldProps {
   onForgot?: () => void;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  t: TFn;
 }
 
 export default function AuthField({
@@ -18,6 +21,7 @@ export default function AuthField({
   onForgot,
   value,
   onChange,
+  t,
 }: AuthFieldProps) {
   return (
     <div className="space-y-2">
@@ -31,7 +35,7 @@ export default function AuthField({
             onClick={onForgot}
             className="text-[11px] text-[var(--color-brand-300)] hover:text-[var(--color-brand-500)]"
           >
-            Forgot password?
+            {t("actions.forgot_password")}
           </button>
         )}
       </div>

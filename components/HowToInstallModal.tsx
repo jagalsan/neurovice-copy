@@ -53,8 +53,7 @@ function StepBlock({
   return (
     <div className="space-y-4">
       <span
-        className="text-[#17FBF8] text-[11px] font-heading tracking-[0.24em] uppercase"
-        style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+        className="text-[#17FBF8] text-[11px] font-heading tracking-[0.24em] uppercase text-glow"
       >
         {step}
       </span>
@@ -202,8 +201,7 @@ export default function HowToInstallModal({
 
           <div className="space-y-4 relative z-10">
             <p
-              className="text-[11px] font-heading tracking-[0.24em] uppercase text-[#7FF7F5]"
-              style={{ textShadow: "0 0 15px rgba(166,255,255,0.6)" }}
+              className="text-[11px] font-heading tracking-[0.24em] uppercase text-[#7FF7F5] text-glow"
             >
               Choose platform
             </p>

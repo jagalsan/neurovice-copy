@@ -5,7 +5,7 @@ import { useT } from "@/providers/I18nProvider";
 interface CartItemProps {
   title: string;
   subtitle: string;
-  oldPrice: string;
+  oldPrice?: string | null;
   price: string;
   imageSrc: string;
   quantity?: number;
@@ -29,15 +29,17 @@ export default function CartItem({
       </div>
 
       <div className="flex-1 flex flex-col gap-2">
-        <h3 className="font-heading text-[26px] leading-none tracking-[0.12em] uppercase text-[#17FBF8]" style={{ textShadow: "0px 0px 15px #00FFFC" }}>
+        <h3 className="font-heading text-[26px] leading-none tracking-[0.12em] uppercase text-[#17FBF8] text-glow-cyan">
           {title}
         </h3>
-        <p className="font-heading text-[13px] tracking-[0.18em] uppercase text-[var(--color-brand-300)]" style={{ textShadow: "0px 0px 15px #00FFFC" }}>
+        <p className="font-heading text-[13px] tracking-[0.18em] uppercase text-[var(--color-brand-300)] text-glow-cyan">
           {subtitle}
         </p>
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-3 font-heading text-[15px] tracking-[0.14em] uppercase" style={{ textShadow: "0px 0px 15px #00FFFC" }}>
-            <span className="line-through text-white/30">{oldPrice}</span>
+          <div className="flex items-center gap-3 font-heading text-[15px] tracking-[0.14em] uppercase text-glow-cyan">
+            {oldPrice && oldPrice !== price && (
+              <span className="line-through text-white/30">{oldPrice}</span>
+            )}
             <span className="text-[#17FBF8]">{price}</span>
           </div>
           {quantity > 1 && (
@@ -57,7 +59,7 @@ export default function CartItem({
         <button
           onClick={onRemove}
           className="w-10 h-10 rounded-full flex items-center justify-center text-[#17FBF8] hover:bg-white/5 transition"
-          aria-label="Remove item"
+          aria-label={t("labels.remove_item")}
         >
           <Trash2 className="w-4 h-4" />
         </button>

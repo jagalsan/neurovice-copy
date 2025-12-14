@@ -10,54 +10,39 @@ import Footer from "@/components/layout/footer/Footer";
 import FaqSection from "@/components/layout/FaqSection";
 import Breadcrumbs from "@/components/layout/header/Breadcrumbs";
 import type { Metadata } from "next";
+import enMessages from "@/i18n/en.json";
+import esMessages from "@/i18n/es.json";
 
 export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-const metadata: Record<Locale, Metadata> = {
-  en: {
-    title: "Neurovice - Premium VR Experience",
-    description: "Premium VR adult entertainment platform with immersive virtual reality experiences. New releases every week.",
-    keywords: ["VR", "Virtual Reality", "Adult Entertainment", "VR Games", "Meta Quest", "PCVR"],
-    authors: [{ name: "Neurovice" }],
-    openGraph: {
-      title: "Neurovice - Premium VR Experience",
-      description: "Premium VR adult entertainment platform with immersive virtual reality experiences",
-      type: "website",
-      locale: "en_US",
-      siteName: "Neurovice",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Neurovice - Premium VR Experience",
-      description: "Premium VR adult entertainment platform",
-    },
-  },
-  es: {
-    title: "Neurovice - Experiencia VR Premium",
-    description: "Plataforma premium de entretenimiento para adultos en realidad virtual con experiencias inmersivas. Nuevos lanzamientos cada semana.",
-    keywords: ["VR", "Realidad Virtual", "Entretenimiento Adultos", "Juegos VR", "Meta Quest", "PCVR"],
-    authors: [{ name: "Neurovice" }],
-    openGraph: {
-      title: "Neurovice - Experiencia VR Premium",
-      description: "Plataforma premium de entretenimiento para adultos en realidad virtual",
-      type: "website",
-      locale: "es_ES",
-      siteName: "Neurovice",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: "Neurovice - Experiencia VR Premium",
-      description: "Plataforma premium de entretenimiento para adultos en VR",
-    },
-  },
-};
+const messagesMap = { en: enMessages, es: esMessages };
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale: localeParam } = await params;
-  const locale = (localeParam || 'en') as Locale;
-  return metadata[locale] || metadata.en;
+  const locale = (localeParam === 'es' ? 'es' : 'en') as Locale;
+  const messages = messagesMap[locale];
+  const meta = messages.metadata;
+
+  return {
+    title: meta.title,
+    description: meta.description,
+    keywords: meta.keywords.split(", "),
+    authors: [{ name: "Neurovice" }],
+    openGraph: {
+      title: meta.og_title,
+      description: meta.og_description,
+      type: "website",
+      locale: locale === "es" ? "es_ES" : "en_US",
+      siteName: "Neurovice",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.twitter_title,
+      description: meta.twitter_description,
+    },
+  };
 }
 
 interface LocaleLayoutProps {
@@ -68,8 +53,6 @@ interface LocaleLayoutProps {
 export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const { locale: localeParam } = await params;
   const locale = (localeParam || 'en') as Locale;
-  
-  console.log('🔄 LocaleLayout rendering with locale:', locale, 'from params:', localeParam);
   
   return (
     <LocaleProvider locale={locale}>

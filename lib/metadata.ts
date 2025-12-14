@@ -18,8 +18,13 @@ const defaultKeywords = {
 const baseUrl = "https://neurovice.com";
 const defaultImage = `${baseUrl}/og-image.jpg`;
 
-function getNestedValue(obj: any, path: string): string {
-  return path.split('.').reduce((current, key) => current?.[key], obj) || path;
+function getNestedValue(obj: Record<string, unknown>, path: string): string {
+  return path.split('.').reduce((current, key) => {
+    if (current && typeof current === 'object' && key in current) {
+      return (current as Record<string, unknown>)[key];
+    }
+    return path;
+  }, obj as unknown) as string || path;
 }
 
 export async function generatePageMetadata(
@@ -32,8 +37,8 @@ export async function generatePageMetadata(
   const url = config.path ? `${baseUrl}/${locale}${config.path}` : `${baseUrl}/${locale}`;
   const image = config.image || defaultImage;
 
-  const title = getNestedValue(messages, config.titleKey);
-  const description = getNestedValue(messages, config.descriptionKey);
+  const title = getNestedValue(messages as Record<string, unknown>, config.titleKey);
+  const description = getNestedValue(messages as Record<string, unknown>, config.descriptionKey);
 
   return {
     title,

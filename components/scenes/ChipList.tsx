@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useLocale } from "@/providers/LocaleProvider";
 
 type ChipItem = string | { id: number; name: string };
 
@@ -17,6 +18,8 @@ export default function ChipList({
   type, 
   interactive = true 
 }: ChipListProps) {
+  const locale = useLocale();
+
   return (
     <div className="flex flex-wrap gap-2">
       {items.map((item, index) => {
@@ -42,7 +45,7 @@ export default function ChipList({
 
         if (linkable && type === "genre" && isObject) {
           return (
-            <Link key={key} href={`/tags/${itemId}`}>
+            <Link key={key} href={`/${locale}/tags/${itemId}`}>
               {chip}
             </Link>
           );
@@ -51,7 +54,7 @@ export default function ChipList({
         if (linkable && type === "genre" && !isObject) {
           const slug = displayName.toLowerCase().replace(/\s+/g, "-");
           return (
-            <Link key={key} href={`/tags/${slug}`}>
+            <Link key={key} href={`/${locale}/tags/${slug}`}>
               {chip}
             </Link>
           );

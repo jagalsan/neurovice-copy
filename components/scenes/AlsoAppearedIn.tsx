@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { primaryButtonBase } from "@/lib/styles/buttons";
+import Button from "@/components/ui/Button";
 import { useT } from "@/providers/I18nProvider";
 
 type Props = {
@@ -49,12 +49,9 @@ export default function AlsoAppearedIn({ name, items, onBuyAll }: Props) {
               {t("labels.also_appeared_in")}
             </p>
 
-            <button
-              onClick={onBuyAll}
-              className={primaryButtonBase}
-            >
+            <Button variant="primary" onClick={onBuyAll} fullWidth>
               {t("actions.buy_all")}
-            </button>
+            </Button>
           </div>
 
           <div className="grid grid-cols-3 gap-4 lg:gap-6">

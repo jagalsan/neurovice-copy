@@ -12,26 +12,16 @@ export interface PornStar {
   age: string;
   gender: string;
   bio: string;
-  userId: number | null;
+  userId: number;
   createdAt: string;
   updatedAt: string;
   scenePornStars: PornStarScene[];
   pornStarsTags: PornStarTag[];
-  
-  // TODO: CAMPOS FALTANTES - Agregar al backend:
-  height?: string;        // Ejemplo: "5.11\"" o "175 cm"
-  breast?: string;        // Ejemplo: "36DD"
-  weight?: string;        // Ejemplo: "123 lbs" o "56 kg"
-  hairColor?: string;     // Ejemplo: "Blue", "Blonde", etc.
-  ethnicity?: string;     // Ejemplo: "White", "Latina", etc.
-  quote?: string;         // Frase/cita de la estrella
-  profileImage?: string;  // URL de la imagen principal
+  profileImage?: string;
   galleryImages?: string[]; // Array de URLs de galería
-  socialMedia?: {         // Redes sociales
-    onlyfans?: string;
-    instagram?: string;
-    x?: string;
-  };
+  ofUrl?: string;
+  igUrl?: string;
+  xUrl?: string;
 }
 
 export interface PornStarScene {
@@ -42,9 +32,7 @@ export interface PornStarScene {
     title: string;
     createdAt: string;
     public: boolean;
-    // TODO: CAMPOS FALTANTES - Agregar al backend:
-    thumbnailUrl?: string;  // URL de la miniatura de la escena
-    coverImage?: string;    // URL de la imagen de portada
+    mainImageUrl?: string;
   };
 }
 

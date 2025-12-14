@@ -1,4 +1,9 @@
-export default function HamburgerButton({ open, setOpen }: any) {
+interface HamburgerButtonProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+export default function HamburgerButton({ open, setOpen }: HamburgerButtonProps) {
   return (
     <button
       onClick={() => setOpen(!open)}

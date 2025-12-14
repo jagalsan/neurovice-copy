@@ -26,8 +26,7 @@ export function BlogArticleClient({ locale, post }: BlogArticleClientProps) {
     <>
       <div className="max-w-[756px] mx-auto text-center mb-10">
         <span
-          className="text-xs font-[500] tracking-[0.28em] uppercase text-[var(--color-brand-500)] z-10 bg-transparent"
-          style={{ textShadow: "0px 0px 15px #00FFFC" }}
+          className="text-xs font-[500] tracking-[0.28em] uppercase text-[var(--color-brand-500)] z-10 bg-transparent text-glow-cyan"
         >
           {t("labels.blog")}
         </span>

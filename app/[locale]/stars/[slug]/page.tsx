@@ -40,7 +40,6 @@ export default async function StarDetailPage({
   try {
     const starResponse = await pornStarsService.getPornStarById(starId);
     starData = starResponse;
-    console.log("Star response:", starResponse.scenePornStars[0]);
     
     if (!starData) {
       redirect('/stars');

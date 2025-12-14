@@ -55,7 +55,9 @@
     "view_all": "Ver todas",
     "view_cart": "Ver Carrito",
     "view_more": "Ver más",
-    "view_profile": "Ver perfil"
+    "view_profile": "Ver perfil",
+    "previous": "Anterior",
+    "next_star": "Siguiente"
   },
   "forms": {
     "agree_to_terms": "Acepto los Términos de Servicio y Política de Privacidad",
@@ -70,7 +72,14 @@
       "password_required": "La contraseña es requerida",
       "password_too_short": "La contraseña debe tener al menos 8 caracteres",
       "passwords_no_match": "Las contraseñas no coinciden",
-      "terms_required": "Debes aceptar los términos y condiciones"
+      "terms_required": "Debes aceptar los términos y condiciones",
+      "fill_all_fields": "Por favor rellena todos los campos",
+      "enter_your_name": "Por favor introduce tu nombre",
+      "enter_your_email": "Por favor introduce tu email",
+      "authentication_failed": "Error de autenticación",
+      "error_sending_reset_email": "Error al enviar email de recuperación",
+      "invalid_credentials": "Email o contraseña inválidos",
+      "something_went_wrong": "Algo salió mal"
     },
     "first_name": "Nombre",
     "forgot_password": "¿Olvidaste tu contraseña?",
@@ -174,6 +183,11 @@
     "playback": "Reproducción",
     "pornstar": "Pornstar",
     "pornstars": "Pornstars",
+    "get_access": "Obtener acceso",
+    "scenes_available": "{count} escenas disponibles",
+    "scene_available": "Escena disponible",
+    "buy_for": "Comprar por",
+    "release": "Lanzamiento",
     "premium": "Premium",
     "premium_collection": "Colección Premium",
     "quantity": "Cantidad",
@@ -182,6 +196,7 @@
     "quick_menu": "Menú rápido",
     "release_date": "Lanzamiento: {date}",
     "scenes": "Escenas",
+    "season": "Temporada",
     "security": "Seguridad",
     "sign_up_or_log_in": "Regístrate o inicia sesión",
     "starter_pack": "Pack de Inicio",
@@ -197,9 +212,16 @@
     "weight": "Peso",
     "windows_pcvr": "Windows PCVR",
     "windows_pcvr_title": "Windows PCVR",
-    "with_email": "Con Email",
+    "with_email": "Con email",
     "write_comment": "Escribe un comentario",
-    "your_email": "Tu Email"
+    "your_email": "Tu email",
+    "female": "Femenino",
+    "male": "Masculino",
+    "logged_in_as": "Conectado como:",
+    "all_chapters": "Todos los Capítulos",
+    "chapters_count": "{count} CAPÍTULOS",
+    "chapters_tagged_as": "Capítulos etiquetados como #{tag}",
+    "remove_item": "Eliminar artículo"
   },
   "messages": {
     "added_to_cart": "¡Añadido al carrito!",
@@ -233,7 +255,9 @@
     "newsletter_join": "¡Únete a nuestro boletín y síguenos en redes sociales para las últimas noticias sobre nuestros juegos y ofertas especiales!",
     "no_active_subscription": "NO TIENES UNA SUSCRIPCIÓN ACTIVA",
     "no_scenes_for_tag": "No se encontraron escenas para {param}",
+    "no_scenes_available": "No hay escenas disponibles",
     "no_seasons_available": "No hay temporadas disponibles",
+    "check_back_later": "Vuelve más tarde para nuevo contenido",
     "password_change_error": "Error al cambiar la contraseña",
     "password_change_success": "Contraseña cambiada exitosamente",
     "pc_system_requirements": "Necesitarás un PC con Windows con al menos 8GB de RAM, una GPU de gama media (GTX 1060 o superior), y una conexión a internet estable.",
@@ -260,7 +284,12 @@
     "network_error": "Error de red. Por favor, comprueba tu conexión.",
     "page_not_found": "Página no encontrada",
     "server_error": "Error del servidor. Por favor, inténtalo de nuevo más tarde.",
-    "something_went_wrong": "Algo salió mal"
+    "something_went_wrong": "Algo salió mal",
+    "please_fill_all_fields": "Por favor rellena todos los campos",
+    "please_enter_your_name": "Por favor introduce tu nombre",
+    "please_enter_your_email": "Por favor introduce tu email",
+    "authentication_failed": "Error de autenticación",
+    "error_sending_reset_email": "Error al enviar email de recuperación"
   },
   "questions": {
     "content_expectations": "¿Qué tipo de contenido puedo esperar cuando compre?",
@@ -328,5 +357,14 @@
     "terms": "Términos de Uso",
     "terms_of_use": "Términos de Uso",
     "vr_settings": "Ajustes VR"
+  },
+  "metadata": {
+    "title": "Neurovice - Experiencia VR Premium",
+    "description": "Plataforma premium de entretenimiento para adultos en realidad virtual con experiencias inmersivas. Nuevos lanzamientos cada semana.",
+    "keywords": "VR, Realidad Virtual, Entretenimiento Adultos, Juegos VR, Meta Quest, PCVR",
+    "og_title": "Neurovice - Experiencia VR Premium",
+    "og_description": "Plataforma premium de entretenimiento para adultos en realidad virtual",
+    "twitter_title": "Neurovice - Experiencia VR Premium",
+    "twitter_description": "Plataforma premium de entretenimiento para adultos en VR"
   }
 }

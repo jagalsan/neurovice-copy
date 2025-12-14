@@ -1,23 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import AuthField from "./AuthField";
 import { useSignUp } from "@/lib/hooks/api/useAuth";
 import type { SignUpRequest } from "@/lib/api/types";
+import Button from "@/components/ui/Button";
+import { useLocale } from "@/providers/LocaleProvider";
 
 type TFn = (key: string) => string;
 
 interface RegisterFormProps {
   t: TFn;
-  primaryButtonClass: string;
   onSuccess?: () => void;
 }
 
-export default function RegisterForm({
-  t,
-  primaryButtonClass,
-  onSuccess,
-}: RegisterFormProps) {
+export default function RegisterForm({ t, onSuccess }: RegisterFormProps) {
+  const locale = useLocale();
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,7 +24,7 @@ export default function RegisterForm({
   const [repeatPassword, setRepeatPassword] = useState("");
   const [marketing, setMarketing] = useState(false);
   const [error, setError] = useState("");
-  
+
   const signUpMutation = useSignUp();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,10 +45,11 @@ export default function RegisterForm({
         repeatPassword,
       };
       await signUpMutation.mutateAsync(payload);
-      
+
       if (onSuccess) onSuccess();
-    } catch (err: any) {
-      setError(err.response?.data?.message || t("notices.something_went_wrong"));
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || t("forms.errors.something_went_wrong"));
     }
   };
 
@@ -60,6 +60,7 @@ export default function RegisterForm({
         placeholder={t("forms.username_placeholder")}
         value={name}
         onChange={(e) => setName(e.target.value)}
+        t={t}
       />
 
       <AuthField
@@ -67,6 +68,7 @@ export default function RegisterForm({
         placeholder={t("forms.last_name")}
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
+        t={t}
       />
 
       <AuthField
@@ -74,6 +76,7 @@ export default function RegisterForm({
         placeholder={t("forms.email_placeholder")}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        t={t}
       />
 
       <AuthField
@@ -82,6 +85,7 @@ export default function RegisterForm({
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        t={t}
       />
 
       <AuthField
@@ -90,6 +94,7 @@ export default function RegisterForm({
         type="password"
         value={repeatPassword}
         onChange={(e) => setRepeatPassword(e.target.value)}
+        t={t}
       />
 
       <label className="flex items-start gap-3 mt-1 text-[11px] text-[var(--color-brand-300)] leading-relaxed">
@@ -109,27 +114,32 @@ export default function RegisterForm({
         <span>{t("forms.signup_marketing")}</span>
       </label>
 
-      {error && (
-        <p className="text-[11px] text-red-400">{error}</p>
-      )}
+      {error && <p className="text-[11px] text-red-400">{error}</p>}
 
-      <button 
+      <Button
         type="submit"
+        variant="primary"
         disabled={signUpMutation.isPending || !email || !password || !name || !lastName}
-        className={primaryButtonClass + " disabled:opacity-50 disabled:cursor-not-allowed"}
+        fullWidth
       >
         {signUpMutation.isPending ? t("labels.loading") : t("actions.sign_up")}
-      </button>
+      </Button>
 
       <p className="mt-4 text-[11px] leading-relaxed text-[var(--color-brand-300)] text-center">
         {t("forms.signup_legal_prefix")}{" "}
-        <button type="button" className="underline hover:text-[var(--color-brand-500)]">
+        <Link
+          href={`/${locale}/terms-of-use`}
+          className="underline hover:text-[var(--color-brand-500)]"
+        >
           {t("views.terms")}
-        </button>{" "}
+        </Link>{" "}
         {t("forms.signup_legal_middle")}{" "}
-        <button type="button" className="underline hover:text-[var(--color-brand-500)]">
+        <Link
+          href={`/${locale}/privacy-policies`}
+          className="underline hover:text-[var(--color-brand-500)]"
+        >
           {t("views.privacy")}
-        </button>{" "}
+        </Link>{" "}
         {t("forms.signup_legal_suffix")}.
       </p>
     </form>

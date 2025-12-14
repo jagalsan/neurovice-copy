@@ -54,6 +54,23 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
+
+  /* Text shadow utilities for brand cyan glow effect */
+  .text-glow {
+    text-shadow: 0 0 15px rgba(166, 255, 255, 0.6);
+  }
+  
+  .text-glow-cyan {
+    text-shadow: 0 0 15px #00FFFC;
+  }
+  
+  .text-glow-strong {
+    text-shadow: 0 0 15px #00FFFC, 0 0 30px rgba(0, 255, 252, 0.4);
+  }
+
+  .text-glow-pink {
+    text-shadow: 0 0 15px rgba(255, 77, 166, 0.6);
+  }
 }
 
 ::-webkit-scrollbar {

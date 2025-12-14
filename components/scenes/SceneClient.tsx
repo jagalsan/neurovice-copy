@@ -10,6 +10,7 @@ import AlsoAppearedIn from "./AlsoAppearedIn";
 import { useAddToCart } from "@/lib/hooks/useAddToCart";
 import { CartItem } from "@/lib/stores/cart.store";
 import { useT } from "@/providers";
+import { PornStar } from "./types";
 
 interface SceneClientProps {
   title: string;
@@ -18,11 +19,7 @@ interface SceneClientProps {
   genres: Array<{ id: number; name: string }> | string[];  
   info: [string, string][];
   requirements: [string, string][];
-  starName: string;
-  starSlug: string;
-  starImage: string;
-  starBio?: string;
-  starTags?: string[];
+  stars: PornStar[];
   coverSrc: string;
   sceneCount: number;
   fileSize: string;
@@ -30,8 +27,6 @@ interface SceneClientProps {
   releaseDate?: string;
   platforms?: string[];
   cartItem: Omit<CartItem, "quantity">;
-  allScenesCartItem: Omit<CartItem, "quantity">;
-  alsoAppearedItems: Array<{ coverSrc: string; coverAlt: string }>;
 }
 
 export default function SceneClient({
@@ -41,27 +36,16 @@ export default function SceneClient({
   genres,
   info,
   requirements,
-  starName,
-  starSlug,
-  starImage,
+  stars,
   coverSrc,
   sceneCount,
   fileSize,
   description,
   releaseDate,
   platforms,
-  starBio,
-  starTags,
   cartItem,
-  allScenesCartItem,
-  alsoAppearedItems,
 }: SceneClientProps) {
   const t = useT();
-  const { addToCart } = useAddToCart();
-
-  const handleBuyAll = () => {
-    addToCart(allScenesCartItem);
-  };
 
   return (
     <div className="w-full bg-[#171614]">
@@ -104,12 +88,6 @@ export default function SceneClient({
                 <InfoTable data={requirements} />
               </div>
             </Card>
-
-            <AlsoAppearedIn
-              name={starName}
-              items={alsoAppearedItems}
-              onBuyAll={handleBuyAll}
-            />
           </div>
 
           <aside className="order-1 lg:order-2 lg:col-span-1">
@@ -122,22 +100,18 @@ export default function SceneClient({
                 subtitle=""
               />
             </Card>
-            
-            <SceneSidebar
+            {stars.length ? <SceneSidebar
               coverSrc={coverSrc}
               sceneCount={sceneCount}
               fileSize={fileSize}
-              starName={starName}
-              starSlug={starSlug}
-              starImage={starImage}
-              starBio={starBio}
-              starTags={starTags}
+              stars={stars}
               sceneTitle={title}
               sceneDescription={description}
               releaseDate={releaseDate}
               platforms={platforms}
               cartItem={cartItem}
-            />
+            /> : null}
+
           </aside>
         </div>
       </div>

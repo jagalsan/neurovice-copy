@@ -30,8 +30,6 @@ const messagesMap: Record<Locale, Messages> = {
 export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
   const validLocale = (initialLocale === 'en' || initialLocale === 'es') ? initialLocale as Locale : defaultLocale;
   
-  console.log('✅ I18nProvider initializing with locale:', validLocale, 'from initialLocale:', initialLocale);
-  
   const [locale, setLocaleState] = useState<Locale>(validLocale);
   const [messages, setMessages] = useState<Messages>(messagesMap[validLocale]);
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +39,6 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
       const newLocale = initialLocale as Locale;
       setLocaleState((currentLocale) => {
         if (newLocale !== currentLocale) {
-          console.log('🌐 Changing locale from', currentLocale, 'to', newLocale);
           setMessages(messagesMap[newLocale]);
           return newLocale;
         }
@@ -65,11 +62,11 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
 
   const t = (key: string, params?: Record<string, string | number>): string => {
     const keys = key.split('.');
-    let value: any = messages;
+    let value: Record<string, unknown> | string = messages;
 
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k] as Record<string, unknown> | string;
       } else {
         // console.warn(`Translation key not found: ${key}`);
         return key;
@@ -77,7 +74,6 @@ export function I18nProvider({ children, initialLocale }: I18nProviderProps) {
     }
 
     if (typeof value !== 'string') {
-      console.warn(`Translation value is not a string: ${key}`);
       return key;
     }
 

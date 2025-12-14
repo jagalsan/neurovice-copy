@@ -2,7 +2,7 @@
 
 import Modal from "./Modal";
 import { useT } from "@/providers/I18nProvider";
-import { primaryButtonBase } from "@/lib/styles/buttons";
+import Button from "@/components/ui/Button";
 
 interface AgeVerificationModalProps {
   isOpen: boolean;
@@ -43,12 +43,14 @@ export default function AgeVerificationModal({
           >
             {t("actions.exit")}
           </button>
-          <button
+          <Button
+            variant="primary"
+            size="md"
             onClick={onConfirm}
-            className={`${primaryButtonBase} flex-1 py-3 text-sm md:text-base uppercase tracking-wider`}
+            fullWidth
           >
             {t("actions.confirm_age")}
-          </button>
+          </Button>
         </div>
       </div>
     </Modal>

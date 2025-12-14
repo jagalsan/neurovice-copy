@@ -4,20 +4,19 @@ import { useState } from "react";
 import AuthField from "./AuthField";
 import { useSignIn } from "@/lib/hooks/api/useAuth";
 import type { SignInRequest } from "@/lib/api/types";
+import Button from "@/components/ui/Button";
 
 type TFn = (key: string) => string;
 
 interface LoginFormProps {
   t: TFn;
   onForgotPassword: () => void;
-  primaryButtonClass: string;
   onSuccess?: () => void;
 }
 
 export default function LoginForm({
   t,
   onForgotPassword,
-  primaryButtonClass,
   onSuccess,
 }: LoginFormProps) {
   const [email, setEmail] = useState("");
@@ -35,8 +34,9 @@ export default function LoginForm({
       await signInMutation.mutateAsync(payload);
       
       if (onSuccess) onSuccess();
-    } catch (err: any) {
-      setError(err.response?.data?.message || t("notices.invalid_credentials"));
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || t("forms.errors.invalid_credentials"));
     }
   };
 
@@ -47,6 +47,7 @@ export default function LoginForm({
         placeholder={t("forms.email_placeholder")}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        t={t}
       />
 
       <AuthField
@@ -57,19 +58,21 @@ export default function LoginForm({
         onForgot={onForgotPassword}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        t={t}
       />
 
       {error && (
         <p className="text-[11px] text-red-400">{error}</p>
       )}
 
-      <button 
+      <Button
         type="submit"
+        variant="primary"
         disabled={signInMutation.isPending || !email || !password}
-        className={primaryButtonClass + " disabled:opacity-50 disabled:cursor-not-allowed"}
+        fullWidth
       >
         {signInMutation.isPending ? t("labels.loading") : t("actions.sign_in")}
-      </button>
+      </Button>
     </form>
   );
 }

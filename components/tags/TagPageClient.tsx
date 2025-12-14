@@ -4,10 +4,11 @@ import Card from "@/components/Card";
 import Pagination from "@/components/Pagination";
 import TagChaptersGridAnimated from "@/components/tags/TagChaptersGridAnimated";
 import { useT } from "@/providers/I18nProvider";
-import { primaryButtonBase } from "@/lib/styles/buttons";
+import Button from "@/components/ui/Button";
 import Link from "next/link";
 import { useLocale } from "@/providers/LocaleProvider";
 import type { Tag } from "@/lib/api/types";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 interface TagPageClientProps {
   tagData: Tag | null;
@@ -17,8 +18,6 @@ export default function TagPageClient({ tagData }: TagPageClientProps) {
   const t = useT();
   const locale = useLocale();
 
-  const PLACEHOLDER_IMAGE = "/placeholder-scene.jpg";
-  
   const scenes = tagData?.sceneTags.map(sceneTag => sceneTag.scene) || [];
   const hasScenes = scenes.length > 0;
   const scenesPerPage = 12;
@@ -30,7 +29,7 @@ export default function TagPageClient({ tagData }: TagPageClientProps) {
     title: scene.title,
     platforms: ["META", "WINDOWS", "APK"] as string[],
     accentColor: "#17FBF8",
-    viewMoreHref: `/scenes/${scene.id}`,
+    viewMoreHref: `/${locale}/scenes/${scene.id}`,
     cartItem: {
       id: `scene-${scene.id}`,
       title: scene.title,
@@ -45,8 +44,7 @@ export default function TagPageClient({ tagData }: TagPageClientProps) {
     <section className="text-white px-4 md:px-8 max-w-[1024px] mx-auto py-8 space-y-12 max-w-[944px]">
       <Card className="bg-[transparent] space-y-0">
         <span
-          className="text-[10px] md:text-xs font-[600] uppercase text-[#17FBF8] mb-0"
-          style={{ textShadow: "0 0 15px #00FFFC" }}
+          className="text-[10px] md:text-xs font-[600] uppercase text-[#17FBF8] mb-0 text-glow-cyan"
         >
           {t("views.tags")}
         </span>
@@ -81,14 +79,12 @@ export default function TagPageClient({ tagData }: TagPageClientProps) {
           </div>
         )}
 
-        <Link href={`/${locale}/subscription`} className={primaryButtonBase}>
-          <span className="relative z-10">
-            {t("actions.unlock_with_subscription")}
-          </span>
-        </Link>
+        <Button variant="primary" href={`/${locale}/subscription`}>
+          {t("actions.unlock_with_subscription")}
+        </Button>
       </Card>
 
-      <Card title={`Chapters tagged as #${tagName}`}>
+      <Card title={t("labels.chapters_tagged_as", { tag: tagName })}>
         {hasScenes ? (
           <TagChaptersGridAnimated chapters={chapters} />
         ) : (

@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/config";
-import type { FooterLinks } from "@/types/footer";
+import type { FooterLinks } from "@/lib/types/footer";
 
 export const getFooterLinks = (locale: Locale): FooterLinks => ({
   left: [

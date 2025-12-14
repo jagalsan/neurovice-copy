@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { FooterLinks } from "@/types/footer";
+import type { FooterLinks } from "@/lib/types/footer";
 
 type TFn = (key: string) => string;
 

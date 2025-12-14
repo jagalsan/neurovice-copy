@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import { useT } from "@/providers/I18nProvider";
-import { primaryButtonBase } from "@/lib/styles/buttons";
 import QuickLogin from "./auth/QuickLogin";
 import AuthTabs from "./auth/AuthTabs";
 import LoginForm from "./auth/LoginForm";
@@ -35,7 +34,6 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           <ForgotPasswordForm
             t={t}
             onBackToLogin={() => setMode("login")}
-            primaryButtonClass={primaryButtonBase}
           />
         ) : (
           <div className="space-y-6">
@@ -59,13 +57,11 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <LoginForm
                 t={t}
                 onForgotPassword={() => setMode("forgot")}
-                primaryButtonClass={primaryButtonBase}
                 onSuccess={handleAuthSuccess}
               />
             ) : (
               <RegisterForm 
                 t={t} 
-                primaryButtonClass={primaryButtonBase}
                 onSuccess={handleAuthSuccess}
               />
             )}

@@ -3,19 +3,20 @@ import type { Locale } from "@/i18n/config";
 import { generatePageMetadata } from "@/lib/metadata";
 import SceneClient from "@/components/scenes/SceneClient";
 import { scenesService } from "@/lib/api/services";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
+import { PLACEHOLDER_IMAGE, PLACEHOLDER_VIDEO } from "@/lib/constants";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const dynamicParams = true;
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ locale: string; slug: string }> 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  
+
   return await generatePageMetadata(locale as Locale, {
     titleKey: "seo.scenes_title",
     descriptionKey: "seo.scenes_description",
@@ -28,36 +29,57 @@ export default async function SceneDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const sceneId = Number(slug);
 
   if (isNaN(sceneId) || sceneId <= 0) {
-    notFound();
+    redirect(`/${locale}`);
   }
 
   try {
     const sceneData = await scenesService.getSceneById(sceneId);
 
+    const stars =
+      sceneData.scenePornStars?.map((sp) => ({
+        ...sp.pornStar,
+        name: `${sp.pornStar.name} ${sp.pornStar.surname}`.trim(),
+        slug: `${sp.pornStar.id}`,
+        image: sp.pornStar.profileImage || "/mock/example_1_x.png",
+        bio: sp.pornStar.bio || "",
+        tags:
+          sp.pornStar.pornStarsTags?.map((t) => t.tag.name.toUpperCase()) || [],
+      })) || [];
+
     const firstPornStar = sceneData.scenePornStars?.[0]?.pornStar;
-    const starName = firstPornStar 
+    const starName = firstPornStar
       ? `${firstPornStar.name} ${firstPornStar.surname}`.trim()
       : "Unknown";
-    
-    const screenshots = sceneData.sceneImages?.map(img => img.imageUrl) || [];
-    
-    const genres = sceneData.sceneTags?.map(st => ({
-      id: st.tag.id,
-      name: st.tag.name.toUpperCase()
-    })) || [];
-    
-    const platforms = ["WINDOWS PCVR", "META QUEST 3/3S", "PICO 4 ULTRA", "HTC VIVE", "VALVE INDEX"];
-    
+
+    const screenshots = sceneData.sceneImages?.map((img) => img.imageUrl) || [];
+
+    const genres =
+      sceneData.sceneTags?.map((st) => ({
+        id: st.tag.id,
+        name: st.tag.name.toUpperCase(),
+      })) || [];
+
+    const platforms = [
+      "WINDOWS PCVR",
+      "META QUEST 3/3S",
+      "PICO 4 ULTRA",
+      "HTC VIVE",
+      "VALVE INDEX",
+    ];
+
     const info: [string, string][] = [];
-    
+
     if (sceneData.releaseDate) {
       info.push(["RELEASE DATE", sceneData.releaseDate]);
     } else if (sceneData.createdAt) {
-      info.push(["RELEASE DATE", new Date(sceneData.createdAt).toLocaleDateString()]);
+      info.push([
+        "RELEASE DATE",
+        new Date(sceneData.createdAt).toLocaleDateString(),
+      ]);
     }
     info.push(["PLATFORMS", platforms.join(", ")]);
     if (starName && starName !== "Unknown") {
@@ -72,25 +94,18 @@ export default async function SceneDetailPage({
     if (sceneData.degree) {
       info.push(["DEGREE", sceneData.degree]);
     }
-    
+
     const requirements: [string, string][] = [
       ["DEVICE SUPPORT", "ANY PCVR HEADSET WITH OPENXR RUNTIME SUPPORT"],
       ["OS", "MS WINDOWS 10"],
       ["CPU", "INTEL CORE I3 OR AMD RYZEN 3 3200"],
       ["GPU", "NVIDIA RTX 2060 OR AMD RX 5600 WITH LATEST DRIVERS"],
       ["RAM", "8GB"],
-      ["DISK SPACE", "15GB"]
+      ["DISK SPACE", "15GB"],
     ];
 
-    const eurPrice = sceneData.prices.find(p => p.currency === "EUR");
-    const price = eurPrice;
+    const eurPrice = sceneData.prices.find((p) => p.currency === "EUR");
     const oldPrice = null;
-
-    const starBio = firstPornStar?.bio || "";
-    const starTags = firstPornStar?.pornStarsTags?.map(t => t.tag.name.toUpperCase()) || [];
-
-    const PLACEHOLDER_IMAGE = "/placeholder-scene.jpg";
-    const PLACEHOLDER_VIDEO = "/placeholder-video.mp4";
 
     return (
       <SceneClient
@@ -100,11 +115,7 @@ export default async function SceneDetailPage({
         genres={genres}
         info={info}
         requirements={requirements}
-        starName={starName}
-        starSlug={firstPornStar ? `${firstPornStar.id}` : "0"}
-        starImage={firstPornStar?.profileImage || PLACEHOLDER_IMAGE}
-        starBio={starBio}
-        starTags={starTags}
+        stars={stars}
         coverSrc={sceneData.mainImageUrl || PLACEHOLDER_IMAGE}
         sceneCount={sceneData.season?.id || 1}
         fileSize={sceneData.fileSize || "N/A"}
@@ -118,17 +129,9 @@ export default async function SceneDetailPage({
           oldPrice: oldPrice,
           imageSrc: sceneData.mainImageUrl || PLACEHOLDER_IMAGE,
         }}
-        allScenesCartItem={{
-          id: (sceneData.season?.id || 0).toString(),
-          title: sceneData.season?.title || "All Scenes",
-          price: 0,
-          oldPrice: 0,
-          imageSrc: sceneData.season?.mainImageUrl || PLACEHOLDER_IMAGE,
-        }}
-        alsoAppearedItems={[]}
       />
     );
   } catch (error) {
-    notFound();
+    redirect(`/${locale}`);
   }
 }

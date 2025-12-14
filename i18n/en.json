@@ -55,7 +55,9 @@
     "view_all": "View all",
     "view_cart": "View Cart",
     "view_more": "View more",
-    "view_profile": "View profile"
+    "view_profile": "View profile",
+    "previous": "Previous",
+    "next_star": "Next"
   },
   "forms": {
     "agree_to_terms": "I agree to the Terms of Service and Privacy Policy",
@@ -70,7 +72,14 @@
       "password_required": "Password is required",
       "password_too_short": "Password must be at least 8 characters",
       "passwords_no_match": "Passwords do not match",
-      "terms_required": "You must agree to the terms and conditions"
+      "terms_required": "You must agree to the terms and conditions",
+      "fill_all_fields": "Please fill all fields",
+      "enter_your_name": "Please enter your name",
+      "enter_your_email": "Please enter your email",
+      "authentication_failed": "Authentication failed",
+      "error_sending_reset_email": "Error sending reset email",
+      "invalid_credentials": "Invalid email or password",
+      "something_went_wrong": "Something went wrong"
     },
     "first_name": "First Name",
     "forgot_password": "Forgot password?",
@@ -174,6 +183,11 @@
     "playback": "Playback",
     "pornstar": "Pornstar",
     "pornstars": "Pornstars",
+    "get_access": "Get access",
+    "scenes_available": "{count} scenes available",
+    "scene_available": "Scene available",
+    "buy_for": "Buy for",
+    "release": "Release",
     "premium": "Premium",
     "premium_collection": "Premium Collection",
     "quantity": "Quantity",
@@ -182,6 +196,7 @@
     "quick_menu": "Quick menu",
     "release_date": "Release: {date}",
     "scenes": "Scenes",
+    "season": "Season",
     "security": "Security",
     "sign_up_or_log_in": "Sign up or log in",
     "starter_pack": "Starter Pack",
@@ -197,9 +212,16 @@
     "weight": "Weight",
     "windows_pcvr": "Windows PCVR",
     "windows_pcvr_title": "Windows PCVR",
-    "with_email": "With Email",
+    "with_email": "With email",
     "write_comment": "Write a comment",
-    "your_email": "Your Email"
+    "your_email": "Your email",
+    "female": "Female",
+    "male": "Male",
+    "logged_in_as": "Logged in as:",
+    "all_chapters": "All Chapters",
+    "chapters_count": "{count} CHAPTERS",
+    "chapters_tagged_as": "Chapters tagged as #{tag}",
+    "remove_item": "Remove item"
   },
   "messages": {
     "added_to_cart": "Added to cart!",
@@ -234,7 +256,9 @@
     "newsletter_join": "Join our newsletter and follow us on social media for the latest news on our games and special offers!",
     "no_active_subscription": "YOU DON'T HAVE AN ACTIVE SUBSCRIPTION",
     "no_scenes_for_tag": "No scenes found for {param}",
+    "no_scenes_available": "No scenes available",
     "no_seasons_available": "No seasons available",
+    "check_back_later": "Check back later for new content",
     "password_change_error": "Error changing the password",
     "password_change_success": "Password changed successfully",
     "pc_system_requirements": "You'll need a Windows PC with at least 8GB of RAM, a mid-range GPU (GTX 1060 or higher), and a stable internet connection.",
@@ -261,7 +285,12 @@
     "network_error": "Network error. Please check your connection.",
     "page_not_found": "Page Not Found",
     "server_error": "Server error. Please try again later.",
-    "something_went_wrong": "Something went wrong"
+    "something_went_wrong": "Something went wrong",
+    "please_fill_all_fields": "Please fill all fields",
+    "please_enter_your_name": "Please enter your name",
+    "please_enter_your_email": "Please enter your email",
+    "authentication_failed": "Authentication failed",
+    "error_sending_reset_email": "Error sending reset email"
   },
   "questions": {
     "content_expectations": "What kind of content can I expect when I purchase?",
@@ -333,5 +362,14 @@
     "terms": "Terms of Use",
     "terms_of_use": "Terms of Use",
     "vr_settings": "VR Settings"
+  },
+  "metadata": {
+    "title": "Neurovice - Premium VR Experience",
+    "description": "Premium VR adult entertainment platform with immersive virtual reality experiences. New releases every week.",
+    "keywords": "VR, Virtual Reality, Adult Entertainment, VR Games, Meta Quest, PCVR",
+    "og_title": "Neurovice - Premium VR Experience",
+    "og_description": "Premium VR adult entertainment platform with immersive virtual reality experiences",
+    "twitter_title": "Neurovice - Premium VR Experience",
+    "twitter_description": "Premium VR adult entertainment platform"
   }
 }

@@ -49,7 +49,7 @@ export function useSignUp() {
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.user() });
     },
     onError: (error) => {
-      console.error("Sign up failed:", getErrorMessage(error));
+      console.error("Sign up failed");
     },
   });
 }
@@ -68,7 +68,7 @@ export function useSignIn() {
       queryClient.invalidateQueries({ queryKey: queryKeys.auth.user() });
     },
     onError: (error) => {
-      console.error("Sign in failed:", getErrorMessage(error));
+      console.error("Sign in failed");
     },
   });
 }
@@ -86,7 +86,7 @@ export function useSignOut() {
       queryClient.clear();
     },
     onError: (error) => {
-      console.error("Sign out failed:", getErrorMessage(error));
+      console.error("Sign out failed");
     },
   });
 }

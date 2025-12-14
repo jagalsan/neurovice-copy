@@ -4,19 +4,18 @@ import { useState } from "react";
 import AuthField from "./AuthField";
 import { useRequestResetPassword } from "@/lib/hooks/api/useAuth";
 import type { RequestResetPasswordRequest } from "@/lib/api/types";
+import Button from "@/components/ui/Button";
 
 type TFn = (key: string) => string;
 
 interface ForgotPasswordFormProps {
   t: TFn;
   onBackToLogin: () => void;
-  primaryButtonClass: string;
 }
 
 export default function ForgotPasswordForm({
   t,
   onBackToLogin,
-  primaryButtonClass,
 }: ForgotPasswordFormProps) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -31,8 +30,9 @@ export default function ForgotPasswordForm({
       const payload: RequestResetPasswordRequest = { email };
       await requestResetPassword.mutateAsync(payload);
       setSuccess(true);
-    } catch (err: any) {
-      setError(err.response?.data?.message || t("notices.something_went_wrong"));
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || t("forms.errors.something_went_wrong"));
     }
   };
 
@@ -44,17 +44,18 @@ export default function ForgotPasswordForm({
             {t("forms.forgot_password_title")}
           </h2>
           <p className="text-[12px] leading-relaxed text-[var(--color-brand-300)]">
-            {t("forms.reset_link_sent") || "We've sent you an email with instructions to reset your password."}
+            {t("forms.reset_link_sent")}
           </p>
         </div>
 
-        <button
+        <Button
           type="button"
+          variant="primary"
           onClick={onBackToLogin}
-          className={primaryButtonClass}
+          fullWidth
         >
           {t("forms.back_to_login")}
-        </button>
+        </Button>
       </div>
     );
   }
@@ -75,19 +76,21 @@ export default function ForgotPasswordForm({
         placeholder={t("forms.email_placeholder")}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        t={t}
       />
 
       {error && (
         <p className="text-[11px] text-red-400">{error}</p>
       )}
 
-      <button 
+      <Button
         type="submit"
+        variant="primary"
         disabled={requestResetPassword.isPending || !email}
-        className={primaryButtonClass + " disabled:opacity-50 disabled:cursor-not-allowed"}
+        fullWidth
       >
         {requestResetPassword.isPending ? t("labels.loading") : t("forms.send_link")}
-      </button>
+      </Button>
 
       <button
         type="button"

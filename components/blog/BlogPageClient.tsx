@@ -16,8 +16,7 @@ export function BlogPageClient({ locale }: BlogPageClientProps) {
     <section className="max-w-[1459px] mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16">
       <div className="text-center mb-12 md:mb-16">
         <span
-          className="text-xs font-[500] tracking-[0.28em] uppercase text-[var(--color-brand-500)] z-10 bg-transparent"
-          style={{ textShadow: "0px 0px 15px #00FFFC" }}
+          className="text-xs font-[500] tracking-[0.28em] uppercase text-[var(--color-brand-500)] z-10 bg-transparent text-glow-cyan"
         >
           {t("labels.blog")}
         </span>

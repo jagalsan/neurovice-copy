@@ -5,16 +5,16 @@ import type { Locale } from "@/i18n/config";
 import { generatePageMetadata } from "@/lib/metadata";
 import { seasonsService } from "@/lib/api/services";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ locale: string }> 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  
+
   return await generatePageMetadata(locale as Locale, {
     titleKey: "seo.home_title",
     descriptionKey: "seo.home_description",
@@ -22,23 +22,15 @@ export async function generateMetadata({
   });
 }
 
-export default async function Home({ 
-  params 
-}: { 
-  params: Promise<{ locale: string }> 
-}) {
-  
+export default async function Home({}: {}) {
   const seasonsResponse = await seasonsService.getSeasons({
     limit: 50,
-    offset: 0
+    offset: 0,
   });
 
   return (
     <div className="min-h-screen">
-      <HeroVideo 
-        src="/hero-video.mp4"
-        posterSrc="/hero-poster.jpg"
-      />
+      <HeroVideo src="/mock/video.mp4" posterSrc="/mock/video-placeholder.jpg" />
       <SeasonsSection seasons={seasonsResponse.results} />
     </div>
   );

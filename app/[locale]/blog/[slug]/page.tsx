@@ -2,7 +2,7 @@ import OtherPostsSection from "@/components/blog/OtherPosts";
 import { BlogArticleClient } from "@/components/blog/BlogArticleClient";
 import type { Locale } from "@/i18n/config";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { generatePageMetadata } from "@/lib/metadata";
 import type { BlogPost } from "@/lib/api/types";
 import { blogService } from "@/lib/api/services/blog.service";
@@ -70,6 +70,6 @@ export default async function BlogArticlePage({
       </section>
     );
   } catch {
-    notFound();
+    redirect(`/${locale}`);
   }
 }

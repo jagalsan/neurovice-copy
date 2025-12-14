@@ -1,7 +1,7 @@
 "use client";
 
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useT } from "@/providers/I18nProvider";
 
 type Props = {
@@ -28,10 +28,34 @@ export default function HeroVideo({
   const videoRef = useRef<HTMLVideoElement>(null);
   const t = useT();
 
-  const togglePlay = () => {
+  const isMobile = () => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 768;
+  };
+
+  const requestFullscreen = async (element: HTMLVideoElement) => {
+    try {
+      if (element.requestFullscreen) {
+        await element.requestFullscreen();
+      } else if ((element as HTMLVideoElement & { webkitEnterFullscreen?: () => Promise<void> }).webkitEnterFullscreen) {
+        await (element as HTMLVideoElement & { webkitEnterFullscreen: () => Promise<void> }).webkitEnterFullscreen();
+      }
+    } catch (error) {
+      console.warn("Fullscreen not supported:", error);
+    }
+  };
+
+  const togglePlay = async () => {
     if (!videoRef.current) return;
-    if (isPlaying) videoRef.current.pause();
-    else videoRef.current.play();
+    
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+      if (isMobile()) {
+        await requestFullscreen(videoRef.current);
+      }
+    }
     setIsPlaying((v) => !v);
   };
 
@@ -40,6 +64,23 @@ export default function HeroVideo({
     videoRef.current.muted = !isMuted;
     setIsMuted((v) => !v);
   };
+
+  // Sync play/pause state with video element events
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
+
+    return () => {
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
+    };
+  }, []);
 
   return (
     <section

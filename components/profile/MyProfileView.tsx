@@ -30,7 +30,7 @@ export default function MyProfileView({ t, onBack }: MyProfileViewProps) {
   const updatePassword = useUpdatePassword();
   
   const activeSubscription = user?.subscriptions?.find(
-    (sub: any) => sub.status.toLowerCase() === "active"
+    (sub: { status: string }) => sub.status.toLowerCase() === "active"
   );
 
   const handleChangePassword = async () => {

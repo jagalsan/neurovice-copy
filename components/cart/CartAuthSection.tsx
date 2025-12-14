@@ -1,104 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { useSignIn, useSignUp, useRequestResetPassword, useFacebookAuthUrl, useGoogleAuthUrl } from "@/lib/hooks/api/useAuth";
-import { MetaIcon } from "@/components/icons/PlatformIcons";
+import { useSignIn, useSignUp, useRequestResetPassword } from "@/lib/hooks/api/useAuth";
+import CartAuthField from "./CartAuthField";
+import CartSocialLoginButtons from "./CartSocialLoginButtons";
 
 type AuthMode = "login" | "register" | "forgot";
+type TFn = (key: string) => string;
 
-interface AuthSectionProps {
-  t: (key: string) => string;
+interface CartAuthSectionProps {
+  t: TFn;
   onAuthSuccess?: () => void;
 }
 
-function AuthField({
-  label,
-  type = "text",
-  placeholder,
-  value,
-  onChange,
-}: {
-  label: string;
-  type?: string;
-  placeholder: string;
-  value: string;
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div className="w-full">
-      <label className="block font-heading text-[11px] tracking-[0.18em] uppercase text-[var(--color-brand-400)] mb-2">
-        {label}
-      </label>
-      <div className="h-[72px] rounded-[12px] border border-white/15 bg-black/40 px-4 flex items-center">
-        <input
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-transparent outline-none text-[13px] text-white placeholder:text-[var(--color-brand-300)]"
-          placeholder={placeholder}
-        />
-      </div>
-    </div>
-  );
-}
-
-function SocialLoginButtons({ t }: { t: (key: string) => string }) {
-  const [loading, setLoading] = useState<"google" | "meta" | null>(null);
-  const { refetch: getGoogleUrl } = useGoogleAuthUrl();
-  const { refetch: getFacebookUrl } = useFacebookAuthUrl();
-
-  const handleGoogle = async () => {
-    try {
-      setLoading("google");
-      const { data: url } = await getGoogleUrl();
-      if (url) window.location.href = url;
-    } finally {
-      setLoading(null);
-    }
-  };
-
-  const handleMeta = async () => {
-    try {
-      setLoading("meta");
-      const { data: url } = await getFacebookUrl();
-      if (url) window.location.href = url;
-    } finally {
-      setLoading(null);
-    }
-  };
-
-  return (
-    <div className="flex gap-4">
-      <button
-        type="button"
-        onClick={handleGoogle}
-        disabled={loading !== null}
-        className="flex-1 h-[72px] rounded-[12px] bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/8 transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {loading === "google" ? (
-          <span className="text-[11px]">{t("labels.loading")}</span>
-        ) : (
-          <Image src="/icons/google.svg" alt="Google" width={32} height={32} />
-        )}
-      </button>
-      <button
-        type="button"
-        onClick={handleMeta}
-        disabled={loading !== null}
-        className="flex-1 h-[72px] rounded-[12px] bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/8 transition disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {loading === "meta" ? (
-          <span className="text-[11px]">{t("labels.loading")}</span>
-        ) : (
-          <MetaIcon />
-        )}
-      </button>
-    </div>
-  );
-}
-
-export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
+export default function CartAuthSection({ t, onAuthSuccess }: CartAuthSectionProps) {
   const [mode, setMode] = useState<AuthMode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -114,12 +29,12 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
     setError("");
 
     if (!email || !password) {
-      setError("Please fill all fields");
+      setError(t("forms.errors.fill_all_fields"));
       return;
     }
 
     if (mode === "register" && !name) {
-      setError("Please enter your name");
+      setError(t("forms.errors.enter_your_name"));
       return;
     }
 
@@ -136,24 +51,25 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
         });
       }
       onAuthSuccess?.();
-    } catch (err: any) {
-      setError(err?.message || "Authentication failed");
+    } catch {
+      setError(t("notices.something_went_wrong"));
     }
   };
 
   const handleForgotPassword = async () => {
     if (!email) {
-      setError("Please enter your email");
+      setError(t("forms.errors.enter_your_email"));
       return;
     }
 
     try {
       await requestResetPassword.mutateAsync({ email });
       setError("");
-      alert(t("messages.password_reset_sent") || "Password reset link sent to your email");
+      alert(t("messages.password_reset_sent"));
       setMode("login");
-    } catch (err: any) {
-      setError(err?.message || "Error sending reset email");
+    } catch (err: unknown) {
+      const error = err as { message?: string };
+      setError(error?.message || t("forms.errors.error_sending_reset_email"));
     }
   };
 
@@ -168,16 +84,14 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
           </h2>
         </div>
 
-        <AuthField
+        <CartAuthField
           label={t("forms.email")}
           placeholder={t("forms.email_placeholder")}
           value={email}
           onChange={setEmail}
         />
 
-        {error && (
-          <p className="text-[11px] text-red-400">{error}</p>
-        )}
+        {error && <p className="text-[11px] text-red-400">{error}</p>}
 
         <button
           onClick={handleForgotPassword}
@@ -192,14 +106,14 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
             transition-transform duration-200 hover:scale-[1.02]
           "
         >
-          {t("actions.send_reset_link") || "Send reset link"}
+          {t("forms.send_link")}
         </button>
 
         <button
           onClick={() => setMode("login")}
           className="w-full text-center text-[11px] text-[#17FBF8] hover:text-white transition"
         >
-          {t("actions.back_to_login") || "Back to login"}
+          {t("forms.back_to_login")}
         </button>
       </div>
     );
@@ -240,20 +154,20 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         {mode === "register" && (
-          <AuthField
+          <CartAuthField
             label={t("forms.first_name")}
-            placeholder={t("forms.first_name") || "Name"}
+            placeholder={t("forms.first_name")}
             value={name}
             onChange={setName}
           />
         )}
-        <AuthField
+        <CartAuthField
           label={t("forms.email")}
           placeholder={t("forms.email_placeholder")}
           value={email}
           onChange={setEmail}
         />
-        <AuthField
+        <CartAuthField
           label={t("forms.password")}
           type="password"
           placeholder={t("forms.password_placeholder")}
@@ -261,9 +175,7 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
           onChange={setPassword}
         />
 
-        {error && (
-          <p className="text-[11px] text-red-400">{error}</p>
-        )}
+        {error && <p className="text-[11px] text-red-400">{error}</p>}
 
         {mode === "login" && (
           <button
@@ -298,15 +210,15 @@ export default function AuthSection({ t, onAuthSuccess }: AuthSectionProps) {
         </button>
       </form>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         <div className="flex-1 h-px bg-white/10" />
-        <span className="px-3 py-1 text-[10px] rounded-[8px] bg-black/60 border border-white/20 font-heading tracking-[0.24em] uppercase">
-          {t("labels.or")}
+        <span className="text-[11px] text-[var(--color-brand-300)] uppercase">
+          {t("forms.or_continue_with")}
         </span>
         <div className="flex-1 h-px bg-white/10" />
       </div>
 
-      <SocialLoginButtons t={t} />
+      <CartSocialLoginButtons t={t} />
     </div>
   );
 }

@@ -5,10 +5,10 @@ import { useT } from "@/providers/I18nProvider";
 import { useCurrentUser } from "@/lib/hooks/api/useAuth";
 import { useCartStore } from "@/lib/stores/cart.store";
 import CartItem from "@/components/cart/CartItem";
-import AuthSection from "@/components/cart/AuthSection";
+import CartAuthSection from "@/components/cart/CartAuthSection";
 import PaymentOptions from "@/components/cart/PaymentOptions";
 import { ArrowRightIcon, ShoppingCart } from "lucide-react";
-import { primaryButtonBase } from "@/lib/styles/buttons";
+import Button from "@/components/ui/Button";
 
 type PaymentMethod = "paypal" | "card";
 
@@ -33,8 +33,7 @@ export default function CartPageClient() {
                   {t("views.cart")}
                 </h1>
                 <p
-                  className="mt-2 font-heading text-[11px] tracking-[0.24em] uppercase text-[var(--color-brand-300)]"
-                  style={{ textShadow: "0px 0px 15px #00FFFC" }}
+                  className="mt-2 font-heading text-[11px] tracking-[0.24em] uppercase text-[var(--color-brand-300)] text-glow-cyan"
                 >
                   {t("labels.items_in_cart").replace(
                     "{count}",
@@ -56,7 +55,7 @@ export default function CartPageClient() {
                     key={item.id}
                     title={item.title}
                     subtitle={item.subtitle || ""}
-                    oldPrice={`$${item.oldPrice}`}
+                    oldPrice={item.oldPrice ? `$${item.oldPrice}` : null}
                     price={`$${item.price}`}
                     imageSrc={item.imageSrc}
                     quantity={item.quantity}
@@ -67,12 +66,16 @@ export default function CartPageClient() {
 
               <div className="mt-10 rounded-[14px] border border-white/10 bg-[#11111880] px-4 py-4 md:px-8 md:py-6 flex items-center justify-between">
                 <div className="flex items-center justify-center w-full gap-2 md:gap-4 uppercase">
-                  <span className="text-white/40 text-[20px] md:text-[28px] lg:text-[32px] font-bold">
-                    ${totalOldPrice.toFixed(2)}
-                  </span>
-                  <span className="text-[#17FBF8] flex-shrink-0">
-                    <ArrowRightIcon className="w-5 h-5 md:w-6 md:h-6" />
-                  </span>
+                  {totalOldPrice > 0 && totalOldPrice !== totalPrice && (
+                    <>
+                      <span className="text-white/40 text-[20px] md:text-[28px] lg:text-[32px] font-bold line-through">
+                        ${totalOldPrice.toFixed(2)}
+                      </span>
+                      <span className="text-[#17FBF8] flex-shrink-0">
+                        <ArrowRightIcon className="w-5 h-5 md:w-6 md:h-6" />
+                      </span>
+                    </>
+                  )}
                   <span className="text-white text-[20px] md:text-[28px] lg:text-[32px] font-bold">
                     ${totalPrice.toFixed(2)}
                   </span>
@@ -86,7 +89,7 @@ export default function CartPageClient() {
                   <div className="flex flex-col justify-between h-full">
                     <div className="space-y-2">
                       <h2 className="font-heading text-[18px] md:text-[20px] uppercase text-[#17FBF8]">
-                        Logged in as:
+                        {t("labels.logged_in_as")}
                       </h2>
                       <p className="text-[13px] text-[var(--color-brand-300)] uppercase break-all">
                         {user.email}
@@ -100,16 +103,18 @@ export default function CartPageClient() {
                         onSelect={setPaymentMethod}
                       />
 
-                      <button
+                      <Button
+                        variant="primary"
                         disabled={items.length === 0}
-                        className={`${primaryButtonBase} mt-4 h-[60px] md:h-[70px] lg:h-[78px] text-sm md:text-base`}
+                        className="mt-4"
+                        fullWidth
                       >
                         {t("actions.proceed_to_payment")}
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 ) : !isLoading ? (
-                  <AuthSection t={t} />
+                  <CartAuthSection t={t} />
                 ) : (
                   <div className="flex items-center justify-center py-8">
                     <p className="text-[13px] text-[var(--color-brand-300)]">

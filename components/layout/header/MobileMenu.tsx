@@ -78,10 +78,10 @@ export default function MobileMenu({
           <Link href={`#`} onClick={onClose}>
             {t("actions.download_app")}
           </Link>
-          <Link href={`${locale}/privacy-policy`} onClick={onClose}>
+          <Link href={`/${locale}/privacy-policies`} onClick={onClose}>
             {t("views.privacy")}
           </Link>
-          <Link href={`${locale}/terms-of-use`} onClick={onClose}>
+          <Link href={`/${locale}/terms-of-use`} onClick={onClose}>
             {t("views.terms")}
           </Link>
         </div>

@@ -4,10 +4,11 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
 import Card from "@/components/Card";
 import StarsGridAnimated from "@/components/stars/StarsGridAnimated";
-import { primaryButtonBase } from "@/lib/styles/buttons";
+import Button from "@/components/ui/Button";
 import { useT } from "@/providers/I18nProvider";
 import { useLocale } from "@/providers/LocaleProvider";
 import type { PornStar } from "@/lib/api/types";
+import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 interface StarsPageClientProps {
   pornStarsData?: PornStar[];
@@ -28,13 +29,11 @@ export default function StarsPageClient({ pornStarsData }: StarsPageClientProps)
   const endIndex = startIndex + starsPerPage;
   const currentStars = (pornStarsData || []).slice(startIndex, endIndex);
 
-  const PLACEHOLDER_IMAGE = "/placeholder-star.jpg";
-
   const stars = currentStars.map((pornStar) => ({
     coverSrc: pornStar.profileImage || PLACEHOLDER_IMAGE,
     coverAlt: `${pornStar.name} ${pornStar.surname}`,
     title: `${pornStar.name} ${pornStar.surname}`.toUpperCase(),
-    releaseLabel: `${pornStar.scenePornStars.length} CHAPTERS`,
+    releaseLabel: t("labels.chapters_count", { count: pornStar.scenePornStars.length }),
     accentColor: "#17FBF8",
     id: pornStar.id,
   }));
@@ -53,8 +52,7 @@ export default function StarsPageClient({ pornStarsData }: StarsPageClientProps)
         <Card className="bg-[transparent]">
           <div>
             <span
-              className="text-xs font-[500] uppercase text-[var(--color-brand-500)] z-10 bg-transparent"
-              style={{ textShadow: "0px 0px 15px #00FFFC" }}
+              className="text-xs font-[500] uppercase text-[var(--color-brand-500)] z-10 bg-transparent text-glow-cyan"
             >
               {t("labels.our_stars")}
             </span>
@@ -68,11 +66,13 @@ export default function StarsPageClient({ pornStarsData }: StarsPageClientProps)
               {t("messages.best_tattoos_vr_description")}
             </p>
             <div className="pt-2">
-              <button className={primaryButtonBase}>
-                <span className="relative z-10">
-                  {t("actions.unlock_with_subscription")}
-                </span>
-              </button>
+              <Button
+                variant="primary"
+                fullWidth
+                onClick={() => router.push(`/${locale}/subscription`)}
+              >
+                {t("actions.unlock_with_subscription")}
+              </Button>
             </div>
           </div>
         </Card>
