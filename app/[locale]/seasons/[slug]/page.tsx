@@ -4,6 +4,7 @@ import { generatePageMetadata } from "@/lib/metadata";
 import { seasonsService } from "@/lib/api/services";
 import { redirect } from "next/navigation";
 import SeasonDetailClient from "@/components/seasons/SeasonDetailClient";
+import { isServerError, getMaintenancePath } from "@/lib/utils/server-error";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -40,6 +41,9 @@ export default async function SeasonDetailPage({
     
     return <SeasonDetailClient seasonData={seasonData} />;
   } catch (error) {
+    if (isServerError(error)) {
+      redirect(getMaintenancePath(locale));
+    }
     redirect(`/${locale}`);
   }
 }

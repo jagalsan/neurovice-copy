@@ -5,6 +5,7 @@ import StarDetailClient from "@/components/stars/StarDetailClient";
 import { pornStarsService } from "@/lib/api/services";
 import type { PornStar } from "@/lib/api/types";
 import { redirect } from "next/navigation";
+import { isServerError, getMaintenancePath } from "@/lib/utils/server-error";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -29,7 +30,7 @@ export default async function StarDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const starId = Number(decodeURIComponent(slug));
   
   if (isNaN(starId) || starId <= 0) {
@@ -46,7 +47,10 @@ export default async function StarDetailPage({
     }
   } catch (error) {
     console.error("Failed to fetch star:", error);
-    redirect('/stars');
+    if (isServerError(error)) {
+      redirect(getMaintenancePath(locale));
+    }
+    redirect(`/${locale}/stars`);
   }
 
   return <StarDetailClient starData={starData} />;

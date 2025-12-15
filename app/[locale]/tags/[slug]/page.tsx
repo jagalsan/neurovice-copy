@@ -5,11 +5,12 @@ import TagPageClient from "@/components/tags/TagPageClient";
 import { tagsService } from "@/lib/api/services";
 import type { Tag } from "@/lib/api/types";
 import { redirect } from "next/navigation";
+import { isServerError, getMaintenancePath } from "@/lib/utils/server-error";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-type Params = { slug: string };
+type Params = { slug: string; locale: string };
 
 export async function generateMetadata({
   params,
@@ -25,8 +26,9 @@ export async function generateMetadata({
   });
 }
 
-export default async function TagPage({ params }: { params: Params }) {
+export default async function TagPage({ params }: { params: Promise<Params> }) {
   const paramsAux = await params;
+  const { locale } = paramsAux;
   const tagSlug = Number(decodeURIComponent(paramsAux.slug));
   
   if (isNaN(tagSlug) || tagSlug <= 0) {
@@ -43,7 +45,10 @@ export default async function TagPage({ params }: { params: Params }) {
     }
   } catch (error) {
     console.error("Failed to fetch tag:", error);
-    redirect('/');
+    if (isServerError(error)) {
+      redirect(getMaintenancePath(locale));
+    }
+    redirect(`/${locale}`);
   }
 
   return <TagPageClient tagData={tagData} />;

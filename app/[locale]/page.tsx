@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import type { Locale } from "@/i18n/config";
 import { generatePageMetadata } from "@/lib/metadata";
 import { seasonsService } from "@/lib/api/services";
+import { redirect } from "next/navigation";
+import { isServerError, getMaintenancePath } from "@/lib/utils/server-error";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -22,7 +24,12 @@ export async function generateMetadata({
   });
 }
 
-export default async function Home({}: {}) {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   let seasons: Awaited<ReturnType<typeof seasonsService.getSeasons>>["results"] = [];
 
   try {
@@ -33,6 +40,9 @@ export default async function Home({}: {}) {
     seasons = seasonsResponse.results;
   } catch (error) {
     console.error("[Home] Failed to fetch seasons:", error);
+    if (isServerError(error)) {
+      redirect(getMaintenancePath(locale));
+    }
   }
 
   return (

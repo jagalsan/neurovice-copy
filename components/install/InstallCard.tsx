@@ -51,6 +51,7 @@ export function InstallCard({
         className={`
           relative flex flex-col flex-1 rounded-[20px] px-6 pt-6 pb-7 overflow-hidden z-4
           ${styles.cardBg} ${styles.textColor}
+          border border-[var(--accent-color)]
         `}
         style={gridBg}
       >

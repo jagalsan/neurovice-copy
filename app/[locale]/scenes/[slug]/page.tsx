@@ -5,6 +5,7 @@ import SceneClient from "@/components/scenes/SceneClient";
 import { scenesService } from "@/lib/api/services";
 import { redirect } from "next/navigation";
 import { PLACEHOLDER_IMAGE, PLACEHOLDER_VIDEO } from "@/lib/constants";
+import { isServerError, getMaintenancePath } from "@/lib/utils/server-error";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -132,6 +133,9 @@ export default async function SceneDetailPage({
       />
     );
   } catch (error) {
+    if (isServerError(error)) {
+      redirect(getMaintenancePath(locale));
+    }
     redirect(`/${locale}`);
   }
 }

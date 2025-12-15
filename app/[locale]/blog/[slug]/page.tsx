@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { generatePageMetadata } from "@/lib/metadata";
 import type { BlogPost } from "@/lib/api/types";
 import { blogService } from "@/lib/api/services/blog.service";
+import { isServerError, getMaintenancePath } from "@/lib/utils/server-error";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -69,7 +70,10 @@ export default async function BlogArticlePage({
         <OtherPostsSection locale={typedLocale} posts={otherPosts} />
       </section>
     );
-  } catch {
+  } catch (error) {
+    if (isServerError(error)) {
+      redirect(getMaintenancePath(locale));
+    }
     redirect(`/${locale}`);
   }
 }

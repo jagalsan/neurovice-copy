@@ -280,6 +280,9 @@
   },
   "notices": {
     "content_loading_error": "Error al cargar el contenido. Por favor, inténtalo de nuevo más tarde.",
+    "maintenance_title": "Estamos trabajando en ello",
+    "maintenance_description": "Nuestros servidores no están disponibles temporalmente. Estamos trabajando para solucionar el problema. Por favor, inténtalo de nuevo en unos minutos.",
+    "maintenance_back_home": "Volver al Inicio",
     "invalid_credentials": "Email o contraseña inválidos",
     "network_error": "Error de red. Por favor, comprueba tu conexión.",
     "page_not_found": "Página no encontrada",
@@ -300,6 +303,8 @@
     "what_is_vr_game": "¿Qué es un juego porno VR?"
   },
   "seo": {
+    "maintenance_title": "Mantenimiento - Neurovice",
+    "maintenance_description": "Nuestros servidores no están disponibles temporalmente. Estamos trabajando para restaurar el servicio lo antes posible.",
     "accessibility_description": "Accesibilidad - Neurovice | Acceso VR Premium",
     "accessibility_title": "Accesibilidad - Neurovice | Acceso VR Premium",
     "billing_support_description": "Obtén ayuda con facturación, pagos, suscripciones y reembolsos. Contacta nuestro equipo de soporte para asistencia con tu cuenta Neurovice y transacciones.",
