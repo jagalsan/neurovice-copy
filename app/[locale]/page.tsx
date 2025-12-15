@@ -23,15 +23,22 @@ export async function generateMetadata({
 }
 
 export default async function Home({}: {}) {
-  const seasonsResponse = await seasonsService.getSeasons({
-    limit: 50,
-    offset: 0,
-  });
+  let seasons: Awaited<ReturnType<typeof seasonsService.getSeasons>>["results"] = [];
+
+  try {
+    const seasonsResponse = await seasonsService.getSeasons({
+      limit: 50,
+      offset: 0,
+    });
+    seasons = seasonsResponse.results;
+  } catch (error) {
+    console.error("[Home] Failed to fetch seasons:", error);
+  }
 
   return (
     <div className="min-h-screen">
       <HeroVideo src="/mock/video.mp4" posterSrc="/mock/video-placeholder.jpg" />
-      <SeasonsSection seasons={seasonsResponse.results} />
+      <SeasonsSection seasons={seasons} />
     </div>
   );
 }
