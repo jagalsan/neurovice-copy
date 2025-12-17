@@ -53,36 +53,69 @@ export default function ContentCard({
         variant === "stars" ? "max-w-[300px]" : ""
       }`}
     >
-      <div className="w-full flex justify-center">
-        <div
-          className={`relative w-full overflow-hidden rounded-[18px] ${
-            variant === "stars" ? "min-w-[291px] min-h-[410px]" : "pt-[140%]"
-          }`}
-        >
-          <Image
-            src={coverSrc}
-            alt={coverAlt}
-            fill
-            className={`${
-              variant === "stars"
-                ? "object-cover rounded-[18px] border-[2px] border-[#17FBF899]"
-                : "object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)]"
-            } z-10`}
-          />
-
-          {variant === "stars" && (
-            <div
-              className="
-          pointer-events-none absolute inset-[2px] rounded-[16px] z-20
-        "
-              style={{
-                background:
-                  "linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 18%, rgba(0,0,0,0.35) 36%, rgba(0,0,0,0.18) 56%, rgba(0,0,0,0) 78%)",
-              }}
+      {viewMoreHref ? (
+        <Link href={viewMoreHref} className="w-full flex justify-center group cursor-pointer">
+          <div
+            className={`relative w-full overflow-hidden rounded-[18px] transition-transform duration-300 ease-out group-hover:-translate-y-2 ${
+              variant === "stars" ? "min-w-[291px] min-h-[410px]" : "pt-[140%]"
+            }`}
+          >
+            <Image
+              src={coverSrc}
+              alt={coverAlt}
+              fill
+              className={`${
+                variant === "stars"
+                  ? "object-cover rounded-[18px] border-[2px] border-[#17FBF899]"
+                  : "object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)]"
+              } z-10`}
             />
-          )}
+
+            {variant === "stars" && (
+              <div
+                className="
+            pointer-events-none absolute inset-[2px] rounded-[16px] z-20
+          "
+                style={{
+                  background:
+                    "linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 18%, rgba(0,0,0,0.35) 36%, rgba(0,0,0,0.18) 56%, rgba(0,0,0,0) 78%)",
+                }}
+              />
+            )}
+          </div>
+        </Link>
+      ) : (
+        <div className="w-full flex justify-center">
+          <div
+            className={`relative w-full overflow-hidden rounded-[18px] ${
+              variant === "stars" ? "min-w-[291px] min-h-[410px]" : "pt-[140%]"
+            }`}
+          >
+            <Image
+              src={coverSrc}
+              alt={coverAlt}
+              fill
+              className={`${
+                variant === "stars"
+                  ? "object-cover rounded-[18px] border-[2px] border-[#17FBF899]"
+                  : "object-contain drop-shadow-[0_26px_40px_rgba(0,0,0,0.85)]"
+              } z-10`}
+            />
+
+            {variant === "stars" && (
+              <div
+                className="
+            pointer-events-none absolute inset-[2px] rounded-[16px] z-20
+          "
+                style={{
+                  background:
+                    "linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 18%, rgba(0,0,0,0.35) 36%, rgba(0,0,0,0.18) 56%, rgba(0,0,0,0) 78%)",
+                }}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="mt-[8px] w-full">
         {releaseLabel && (
