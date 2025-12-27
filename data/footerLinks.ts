@@ -8,10 +8,8 @@ export const getFooterLinks = (locale: Locale): FooterLinks => ({
       items: [
         { labelKey: "messages.how_to_run_chapters", href: "#" },
         { labelKey: "messages.report_inappropriate_content", href: "#" },
-        { labelKey: "actions.download_app", href: "#" },
         { labelKey: "labels.pornstars", href: `/${locale}/stars` },
         { labelKey: "labels.blog", href: `/${locale}/blog` },
-        { labelKey: "messages.reach_customer_support", href: "#" },
       ],
     },
     {

@@ -149,12 +149,12 @@ export function useUpdatePassword() {
 }
 
 /**
- * Get Facebook OAuth URL
+ * Get X (Twitter) OAuth URL
  */
-export function useFacebookAuthUrl() {
+export function useXAuthUrl() {
   return useQuery({
-    queryKey: ["auth", "facebook-url"],
-    queryFn: () => authenticationService.getFacebookAuthUrl(),
+    queryKey: ["auth", "x-url"],
+    queryFn: () => authenticationService.getXAuthUrl(),
     enabled: false, 
   });
 }

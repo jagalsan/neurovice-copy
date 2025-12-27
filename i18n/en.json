@@ -103,6 +103,10 @@
     "signup_legal_prefix": "By signing up you agree to our",
     "signup_legal_suffix": "and confirm that you are at least 18 years old",
     "signup_marketing": "Become a true Neurovice and receive our latest news and special deals",
+    "support_phone_placeholder": "Your phone number (optional)",
+    "support_select_subject": "Select a subject",
+    "support_message_placeholder": "Describe your issue or question...",
+    "support_name_placeholder": "Your full name",
     "username": "Username",
     "username_placeholder": "Choose a username",
     "welcome_back": "Welcome Back"
@@ -119,7 +123,7 @@
     "app_for_windows": "App for Windows",
     "auto_switching_scenes": "Auto switching scenes",
     "bio": "Bio",
-    "blog": "BD Blog",
+    "blog": "Blog",
     "brand_name": "NEUROVICE",
     "breast": "Breast",
     "bundle_four": "BUNDLE FOUR",
@@ -221,7 +225,15 @@
     "all_chapters": "All Chapters",
     "chapters_count": "{count} CHAPTERS",
     "chapters_tagged_as": "Chapters tagged as #{tag}",
-    "remove_item": "Remove item"
+    "remove_item": "Remove item",
+    "support_phone": "Phone",
+    "support_subject": "Subject",
+    "support_message": "Message",
+    "support_subject_billing": "Billing & Payments",
+    "support_subject_technical": "Technical Support",
+    "support_subject_account": "Account Issues",
+    "support_subject_content": "Content Report",
+    "support_subject_other": "Other"
   },
   "messages": {
     "added_to_cart": "Added to cart!",
@@ -277,7 +289,9 @@
     "vr_game_vs_video": "Unlike passive videos, VR games offer interactivity, freedom of movement, character choices and real-time animations.",
     "vr_headsets_support": "Our standalone application is designed to operate seamlessly on the Meta Quest 3 and 3S, as well as the Pico 4 Ultra headset. For users with other headsets, such as those from Valve, HTC, or Pico, you can still enjoy our app by utilizing the PCVR mode, which allows for a smooth and immersive experience across various platforms.",
     "vr_porn_special_description": "VR porn offers an unparalleled experience that combines realism with interactivity. The immersive nature of virtual reality allows viewers to engage with the content like never before.",
-    "what_makes_tag_special": "What makes {param} VR porn special"
+    "what_makes_tag_special": "What makes {param} VR porn special",
+    "support_description": "Have a question or need help? Fill out the form below and our team will get back to you as soon as possible.",
+    "support_success": "Message sent successfully!"
   },
   "notices": {
     "content_loading_error": "Error loading content. Please try again later.",
@@ -293,7 +307,9 @@
     "please_enter_your_name": "Please enter your name",
     "please_enter_your_email": "Please enter your email",
     "authentication_failed": "Authentication failed",
-    "error_sending_reset_email": "Error sending reset email"
+    "error_sending_reset_email": "Error sending reset email",
+    "support_subject_required": "Please select a subject",
+    "support_message_required": "Please enter your message"
   },
   "questions": {
     "content_expectations": "What kind of content can I expect when I purchase?",
@@ -304,6 +320,13 @@
     "what_is_vr_game": "What is a VR porn game?"
   },
   "seo": {
+    "title": "Neurovice - Premium VR Experience",
+    "description": "Premium VR adult entertainment platform with immersive virtual reality experiences. New releases every week.",
+    "keywords": "VR, Virtual Reality, Adult Entertainment, VR Games, Meta Quest, PCVR",
+    "og_title": "Neurovice - Premium VR Experience",
+    "og_description": "Premium VR adult entertainment platform with immersive virtual reality experiences",
+    "twitter_title": "Neurovice - Premium VR Experience",
+    "twitter_description": "Premium VR adult entertainment platform",
     "maintenance_title": "Maintenance - Neurovice",
     "maintenance_description": "Our servers are temporarily unavailable. We're working to restore service as soon as possible.",
     "accessibility_description": "Accessibility - Neurovice | Premium VR Access",
@@ -336,6 +359,7 @@
     "terms_title": "Terms of Use - Neurovice | Legal Agreement & User Guidelines"
   },
   "views": {
+    "contact_support": "Contact Support",
     "accessibility": "Accessibility",
     "back": "Back",
     "billing": "Billing Support",
@@ -367,14 +391,5 @@
     "terms": "Terms of Use",
     "terms_of_use": "Terms of Use",
     "vr_settings": "VR Settings"
-  },
-  "metadata": {
-    "title": "Neurovice - Premium VR Experience",
-    "description": "Premium VR adult entertainment platform with immersive virtual reality experiences. New releases every week.",
-    "keywords": "VR, Virtual Reality, Adult Entertainment, VR Games, Meta Quest, PCVR",
-    "og_title": "Neurovice - Premium VR Experience",
-    "og_description": "Premium VR adult entertainment platform with immersive virtual reality experiences",
-    "twitter_title": "Neurovice - Premium VR Experience",
-    "twitter_description": "Premium VR adult entertainment platform"
   }
 }

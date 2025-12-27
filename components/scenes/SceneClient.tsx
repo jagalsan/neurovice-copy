@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Card from "@/components/Card";
 import HeroVideo from "@/components/HeroVideo";
 import ChipList from "./ChipList";
@@ -11,6 +12,7 @@ import { useAddToCart } from "@/lib/hooks/useAddToCart";
 import { CartItem } from "@/lib/stores/cart.store";
 import { useT } from "@/providers";
 import { PornStar } from "./types";
+import { useBreadcrumbStore } from "@/lib/stores/breadcrumb.store";
 
 interface SceneClientProps {
   title: string;
@@ -46,6 +48,11 @@ export default function SceneClient({
   cartItem,
 }: SceneClientProps) {
   const t = useT();
+  const { setCustomLabel } = useBreadcrumbStore();
+
+  useEffect(() => {
+    setCustomLabel(cartItem.id, title.toUpperCase());
+  }, [cartItem.id, title, setCustomLabel]);
 
   return (
     <div className="w-full bg-[#171614]">

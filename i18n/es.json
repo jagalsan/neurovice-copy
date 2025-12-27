@@ -103,6 +103,10 @@
     "signup_legal_prefix": "Al registrarte aceptas nuestros",
     "signup_legal_suffix": "y confirmas que tienes al menos 18 años",
     "signup_marketing": "Conviértete en un verdadero Neurovice y recibe nuestras últimas noticias y ofertas especiales",
+    "support_phone_placeholder": "Tu número de teléfono (opcional)",
+    "support_select_subject": "Selecciona un asunto",
+    "support_message_placeholder": "Describe tu problema o pregunta...",
+    "support_name_placeholder": "Tu nombre completo",
     "username": "Nombre de usuario",
     "username_placeholder": "Elige un nombre de usuario",
     "welcome_back": "Bienvenido de Vuelta"
@@ -119,7 +123,7 @@
     "app_for_windows": "App para Windows",
     "auto_switching_scenes": "Cambio automático de escenas",
     "bio": "Biografía",
-    "blog": "BD Blog",
+    "blog": "Blog",
     "brand_name": "NEUROVICE",
     "breast": "Pecho",
     "bundle_four": "Bundle Four",
@@ -221,7 +225,15 @@
     "all_chapters": "Todos los Capítulos",
     "chapters_count": "{count} CAPÍTULOS",
     "chapters_tagged_as": "Capítulos etiquetados como #{tag}",
-    "remove_item": "Eliminar artículo"
+    "remove_item": "Eliminar artículo",
+    "support_phone": "Teléfono",
+    "support_subject": "Asunto",
+    "support_message": "Mensaje",
+    "support_subject_billing": "Facturación y Pagos",
+    "support_subject_technical": "Soporte Técnico",
+    "support_subject_account": "Problemas de Cuenta",
+    "support_subject_content": "Reportar Contenido",
+    "support_subject_other": "Otro"
   },
   "messages": {
     "added_to_cart": "¡Añadido al carrito!",
@@ -276,7 +288,9 @@
     "vr_game_vs_video": "A diferencia de los videos pasivos, los juegos VR ofrecen interactividad, libertad de movimiento, elección de personajes y animaciones en tiempo real.",
     "vr_headsets_support": "Nuestra aplicación standalone está diseñada para funcionar perfectamente en Meta Quest 3 y 3S, así como en el casco Pico 4 Ultra. Para usuarios con otros cascos, como los de Valve, HTC o Pico, aún puedes disfrutar de nuestra app utilizando el modo PCVR, que permite una experiencia fluida e inmersiva en varias plataformas.",
     "vr_porn_special_description": "El porno en realidad virtual ofrece una experiencia sin igual que combina realismo e interactividad. La naturaleza inmersiva de la realidad virtual permite a los espectadores interactuar con el contenido como nunca antes.",
-    "what_makes_tag_special": "¿Qué hace que el porno en realidad virtual de {param} sea especial?"
+    "what_makes_tag_special": "¿Qué hace que el porno en realidad virtual de {param} sea especial?",
+    "support_description": "¿Tienes una pregunta o necesitas ayuda? Completa el formulario y nuestro equipo te responderá lo antes posible.",
+    "support_success": "¡Mensaje enviado correctamente!"
   },
   "notices": {
     "content_loading_error": "Error al cargar el contenido. Por favor, inténtalo de nuevo más tarde.",
@@ -292,7 +306,9 @@
     "please_enter_your_name": "Por favor introduce tu nombre",
     "please_enter_your_email": "Por favor introduce tu email",
     "authentication_failed": "Error de autenticación",
-    "error_sending_reset_email": "Error al enviar email de recuperación"
+    "error_sending_reset_email": "Error al enviar email de recuperación",
+    "support_subject_required": "Por favor selecciona un asunto",
+    "support_message_required": "Por favor introduce tu mensaje"
   },
   "questions": {
     "content_expectations": "¿Qué tipo de contenido puedo esperar cuando compre?",
@@ -303,6 +319,13 @@
     "what_is_vr_game": "¿Qué es un juego porno VR?"
   },
   "seo": {
+    "title": "Neurovice - Experiencia VR Premium",
+    "description": "Plataforma premium de entretenimiento para adultos en realidad virtual con experiencias inmersivas. Nuevos lanzamientos cada semana.",
+    "keywords": "VR, Realidad Virtual, Entretenimiento Adultos, Juegos VR, Meta Quest, PCVR",
+    "og_title": "Neurovice - Experiencia VR Premium",
+    "og_description": "Plataforma premium de entretenimiento para adultos en realidad virtual",
+    "twitter_title": "Neurovice - Experiencia VR Premium",
+    "twitter_description": "Plataforma premium de entretenimiento para adultos en VR",
     "maintenance_title": "Mantenimiento - Neurovice",
     "maintenance_description": "Nuestros servidores no están disponibles temporalmente. Estamos trabajando para restaurar el servicio lo antes posible.",
     "accessibility_description": "Accesibilidad - Neurovice | Acceso VR Premium",
@@ -335,6 +358,7 @@
     "terms_title": "Términos de Uso - Neurovice | Acuerdo Legal y Directrices de Usuario"
   },
   "views": {
+    "contact_support": "Contactar Soporte",
     "accessibility": "Accesibilidad",
     "billing": "Soporte de facturación",
     "blog": "Blog",
@@ -362,14 +386,5 @@
     "terms": "Términos de Uso",
     "terms_of_use": "Términos de Uso",
     "vr_settings": "Ajustes VR"
-  },
-  "metadata": {
-    "title": "Neurovice - Experiencia VR Premium",
-    "description": "Plataforma premium de entretenimiento para adultos en realidad virtual con experiencias inmersivas. Nuevos lanzamientos cada semana.",
-    "keywords": "VR, Realidad Virtual, Entretenimiento Adultos, Juegos VR, Meta Quest, PCVR",
-    "og_title": "Neurovice - Experiencia VR Premium",
-    "og_description": "Plataforma premium de entretenimiento para adultos en realidad virtual",
-    "twitter_title": "Neurovice - Experiencia VR Premium",
-    "twitter_description": "Plataforma premium de entretenimiento para adultos en VR"
   }
 }

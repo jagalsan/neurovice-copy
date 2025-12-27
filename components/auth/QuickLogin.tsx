@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useGoogleAuthUrl, useFacebookAuthUrl } from "@/lib/hooks/api/useAuth";
-import { MetaIcon } from "../icons/PlatformIcons";
+import { useGoogleAuthUrl, useXAuthUrl } from "@/lib/hooks/api/useAuth";
+import { FaXTwitter } from "react-icons/fa6";
 
 type TFn = (key: string) => string;
 
@@ -12,9 +12,9 @@ interface QuickLoginProps {
 }
 
 export default function QuickLogin({ t }: QuickLoginProps) {
-  const [loading, setLoading] = useState<"google" | "facebook" | null>(null);
+  const [loading, setLoading] = useState<"google" | "x" | null>(null);
   const { refetch: getGoogleUrl } = useGoogleAuthUrl();
-  const { refetch: getFacebookUrl } = useFacebookAuthUrl();
+  const { refetch: getXUrl } = useXAuthUrl();
 
   const handleGoogleLogin = async () => {
     try {
@@ -27,13 +27,13 @@ export default function QuickLogin({ t }: QuickLoginProps) {
     }
   };
 
-  const handleFacebookLogin = async () => {
+  const handleXLogin = async () => {
     try {
-      setLoading("facebook");
-      const { data: url } = await getFacebookUrl();
+      setLoading("x");
+      const { data: url } = await getXUrl();
       if (url) window.location.href = url;
     } catch (err) {
-      console.error("Facebook OAuth error:", err);
+      console.error("X OAuth error:", err);
       setLoading(null);
     }
   };
@@ -74,7 +74,7 @@ export default function QuickLogin({ t }: QuickLoginProps) {
 
         <button
           type="button"
-          onClick={handleFacebookLogin}
+          onClick={handleXLogin}
           disabled={loading !== null}
           className="
             flex-1 h-[72px] rounded-[12px]
@@ -87,10 +87,10 @@ export default function QuickLogin({ t }: QuickLoginProps) {
             disabled:opacity-50 disabled:cursor-not-allowed
           "
         >
-          {loading === "facebook" ? (
+          {loading === "x" ? (
             <span className="text-[11px]">{t("labels.loading")}</span>
           ) : (
-            <MetaIcon />
+            <FaXTwitter className="w-8 h-8 text-white" />
           )}
         </button>
       </div>

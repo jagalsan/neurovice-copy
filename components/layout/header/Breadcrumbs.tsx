@@ -4,11 +4,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useT } from "@/providers/I18nProvider";
 import { useLocale } from "@/providers/LocaleProvider";
+import { useBreadcrumbStore } from "@/lib/stores/breadcrumb.store";
 
 export default function Breadcrumbs() {
   const pathname = usePathname();
   const locale = useLocale();
   const t = useT();
+  const { customLabels } = useBreadcrumbStore();
   
   const segments = pathname.split("/").filter(Boolean);
   const pathSegments = segments.slice(1); 
@@ -16,6 +18,10 @@ export default function Breadcrumbs() {
   if (pathSegments.length === 0) return null;
 
   const getViewTranslation = (segment: string): string => {
+    if (customLabels[segment]) {
+      return customLabels[segment];
+    }
+    
     const key = segment.replace(/-/g, "_");
     const translation = t(`views.${key}`);
     

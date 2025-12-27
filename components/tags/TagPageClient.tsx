@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Card from "@/components/Card";
 import Pagination from "@/components/Pagination";
 import TagChaptersGridAnimated from "@/components/tags/TagChaptersGridAnimated";
@@ -8,6 +9,7 @@ import Button from "@/components/ui/Button";
 import Link from "next/link";
 import { useLocale } from "@/providers/LocaleProvider";
 import type { Tag } from "@/lib/api/types";
+import { useBreadcrumbStore } from "@/lib/stores/breadcrumb.store";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 
 interface TagPageClientProps {
@@ -17,6 +19,13 @@ interface TagPageClientProps {
 export default function TagPageClient({ tagData }: TagPageClientProps) {
   const t = useT();
   const locale = useLocale();
+  const { setCustomLabel } = useBreadcrumbStore();
+
+  useEffect(() => {
+    if (tagData) {
+      setCustomLabel(String(tagData.id), tagData.name.toUpperCase());
+    }
+  }, [tagData, setCustomLabel]);
 
   const scenes = tagData?.sceneTags.map(sceneTag => sceneTag.scene) || [];
   const hasScenes = scenes.length > 0;

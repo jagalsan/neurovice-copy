@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale: localeParam } = await params;
   const locale = (localeParam === 'es' ? 'es' : 'en') as Locale;
   const messages = messagesMap[locale];
-  const meta = messages.metadata;
+  const meta = messages.seo;
 
   return {
     title: meta.title,

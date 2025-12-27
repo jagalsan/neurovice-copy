@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import { useAddToCart } from "@/lib/hooks/useAddToCart";
 import { useT } from "@/providers/I18nProvider";
 import type { PornStar } from "@/lib/api/types";
+import { useBreadcrumbStore } from "@/lib/stores/breadcrumb.store";
 import StarProfileCard from "./StarProfileCard";
 import StarInfoCard from "./StarInfoCard";
 import StarGalleryCard from "./StarGalleryCard";
@@ -17,8 +19,13 @@ export default function StarDetailClient({ starData }: StarDetailClientProps) {
   const gridColor = "rgba(23,251,248,0.25)";
   const { addToCart } = useAddToCart();
   const t = useT();
+  const { setCustomLabel } = useBreadcrumbStore();
 
   const starName = `${starData.name} ${starData.surname}`.toUpperCase();
+
+  useEffect(() => {
+    setCustomLabel(String(starData.id), starName);
+  }, [starData.id, starName, setCustomLabel]);
   const starTags = starData.pornStarsTags.map((tag) => ({
     id: tag.tag.id,
     name: tag.tag.name,

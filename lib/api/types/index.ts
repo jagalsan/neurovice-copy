@@ -12,3 +12,4 @@ export * from "./seasons";
 export * from "./blog";
 export * from "./users";
 export * from "./playback";
+export * from "./support";

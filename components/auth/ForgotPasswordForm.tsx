@@ -5,6 +5,7 @@ import AuthField from "./AuthField";
 import { useRequestResetPassword } from "@/lib/hooks/api/useAuth";
 import type { RequestResetPasswordRequest } from "@/lib/api/types";
 import Button from "@/components/ui/Button";
+import FormError from "@/components/ui/FormError";
 
 type TFn = (key: string) => string;
 
@@ -79,9 +80,7 @@ export default function ForgotPasswordForm({
         t={t}
       />
 
-      {error && (
-        <p className="text-[11px] text-red-400">{error}</p>
-      )}
+      <FormError errors={error ? [error] : []} />
 
       <Button
         type="submit"

@@ -111,11 +111,11 @@ class AuthenticationService {
   }
 
   /**
-   * Get Facebook OAuth URL
+   * Get X (Twitter) OAuth URL
    */
-  async getFacebookAuthUrl(): Promise<string> {
+  async getXAuthUrl(): Promise<string> {
     const { data } = await apiClient.get<string>(
-      `${this.basePath}/facebook`,
+      `${this.basePath}/x`,
       { skipAuth: true }
     );
     return data;

@@ -6,6 +6,7 @@ import AuthField from "./AuthField";
 import { useSignUp } from "@/lib/hooks/api/useAuth";
 import type { SignUpRequest } from "@/lib/api/types";
 import Button from "@/components/ui/Button";
+import FormError from "@/components/ui/FormError";
 import { useLocale } from "@/providers/LocaleProvider";
 
 type TFn = (key: string) => string;
@@ -114,7 +115,7 @@ export default function RegisterForm({ t, onSuccess }: RegisterFormProps) {
         <span>{t("forms.signup_marketing")}</span>
       </label>
 
-      {error && <p className="text-[11px] text-red-400">{error}</p>}
+      <FormError errors={error ? [error] : []} />
 
       <Button
         type="submit"

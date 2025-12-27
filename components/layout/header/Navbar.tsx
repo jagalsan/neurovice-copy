@@ -9,6 +9,7 @@ import CartMenu from "./CartMenu";
 import AuthModal from "../../AuthModal";
 import ProfileModal from "../../ProfileModal";
 import HowToInstallModal from "../../HowToInstallModal";
+import ContactSupportModal from "../../ContactSupportModal";
 import { useState, useEffect } from "react";
 import { useT } from "@/providers/I18nProvider";
 import InstallModal from "@/components/InstallModal";
@@ -21,6 +22,7 @@ export default function Navbar() {
   const [openInstall, setOpenInstall] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [openHowToInstall, setOpenHowToInstall] = useState(false);
+  const [openContactSupport, setOpenContactSupport] = useState(false);
   const locale = useLocale();
   const t = useT();
   const { data: user, refetch } = useCurrentUser();
@@ -46,13 +48,25 @@ export default function Navbar() {
       setOpenAuth(true);
     };
 
+    const handleOpenHowToRunChapters = () => {
+      setOpenHowToInstall(true);
+    };
+
+    const handleOpenContactSupport = () => {
+      setOpenContactSupport(true);
+    };
+
     if (typeof window !== "undefined") {
       window.addEventListener("open-auth-modal", handleOpenAuthFromEvent);
+      window.addEventListener("open-how-to-run-chapters-modal", handleOpenHowToRunChapters);
+      window.addEventListener("open-contact-support-modal", handleOpenContactSupport);
     }
 
     return () => {
       if (typeof window !== "undefined") {
         window.removeEventListener("open-auth-modal", handleOpenAuthFromEvent);
+        window.removeEventListener("open-how-to-run-chapters-modal", handleOpenHowToRunChapters);
+        window.removeEventListener("open-contact-support-modal", handleOpenContactSupport);
       }
     };
   }, []);
@@ -170,6 +184,10 @@ export default function Navbar() {
       <ProfileModal
         isOpen={openProfile}
         onClose={() => setOpenProfile(false)}
+      />
+      <ContactSupportModal
+        isOpen={openContactSupport}
+        onClose={() => setOpenContactSupport(false)}
       />
     </>
   );

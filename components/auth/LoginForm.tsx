@@ -5,6 +5,7 @@ import AuthField from "./AuthField";
 import { useSignIn } from "@/lib/hooks/api/useAuth";
 import type { SignInRequest } from "@/lib/api/types";
 import Button from "@/components/ui/Button";
+import FormError from "@/components/ui/FormError";
 
 type TFn = (key: string) => string;
 
@@ -61,9 +62,7 @@ export default function LoginForm({
         t={t}
       />
 
-      {error && (
-        <p className="text-[11px] text-red-400">{error}</p>
-      )}
+      <FormError errors={error ? [error] : []} />
 
       <Button
         type="submit"

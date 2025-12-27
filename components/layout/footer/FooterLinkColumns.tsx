@@ -9,12 +9,14 @@ interface FooterLinkColumnsProps {
   t: TFn;
   footerLinks: FooterLinks;
   onHowToRunChapters?: () => void;
+  onContactSupport?: () => void;
 }
 
 export default function FooterLinkColumns({
   t,
   footerLinks,
   onHowToRunChapters,
+  onContactSupport,
 }: FooterLinkColumnsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
@@ -31,6 +33,15 @@ export default function FooterLinkColumns({
                   <button
                     type="button"
                     onClick={onHowToRunChapters}
+                    className="hover:text-white/80 transition text-left"
+                  >
+                    {t(item.labelKey)}
+                  </button>
+                ) : item.labelKey === "messages.report_inappropriate_content" &&
+                  onContactSupport ? (
+                  <button
+                    type="button"
+                    onClick={onContactSupport}
                     className="hover:text-white/80 transition text-left"
                   >
                     {t(item.labelKey)}

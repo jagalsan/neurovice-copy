@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Card from "@/components/Card";
 import Pagination from "@/components/Pagination";
 import { useT } from "@/providers/I18nProvider";
 import { useLocale } from "@/providers/LocaleProvider";
 import type { Season } from "@/lib/api/types";
+import { useBreadcrumbStore } from "@/lib/stores/breadcrumb.store";
 import { PLACEHOLDER_IMAGE } from "@/lib/constants";
 import SeasonsGridAnimated from "@/components/seasons/SeasonsGridAnimated";
 
@@ -21,6 +23,11 @@ export default function SeasonDetailClient({
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentPage = Number(searchParams.get("page") ?? "1");
+  const { setCustomLabel } = useBreadcrumbStore();
+
+  useEffect(() => {
+    setCustomLabel(String(seasonData.id), seasonData.title.toUpperCase());
+  }, [seasonData.id, seasonData.title, setCustomLabel]);
 
   const scenes = seasonData.scenes || [];
   const hasScenes = scenes.length > 0;

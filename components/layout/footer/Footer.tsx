@@ -19,6 +19,13 @@ export default function Footer() {
     }
   };
 
+  const handleContactSupport = () => {
+    const event = new CustomEvent("open-contact-support-modal");
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(event);
+    }
+  };
+
   return (
     <footer className="w-full border-t border-[var(--color-border-green)] bg-[#171614] text-white">
       <div className="mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-[1459px]">
@@ -35,6 +42,7 @@ export default function Footer() {
             t={t}
             footerLinks={footerLinks}
             onHowToRunChapters={handleHowToRunChapters}
+            onContactSupport={handleContactSupport}
           />
         </div>
 

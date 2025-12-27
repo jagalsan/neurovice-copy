@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import type { BlogPost } from "@/lib/api/types";
 import { BlogComments } from "@/components/blog/BlogComments";
 import { useT } from "@/providers/I18nProvider";
+import { useBreadcrumbStore } from "@/lib/stores/breadcrumb.store";
 
 interface BlogArticleClientProps {
   locale: Locale;
@@ -13,6 +15,11 @@ interface BlogArticleClientProps {
 
 export function BlogArticleClient({ locale, post }: BlogArticleClientProps) {
   const t = useT();
+  const { setCustomLabel } = useBreadcrumbStore();
+
+  useEffect(() => {
+    setCustomLabel(post.slug, post.title.toUpperCase());
+  }, [post.slug, post.title, setCustomLabel]);
 
   const publishedDate = post.publishedAt
     ? new Date(post.publishedAt).toLocaleDateString()
