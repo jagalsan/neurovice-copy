@@ -16,7 +16,6 @@ export const getFooterLinks = (locale: Locale): FooterLinks => ({
       titleKey: "labels.download_section",
       items: [
         { labelKey: "labels.meta_quest", href: "#" },
-        { labelKey: "labels.pico_4", href: "#" },
         { labelKey: "labels.windows_pcvr", href: "#" },
       ],
     },

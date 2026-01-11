@@ -43,9 +43,6 @@ export default function VrSettingsView({ t, onBack }: VrSettingsViewProps) {
             <p className={controllerLabelClass}>
               {t("labels.hand_rendering")}
             </p>
-            <p className="mt-1 text-[15px] text-[#17FBF899]">
-              {t("messages.hand_rendering_copy")}
-            </p>
           </div>
           <Toggle active={handRendering} onChange={setHandRendering} />
         </div>
@@ -53,9 +50,6 @@ export default function VrSettingsView({ t, onBack }: VrSettingsViewProps) {
         <div className="flex items-center justify-between">
           <div className="flex-1 pr-4">
             <p className={controllerLabelClass}>{t("labels.quick_menu")}</p>
-            <p className="mt-1 text-[15px] text-[#17FBF899]">
-              {t("messages.quick_menu_copy")}
-            </p>
           </div>
           <Toggle active={quickMenu} onChange={setQuickMenu} />
         </div>
